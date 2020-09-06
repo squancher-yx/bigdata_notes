@@ -87,7 +87,7 @@
 
 **Spark SQL :**
 
-1. [DateFrame 和 DataSet ](notes/SparkSQL_Dataset和DataFrame简介.md)
+1. [DateFrame 和 DataSet ](notes/spark/SparkSQL_Dataset和DataFrame简介.md)
 2. [Structured API 的基本使用](notes/spark/Spark_Structured_API的基本使用.md)
 3. [Spark SQL 外部数据源](notes/spark/SparkSQL外部数据源.md)
 4. [Spark SQL 常用聚合函数](notes/spark/SparkSQL常用聚合函数.md)
