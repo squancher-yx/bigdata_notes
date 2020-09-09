@@ -218,7 +218,7 @@ sqoop export  \
     --password root \
     --table help_keyword_from_hive \
     --export-dir /user/hive/warehouse/sqoop_test.db/help_keyword  \
-    -input-fields-terminated-by '\001' \             # 需要注意的是 hive 中默认的分隔符为 \001
+    -input-fields-terminated-by '\001' \             # hive 中默认的分隔符为 \001，具体视情况而定，可以先查看表结构确定
     --m 3 
 ```
 MySQL 中的表需要预先创建：
