@@ -4,8 +4,8 @@
 <a href="#一Sqoop-基本命令">一、Sqoop 基本命令</a><br/>
 <a href="#二Sqoop-与-MySQL">二、Sqoop 与 MySQL</a><br/>
 <a href="#三Sqoop-与-HDFS">三、Sqoop 与 HDFS</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-MySQL数据导入到HDFS">3.1 MySQL数据导入到HDFS</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-HDFS数据导出到MySQL">3.2 HDFS数据导出到MySQL</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.1-MySQL数据导入到HDFS">3.1 MySQL数据导入到HDFS</a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3.2-HDFS数据导出到MySQL">3.2 HDFS数据导出到MySQL</a><br/>
 <a href="#四Sqoop-与-Hive">四、Sqoop 与 Hive</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-MySQL数据导入到Hive">4.1 MySQL数据导入到Hive</a><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-Hive-导出数据到MySQL">4.2 Hive 导出数据到MySQL</a><br/>
