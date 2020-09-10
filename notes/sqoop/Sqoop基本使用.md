@@ -15,7 +15,7 @@
 <a href="#七Sqoop-数据过滤">七、Sqoop 数据过滤</a><br/>
 <a href="#八类型支持">八、类型支持</a><br/>
 </nav>
-[3.1 MySQL数据导入到HDFS](#31-MySQL数据导入到HDFS)
+[3.1 MySQL数据导入到HDFS](#31-mysql数据导入到hdfs)
 
 ## 一、Sqoop 基本命令
 
