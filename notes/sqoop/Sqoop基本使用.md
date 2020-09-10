@@ -15,7 +15,7 @@
 <a href="#七Sqoop-数据过滤">七、Sqoop 数据过滤</a><br/>
 <a href="#八类型支持">八、类型支持</a><br/>
 </nav>
-[HDFS](#www.baidu.com)
+[HDFS](#2查看某条命令的具体使用方法)
 
 ## 一、Sqoop 基本命令
 
