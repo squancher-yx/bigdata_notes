@@ -15,7 +15,6 @@
 <a href="#七Sqoop-数据过滤">七、Sqoop 数据过滤</a><br/>
 <a href="#八类型支持">八、类型支持</a><br/>
 </nav>
-[HDFS](#2查看某条命令的具体使用方法)
 
 ## 一、Sqoop 基本命令
 
@@ -110,7 +109,7 @@ hadoop fs -text  /sqoop/part-m-00000
 <br/>
 
 ### 3.2 HDFS数据导出到MySQL
-
+*注意：只能指定HDFS某个目录，会读取目录下所有文件，如果含有文件夹会失败*
 ```shell
 sqoop export  \
     --connect jdbc:mysql://hadoop001:3306/mysql \
@@ -191,6 +190,8 @@ sqoop import \
 ### 4.2 Hive 导出数据到MySQL
 
 由于 Hive 的数据是存储在 HDFS 上的，所以 Hive 导入数据到 MySQL，实际上就是 HDFS 导入数据到 MySQL。
+
+*注意：只能指定HDFS某个目录，会读取目录下所有文件，如果含有文件夹会失败*
 
 #### 1. 查看Hive表在HDFS的存储位置
 
