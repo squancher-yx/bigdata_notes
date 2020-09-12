@@ -9,6 +9,8 @@ import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.FilterList;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.CellUtil;
 
 import java.io.IOException;
 import java.util.List;
@@ -72,6 +74,8 @@ public class HBaseUtils {
         return true;
     }
 
+	//可以批量插入 table.put(List<Put>)
+
     /**
      * 插入数据
      *
@@ -117,6 +121,7 @@ public class HBaseUtils {
         return true;
     }
 
+	//可以批量获取多行 Result[] result= table.get(List<Get>)
 
     /**
      * 根据rowKey获取指定行的数据
@@ -135,6 +140,26 @@ public class HBaseUtils {
         return null;
     }
 
+    /**
+     * 根据rowKey获取指定列的所有版本数据
+     *
+     * @param tableName    表名
+     * @param rowKey       唯一标识
+     * @param columnFamily 列族
+     * @param qualifier    列标识
+     */
+    public static List<Cell> getFullRow(String tableName, String rowKey, String columnFamily, String qualifier) {
+        try {
+            Table table = connection.getTable(TableName.valueOf(tableName));
+            Get get = new Get(Bytes.toBytes(rowKey));
+			Result result = table.get(get);
+			List<Cell> cells = result.getColumnCells(Bytes.toBytes(columnFamily), Bytes.toBytes(qualifier));
+            return cells;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     /**
      * 获取指定行指定列(cell)的最新版本的数据

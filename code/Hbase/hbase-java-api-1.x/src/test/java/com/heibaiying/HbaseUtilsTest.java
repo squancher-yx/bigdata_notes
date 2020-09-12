@@ -8,6 +8,8 @@ import org.apache.hadoop.hbase.filter.FilterList;
 import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.junit.Test;
+import org.apache.hadoop.hbase.Cell;
+import org.apache.hadoop.hbase.CellUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +46,7 @@ public class HBaseUtilsTest {
         HBaseUtils.putRow(TABLE_NAME, "rowKey3", STUDENT, pairs3);
     }
 
-
+	//某一列
     @Test
     public void getRow() {
         Result result = HBaseUtils.getRow(TABLE_NAME, "rowKey1");
@@ -52,7 +54,34 @@ public class HBaseUtilsTest {
             System.out.println(Bytes
                     .toString(result.getValue(Bytes.toBytes(STUDENT), Bytes.toBytes("name"))));
         }
-
+    }
+	
+	//所有列
+	@Test
+    public void getRow2() {
+        Result result = HBaseUtils.getRow(TABLE_NAME, "rowKey1");
+        if (result != null) {
+			Cell[] cells = result.rawCells();
+			for(int i = 0;i < cells.length;i++){
+				byte[] cValue = CellUtil.cloneValue(cell[i]);
+				byte[] cQualifier = CellUtil.cloneQualifier(cell[i]);
+				System.out.println();
+			}
+           
+        }
+    }
+	
+	@Test
+    public void getFullRow() {
+        List<Cell> cells = HBaseUtils.getRow(TABLE_NAME, "rowKey1", STUDENT, "age");
+		if (cells != null) {
+			for (Cell cell: cells){
+				byte[] cValue = CellUtil.cloneValue(cell);
+				byte[] cFamily = CellUtil.cloneFamily(cell);
+				byte[] cQualifier = CellUtil.cloneQualifier(cell);
+				System.out.println();
+			}
+		}
     }
 
     @Test
