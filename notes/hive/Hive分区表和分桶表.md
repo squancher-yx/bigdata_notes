@@ -63,6 +63,21 @@ LOAD DATA LOCAL INPATH "/usr/file/emp30.txt" OVERWRITE INTO TABLE emp_partition 
 
 <div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/hive-hadoop-partitation.png"/> </div>
 
+### 1.6 动态分区
+
+```
+create table test_p_target (
+    id string,
+    name string
+)
+partitioned by (ds string)
+row format delimited fields terminated by '\t'
+stored as textfile;
+
+SET hive.exec.dynamic.partition=true;   #是否开启动态分区，默认是false，所以必须要设置成true
+SET hive.exec.dynamic.partition.mode=nonstrict;    # 动态分区模式，默认为strict, 表示表中必须一个分区为静态分区，nostrict表示允许所有字段都可以作为动态分区
+insert into table test_p_target partition (ds) select id, name, birthday as ds from test_p_source;
+```
 
 
 ## 二、分桶表
