@@ -381,7 +381,7 @@ $ sqoop import ... --map-column-java id=String,value=Integer
 ```
 
 ## 九、空数据处理
-Hive 中的 Null 在底层是以“\N”来存储，而 MySQL 中的 Null 在底层就是 Null， 为了保证数据两端的一致性。在导出数据时采用 --input-null-string 和 --input-null-non-string 两个参数。导入数据时采用--null-string 和--null-non-string。
+Hive 中的 Null 在底层是以“\N”来存储，而 MySQL 中的 Null 在底层就是 Null， 为了保证数据两端的一致性。在导出数据时采用 ``--input-null-string`` 和 ``--input-null-non-string`` 两个参数。导入数据时采用``--null-string`` 和``--null-non-string``。
 
 
 ## 参考资料
