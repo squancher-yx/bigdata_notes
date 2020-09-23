@@ -14,6 +14,7 @@
 <a href="#六全库导出">六、全库导出</a><br/>
 <a href="#七Sqoop-数据过滤">七、Sqoop 数据过滤</a><br/>
 <a href="#八类型支持">八、类型支持</a><br/>
+<a href="#九空数据处理">九、空数据处理</a><br/>
 </nav>
 
 ## 一、Sqoop 基本命令
@@ -379,8 +380,8 @@ Sqoop 默认支持数据库的大多数字段类型，但是某些特殊类型�
 $ sqoop import ... --map-column-java id=String,value=Integer
 ```
 
-
-
+## 九、空数据处理
+Hive 中的 Null 在底层是以“\N”来存储，而 MySQL 中的 Null 在底层就是 Null， 为了保证数据两端的一致性。在导出数据时采用 ``--input-null-string`` 和 ``--input-null-non-string`` 两个参数。导入数据时采用``--null-string`` 和``--null-non-string``。
 
 
 ## 参考资料
