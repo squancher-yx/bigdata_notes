@@ -129,3 +129,9 @@ SELECT CONCAT_WS('_',id,name) AS con_ws FROM tbl
 | First name,Last Name                         |
 +----------------------------------------------+
 ```
+
+## 七  
+NEXT_DAY函数  
+语法：next_day(string date, string week)  
+返回大于指定日期并且与week相匹配的第一个日期。实质上是指下周几的具体日期。week可以是Mo, tue, FRIDAY等。  
+例：``select next_day("2016-10-31", 'FRIDAY')``

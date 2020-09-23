@@ -388,4 +388,3 @@ $ sqoop import ... --map-column-java id=String,value=Integer
 [Sqoop User Guide (v1.4.7)](http://sqoop.apache.org/docs/1.4.7/SqoopUserGuide.html)
 
 
-<div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/weixin-desc.png"/> </div>
