@@ -1,5 +1,12 @@
 # dump导出
 
+
+[官方文档](https://dev.mysql.com/doc/refman/5.7/en/mysqldump.html)
+
+可以使用：``--defaults-extra-file=file_name`` 等  
+[官方文档](https://dev.mysql.com/doc/refman/5.7/en/option-file-options.html)
+
+
 ## 语法
 ```
 Usage: mysqldump [OPTIONS] database [tables]

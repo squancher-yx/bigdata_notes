@@ -1,2 +1,3 @@
 notes/mysql/Mysql_dump
+notes/mysql/Mysql_索引
 notes/linux/Linx_sed
