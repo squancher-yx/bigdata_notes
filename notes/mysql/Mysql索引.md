@@ -97,7 +97,7 @@ ALTER TABLE (表名) DROP PRIMARY KEY;
 2. 过滤字段使用了函数运算后（如abs(column)），MySQL 无法使用索引。
 3. 使用非等值查询的时候MySQL 无法使用Hash 索引。
 
-### NULL 字段影响
+## NULL 字段影响
 
 NULL 字段不参加统计
 
