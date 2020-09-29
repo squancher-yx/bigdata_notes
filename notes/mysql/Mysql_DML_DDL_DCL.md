@@ -184,7 +184,7 @@ SELECT s1 FROM table1 WHERE s1 > ALL (SELECT s2 FROM table2)
 指子查询返回的结果集是一行 N 列，该子查询的结果通常是对表的某行数据进行查询而返回的结果集。   
 没啥意义
 
-4. MySQL 表子查询：  
+4. MySQL 表子查询：  
 指子查询返回的结果集是 N 行 N 列的一个表数据。   
 例子：
 ```
