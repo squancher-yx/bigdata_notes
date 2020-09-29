@@ -3,7 +3,7 @@
 CREATE DATABASE database;
 DROP DATABASE database;
 SHOW DATABASES;
- ```
+```
 创建和删除表
 ```
 USE table
@@ -12,10 +12,10 @@ CREATE TABLE table (
 (列名) (类型),
 ........
 );
-
 DROP TABLE (表名);
 SHOW TABLES;
 ``` 
+
 查看表结构
 ```
 DESC (表名);
@@ -26,7 +26,7 @@ SHOW CREATE TABLE (表名);
 INSERT INTO (表名) SET (列名)=(内容),(列名)=(内容).....;
 INSERT INTO (表名) VALUES (内容,内容.....),(内容,内容.....).....;         #内容个数与列表个数相同
 INSERT INTO 表名(字段1,字段2,...,字段m) VALUES (值1,值2,...,值m),(值1,值2,...,值m).....;
- ```
+```
 
 表操作
 
@@ -105,7 +105,8 @@ mysql>ALTER DATABASE mydb CHARACTER SET utf-8(utf8) COLLATE utf8_general_ci
 ALTER TABLE tbl_name CONVERT TO CHARACTER SET character_name[COLLATE ...]
 ```
 如：
-```ALTER TABLE logtest CONVERT TO CHARACTER set utf8 COLLATE utf8_general_ci;
+```
+ALTER TABLE logtest CONVERT TO CHARACTER set utf8 COLLATE utf8_general_ci;
 ```
 只是修改表的默认字符集：
 ```
