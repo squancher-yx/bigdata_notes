@@ -64,7 +64,7 @@ ALTER TABLE(表名) DROP COLUMN (列名);
 1、事务：truncate是不可以rollback的，但是delete是可以rollback的；
    原因：truncate删除整表数据(ddl语句,隐式提交)，delete是一行一行的删除，可以rollback
 2、效果：truncate删除后将重新水平线和索引(id从零开始) ,delete不会删除索引    
-3、truncate 不能触发任何Delete触发器。
+3、truncate 不能触发任何Delete触发器。  
 4、delete 删除可以返回行数
 
 查看编码及引擎
@@ -121,5 +121,29 @@ ALTER TABLE logtest DEFAULT CHARACTER utf8 COLLATE utf8_general_ci;
 ALTER TABLE tbl_nameCHANGE c_name c_name CHARACTER SET character_name [COLLATE ...];
 ```
 如：  
-```ALTER TABLE logtest CHANGE title titleVARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci;
+```
+ALTER TABLE logtest CHANGE title titleVARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci;
+```
+
+事务
+
+初始化事务  
+初始化MySQL事务，首先声明初始化MySQL事务后所有的SQL语句为一个单元。在MySQL中，应用``START TRANSACTION``命令来标记一个事务的开始。初始化事务的结构如下：  
+START TRANSACTION；  
+另外，用户也可以使用``BEGIN``或者``BEGIN WORK``命令初始化事务，通常``START TRANSACTION``命令后面跟随的是组成事务的SQL语句。  
+在命令提示符中输入如下命令：  
+```
+start transaction；
+```
+创建保留点
+```
+savepoint xxxx;
+```
+回滚
+```
+rollback to xxxx;
+```
+提交
+```
+commit;
 ```
