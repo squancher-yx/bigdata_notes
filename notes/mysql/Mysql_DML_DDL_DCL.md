@@ -1,3 +1,5 @@
+## 数据库及表操作
+
 创建删除查看数据库
 ```
 CREATE DATABASE database;
@@ -6,7 +8,7 @@ SHOW DATABASES;
 ```
 创建和删除表
 ```
-USE table
+USE table;
 CREATE TABLE table (
 (列名) (类型),
 (列名) (类型),
@@ -15,7 +17,6 @@ CREATE TABLE table (
 DROP TABLE (表名);
 SHOW TABLES;
 ``` 
-
 查看表结构
 ```
 DESC (表名);
@@ -27,9 +28,6 @@ INSERT INTO (表名) SET (列名)=(内容),(列名)=(内容).....;
 INSERT INTO (表名) VALUES (内容,内容.....),(内容,内容.....).....;         #内容个数与列表个数相同
 INSERT INTO 表名(字段1,字段2,...,字段m) VALUES (值1,值2,...,值m),(值1,值2,...,值m).....;
 ```
-
-表操作
-
 修改表名
 ```
 ALTER TABLE(之前的表名) RENAME (之后的表名)；
@@ -50,7 +48,7 @@ ALTER TABLE(表名) ADD COLUMN  (列名) varchar(30) AFTER (列名);
 ALTER TABLE(表名) DROP COLUMN (列名);
 ```
 
-删除表数据
+**删除表数据**
 
 程度从强到弱
 1、DROP TABLE tb 
@@ -67,7 +65,7 @@ ALTER TABLE(表名) DROP COLUMN (列名);
 3、truncate 不能触发任何Delete触发器。  
 4、delete 删除可以返回行数
 
-查看编码及引擎
+## 查看编码及引擎
 1、查看 MySQL 数据库服务器和数据库字符集
 ```
 show variables like'%char%';
@@ -93,7 +91,7 @@ SHOW CREATE TABLE tbl_name;
 SHOW FULL COLUMNS FROM tbl_name;
 ```
 
-四、修改字符集
+## 修改字符集
 1.修改数据库的字符集
 ```
 mysql>usemydb
@@ -125,7 +123,7 @@ ALTER TABLE tbl_nameCHANGE c_name c_name CHARACTER SET character_name [COLLATE .
 ALTER TABLE logtest CHANGE title titleVARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci;
 ```
 
-事务
+## 事务
 
 初始化事务  
 + 初始化MySQL事务，首先声明初始化MySQL事务后所有的SQL语句为一个单元。在MySQL中，应用``START TRANSACTION``命令来标记一个事务的开始。初始化事务的结构如下：  
@@ -159,7 +157,7 @@ CREATE TABLE t1_copy as select * from test1.t1;
 create table 新表 like 被复制表 
 ```
 
-子查询
+## 子查询
 
 1. 标量子查询：
 是指子查询返回的是单一值的标量，如一个数字或一个字符串，也是子查询中最简单的返回形式。 可以使用 = > < >= <= <> 这些操作符对子查询的标量结果进行比较，通常子查询的位置在比较式的右侧 
@@ -169,7 +167,8 @@ SELECT * FROM article WHERE uid = (SELECT uid FROM user WHERE status=1 ORDER BY 
 SELECT * FROM t1 WHERE column1 = (SELECT MAX(column2) FROM t2)
 SELECT * FROM article AS t WHERE 2 = (SELECT COUNT(*) FROM article WHERE article.uid = t.uid)
 ```
-2. MySQL 列子查询：
+
+2. MySQL 列子查询：
 指子查询返回的结果集是 N 行一列，该结果通常来自对表的某个字段查询返回。 
 可以使用 = > < >= <= <> 这些操作符对子查询的标量结果进行比较，通常子查询的位置在比较式的右侧 
 可以使用 IN、ANY、SOME 和 ALL 操作符，不能直接使用 = > < >= <= <> 这些比较标量结果的操作符。 
@@ -179,7 +178,8 @@ SELECT * FROM article WHERE uid IN (SELECT uid FROM user WHERE status=1)
 SELECT s1 FROM table1 WHERE s1 > ANY (SELECT s2 FROM table2)
 SELECT s1 FROM table1 WHERE s1 > ALL (SELECT s2 FROM table2)
 ```
-3. MySQL 行子查询：
+
+3. MySQL 行子查询：
 指子查询返回的结果集是一行 N 列，该子查询的结果通常是对表的某行数据进行查询而返回的结果集。 
 没啥意义
 
