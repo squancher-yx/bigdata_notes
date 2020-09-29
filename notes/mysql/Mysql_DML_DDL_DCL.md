@@ -135,7 +135,7 @@ START TRANSACTION;
 + 另外，用户也可以使用``BEGIN``或者``BEGIN WORK``命令初始化事务，通常``START TRANSACTION``命令后面跟随的是组成事务的SQL语句。  
 在命令提示符中输入如下命令：  
 ```
-start transaction；
+START TRANSACTION;
 ```
 创建保留点
 ```
@@ -148,4 +148,44 @@ rollback to xxxx;
 提交
 ```
 commit;
+```
+
+表复制
+```
+CREATE TABLE t1_copy as select * from test1.t1;
+```
+复制表结构
+```
+create table 新表 like 被复制表 
+```
+
+子查询
+
+1. 标量子查询：
+是指子查询返回的是单一值的标量，如一个数字或一个字符串，也是子查询中最简单的返回形式。 可以使用 = > < >= <= <> 这些操作符对子查询的标量结果进行比较，通常子查询的位置在比较式的右侧 
+示例：  
+```
+SELECT * FROM article WHERE uid = (SELECT uid FROM user WHERE status=1 ORDER BY uid DESC LIMIT 1)
+SELECT * FROM t1 WHERE column1 = (SELECT MAX(column2) FROM t2)
+SELECT * FROM article AS t WHERE 2 = (SELECT COUNT(*) FROM article WHERE article.uid = t.uid)
+```
+2. MySQL 列子查询：
+指子查询返回的结果集是 N 行一列，该结果通常来自对表的某个字段查询返回。 
+可以使用 = > < >= <= <> 这些操作符对子查询的标量结果进行比较，通常子查询的位置在比较式的右侧 
+可以使用 IN、ANY、SOME 和 ALL 操作符，不能直接使用 = > < >= <= <> 这些比较标量结果的操作符。 
+示例：
+```
+SELECT * FROM article WHERE uid IN (SELECT uid FROM user WHERE status=1)
+SELECT s1 FROM table1 WHERE s1 > ANY (SELECT s2 FROM table2)
+SELECT s1 FROM table1 WHERE s1 > ALL (SELECT s2 FROM table2)
+```
+3. MySQL 行子查询：
+指子查询返回的结果集是一行 N 列，该子查询的结果通常是对表的某行数据进行查询而返回的结果集。 
+没啥意义
+
+4. MySQL 表子查询：
+指子查询返回的结果集是 N 行 N 列的一个表数据。 
+例子：
+```
+SELECT * FROM article WHERE (title,content,uid) IN (SELECT title,content,uid FROM blog)
 ```
