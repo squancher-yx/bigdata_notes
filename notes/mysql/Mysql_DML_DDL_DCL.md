@@ -128,9 +128,11 @@ ALTER TABLE logtest CHANGE title titleVARCHAR(100) CHARACTER SET utf8 COLLATE ut
 事务
 
 初始化事务  
-初始化MySQL事务，首先声明初始化MySQL事务后所有的SQL语句为一个单元。在MySQL中，应用``START TRANSACTION``命令来标记一个事务的开始。初始化事务的结构如下：  
-START TRANSACTION；  
-另外，用户也可以使用``BEGIN``或者``BEGIN WORK``命令初始化事务，通常``START TRANSACTION``命令后面跟随的是组成事务的SQL语句。  
++ 初始化MySQL事务，首先声明初始化MySQL事务后所有的SQL语句为一个单元。在MySQL中，应用``START TRANSACTION``命令来标记一个事务的开始。初始化事务的结构如下：  
+```
+START TRANSACTION;
+``` 
++ 另外，用户也可以使用``BEGIN``或者``BEGIN WORK``命令初始化事务，通常``START TRANSACTION``命令后面跟随的是组成事务的SQL语句。  
 在命令提示符中输入如下命令：  
 ```
 start transaction；
