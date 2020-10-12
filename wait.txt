@@ -3,3 +3,4 @@ notes/mysql/Mysql_索引
 notes/linux/Linx_sed
 notes/mysql/Mysql_DML_DDL_DCL
 notes/zookeeper/Zookeeper选举机制
+notes/mysql/Mysql常用函数
