@@ -1,0 +1,2 @@
+共识算法：Raft
+Raft 原理动画：http://thesecretlivesofdata.com/raft/
