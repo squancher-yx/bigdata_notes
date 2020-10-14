@@ -1,0 +1,14 @@
+Druid：实时OLAP，高并发，低延迟，不适合大表关联，不支持点更新和删除，列存储，(SQL支持差,Druid提供了三种查询方式，SQL，原生JSON，CURL)
+Impala：MPP，可以操作kudu，支持各种文件格式，不支持点更新和删除，不支UDF，使用（依赖）hive元数据，可以像hive一样整合hbase，支持UDF和UDAF
+Presto：不存储数据，低延迟，高并发，可以连接多种数据源，包括Hive、RDBMS、Kafka、MongoDB等
+Kylin：(Cube，预先对数据作多维索引，查询时只扫描索引)，(查询的维度组合数量需要提前确定好，不适合即席查询分析；预计算量大，资源消耗多)，依赖Hadoop、Hive、Zookeeper、HBase
+TIDB：兼容MySQL，有点像分布式mysql，OLTP，复杂查询其实并不擅长
+clickhouse：不支持事务，不支持真正的删除/更新，不支持高并发，尽量批量写入，数据压缩空间大，写入速度非常快
+kudu：MPP，
+spark-sql：全量数据时(TB级)有优势
+多表查询tpc-ds速度：Presto>=Impala>greenplum>clickhouse(Presto和Impala测试结果不唯一)
+
+单表大表：clickhouse>Presto>Impala>spark-sql>greenplum(Presto和Impala测试结果不唯一)
+
+
+测试方法 TPC-H、TPC-DS
