@@ -181,7 +181,7 @@ mysqldump  -uroot -p --databases test mysql
 --debug  
 输出debug信息，用于调试。默认值为：d:t,/tmp/mysqldump.trace  
 mysqldump  -uroot -p --all-databases --debug  
-mysqldump  -uroot -p --all-databases --debug=” d:t,/tmp/debug.trace”  
+mysqldump  -uroot -p --all-databases --debug="d:t:o,/tmp/debug.trace" 
 --debug-check  
 检查内存和打开文件使用说明并退出。  
 mysqldump  -uroot -p --all-databases --debug-check  
