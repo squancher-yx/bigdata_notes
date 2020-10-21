@@ -3,3 +3,4 @@ Raft 原理动画：http://thesecretlivesofdata.com/raft/
 乐观事务模型、悲观事务模型
 事务隔离级别
 MVCC
+mysql lock tbl [ write | read ]
