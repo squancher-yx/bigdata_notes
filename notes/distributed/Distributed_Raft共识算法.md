@@ -8,7 +8,7 @@
 
 一个Raft集群通常包含2N+1个服务器，允许系统有N个故障服务器。每个服务器处于3个状态之一：leader、follower或candidate。正常操作状态下，仅有一个leader，其他的服务器均为follower。follower是被动的，不会对自身发出的请求而是对来自leader和candidate的请求做出响应。leader处理所有的client请求（若client联系follower，则该follower将转发给leader)。candidate状态用来选举leader。状态转换如下图所示：
 <div align="center"> <img width="600px" src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/raft.png"/> </div>
-<<<<<<< HEAD
+
 
 为了进行领导人选举和日志复制等，需要服务器节点存储如下状态信息：
 
