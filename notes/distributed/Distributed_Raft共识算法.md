@@ -140,6 +140,4 @@ leader选举成功后，将进入有效工作阶段，即日志复制阶段，�
 
 **出现网络分区时怎么处理？**
 分布式系统中网络分区的情况基本无法避免，出现网络分区时，原有leader在分区的一侧，此时如果客户端发来指令，旧leader依旧在分区一测进行日志复制的过程，但因收不到大多数节点的确认，客户端所提交的指令entry只能记录在日志中，无法进行提交确认，处于uncommitted状态。而在分区的另一侧，此时收不到心跳信息，会进入选举流程重新选举一个leader，新leader负责分区零一侧的请求，进行日志复制等操作。因为新leader可以收到大多数follower确认，客户端的指令entry可以被提交，并更新节点状态，当网络分区恢复时，此时两个leader会收到彼此广播的心跳信息，此时，旧leader发现更大term的leader，旧leader转为follower，此时旧leader分区一侧的所有操作都要回滚，接受新leader的更新。
-=======
-<div align="center"> <img width="600px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/streaming-flow.png"/> </div>
->>>>>>> fed13efe8162fdd267bbbdee1473022c53653a2c
+
