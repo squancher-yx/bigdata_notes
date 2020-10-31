@@ -54,7 +54,9 @@ Flink 提供了以下数据格式来管理和存储键控状态 (Keyed State)：
 - **ReducingState**：用于存储经过 ReduceFunction 计算后的结果，使用 `add(T)` 增加元素。
 - **AggregatingState**：用于存储经过 AggregatingState 计算后的结果，使用 `add(IN)` 添加元素。
 - **FoldingState**：已被标识为废弃，会在未来版本中移除，官方推荐使用 `AggregatingState` 代替。
--  **MapState**：维护 Map 类型的状态。
+- **MapState**：维护 Map 类型的状态。
+
+注：ListState、MapState 超时机制作用在每个元素上，也就是每个元素的超时是独立的。
 
 以上所有增删改查方法不必硬记，在使用时通过语法提示来调用即可。这里给出一个具体的使用示例：假设我们正在开发一个监控系统，当监控数据超过阈值一定次数后，需要发出报警信息。这里之所以要达到一定次数，是因为由于偶发原因，偶尔一次超过阈值并不能代表什么，故需要达到一定次数后才触发报警，这就需要使用到 Flink 的状态编程。相关代码如下：
 
