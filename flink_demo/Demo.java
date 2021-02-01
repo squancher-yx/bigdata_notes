@@ -28,14 +28,20 @@ public class Demo {
         //设置水位线自动提交时间
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
         env.getConfig().setAutoWatermarkInterval(10000);
-
+		
+		//kafka配置
         Properties properties = new Properties();
         properties.setProperty("bootstrap.servers", "localhost:9092");
         properties.setProperty("group.id", "test");
 
+		
+		//添加source和水位线规则
         DataStream<String> stream = env
+		//消费topic：quickstart-events
                 .addSource(new FlinkKafkaConsumer<>("quickstart-events", new SimpleStringSchema(), properties).setStartFromLatest())
+				//添加水位线
                 .assignTimestampsAndWatermarks(new MyWatermarkStrategy().withTimestampAssigner(new SerializableTimestampAssigner<String>() {
+					//提取水位线（事件时间）
                     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     @Override
                     public long extractTimestamp(String element, long recordTimestamp) {
@@ -60,14 +66,17 @@ public class Demo {
                 return value.split("\t", -1).length == 3;
             }
         })
+		//使用keyby对id分组
                 .keyBy(new KeySelector<String, String>() {
                     @Override
                     public String getKey(String value) throws Exception {
                         String[] line = value.split("\t", -1);
                         return line[1];
                     }
+					//设置60秒的窗口
                 }).timeWindow(Time.seconds(60));
-//        stream.addSink(new RichSinkFunction<String>() {
+				//添加sink
+//        stream.addSink(new SinkFunction<String>() {
 //        });
 
         //前一分钟数据
@@ -83,7 +92,7 @@ public class Demo {
             }
         }).print();
 
-        //分组总和
+        //不使用窗口求分组总和
         stream.keyBy(new KeySelector<String, String>() {
             @Override
             public String getKey(String value) throws Exception {
@@ -102,7 +111,7 @@ public class Demo {
             }
         }).print();
 
-        //总和
+        //不使用窗口求所有总和
         stream.keyBy(new KeySelector<String, Object>() {
             @Override
             public Object getKey(String value) throws Exception {
@@ -124,6 +133,7 @@ public class Demo {
     }
 }
 
+//基于事件时间的水位线规则
 class MyWatermarkStrategy implements WatermarkStrategy<String> {
 
     @Override
