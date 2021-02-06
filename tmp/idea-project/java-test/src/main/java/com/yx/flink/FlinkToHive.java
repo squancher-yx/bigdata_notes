@@ -9,6 +9,8 @@ import org.apache.flink.streaming.api.environment.ExecutionCheckpointingOptions;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.flink.table.api.EnvironmentSettings;
+import org.apache.flink.table.api.StatementSet;
+import org.apache.flink.table.api.Table;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.table.catalog.hive.HiveCatalog;
 import org.apache.flink.table.expressions.Expression;
@@ -39,7 +41,7 @@ public class FlinkToHive {
         //tableEnv.getConfig().getConfiguration().set(ExecutionCheckpointingOptions.CHECKPOINTING_INTERVAL, Duration.ofSeconds(120));
         HiveCatalog catalog = new HiveCatalog("test_catlog","default_databases","hive-site.xml path");
         tableEnv.registerCatalog("test_catlog",catalog);
-        //tableEnv.useCatalog("test_catlog");
+        tableEnv.useCatalog("test_catlog");
         Properties properties = new Properties();
         properties.put("bootstrap.servers", "127.0.0.1:9092");
         properties.put("group.id", "testGroup");
@@ -48,12 +50,15 @@ public class FlinkToHive {
 
         FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<String>("test_topic",new SimpleStringSchema(),properties);
         consumer.setStartFromLatest();
+        //需要使用 flink Tuple，不能使用lambda，需要使用匿名类
         DataStream<Tuple3<String,String,String>> source= streamEnv.addSource(consumer).map(f->{
             String[] line = f.split(" ");
             return new Tuple3<>(line[0], line[1], line[2]);
         });
-
-        tableEnv.createTemporaryView("view" , source,$(""));
-
+        tableEnv.createTemporaryView("view" , source,$(""),$(""));
+        StatementSet statementSet = tableEnv.createStatementSet();
+        statementSet.addInsertSql("insert into xx (select * fron xx)");
+        statementSet.addInsertSql("insert into xxx (select * fron xxx)");
+        statementSet.execute();
     }
 }
