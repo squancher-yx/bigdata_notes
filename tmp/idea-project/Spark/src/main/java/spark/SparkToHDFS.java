@@ -5,6 +5,7 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.PairFunction;
+import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import scala.Tuple2;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class SparkToHDFS {
         list.add("qq ee");
         list.add("qq rr");
         JavaRDD<String> rdd = sc.parallelize(list);
-        rdd.mapToPair(new PairFunction<String, Object, Object>() {
+        rdd.distinct().mapToPair(new PairFunction<String, Object, Object>() {
             @Override
             public Tuple2<Object, Object> call(String s) throws Exception {
                 String[] line =s.split(" ",-1);

@@ -7,3 +7,4 @@ mysql lock tbl [ write | read ]
 jstack、jmap、jhat、jstat
 LSM-Tree
 有赞数仓 https://tech.youzan.com/you-zan-zhi-biao-ku-shi-jian/
+drbd
