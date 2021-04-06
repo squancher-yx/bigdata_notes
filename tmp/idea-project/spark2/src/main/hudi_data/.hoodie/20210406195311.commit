@@ -1,0 +1,63 @@
+{
+  "partitionToWriteStats" : {
+    "a" : [ {
+      "fileId" : "06da1f15-47a6-47a6-a3ce-f90b0f099f9b-0",
+      "path" : "a/06da1f15-47a6-47a6-a3ce-f90b0f099f9b-0_0-21-24_20210406195311.parquet",
+      "prevCommit" : "null",
+      "numWrites" : 1,
+      "numDeletes" : 0,
+      "numUpdateWrites" : 0,
+      "numInserts" : 1,
+      "totalWriteBytes" : 434510,
+      "totalWriteErrors" : 0,
+      "tempPath" : null,
+      "partitionPath" : "a",
+      "totalLogRecords" : 0,
+      "totalLogFilesCompacted" : 0,
+      "totalLogSizeCompacted" : 0,
+      "totalUpdatedRecordsCompacted" : 0,
+      "totalLogBlocks" : 0,
+      "totalCorruptLogBlock" : 0,
+      "totalRollbackBlocks" : 0,
+      "fileSizeInBytes" : 434510
+    } ],
+    "b" : [ {
+      "fileId" : "b4078c78-0d6f-49a7-8ef2-d9646958fc53-0",
+      "path" : "b/b4078c78-0d6f-49a7-8ef2-d9646958fc53-0_1-21-25_20210406195311.parquet",
+      "prevCommit" : "null",
+      "numWrites" : 1,
+      "numDeletes" : 0,
+      "numUpdateWrites" : 0,
+      "numInserts" : 1,
+      "totalWriteBytes" : 434512,
+      "totalWriteErrors" : 0,
+      "tempPath" : null,
+      "partitionPath" : "b",
+      "totalLogRecords" : 0,
+      "totalLogFilesCompacted" : 0,
+      "totalLogSizeCompacted" : 0,
+      "totalUpdatedRecordsCompacted" : 0,
+      "totalLogBlocks" : 0,
+      "totalCorruptLogBlock" : 0,
+      "totalRollbackBlocks" : 0,
+      "fileSizeInBytes" : 434512
+    } ]
+  },
+  "compacted" : false,
+  "extraMetadata" : {
+    "schema" : "{\"type\":\"record\",\"name\":\"test_record\",\"namespace\":\"hoodie.test\",\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":[\"string\",\"null\"]},{\"name\":\"ts\",\"type\":\"int\"},{\"name\":\"path\",\"type\":[\"string\",\"null\"]}]}"
+  },
+  "operationType" : "UPSERT",
+  "totalLogFilesCompacted" : 0,
+  "totalLogFilesSize" : 0,
+  "totalLogRecordsCompacted" : 0,
+  "totalCompactedRecordsUpdated" : 0,
+  "fileIdAndRelativePaths" : {
+    "b4078c78-0d6f-49a7-8ef2-d9646958fc53-0" : "b/b4078c78-0d6f-49a7-8ef2-d9646958fc53-0_1-21-25_20210406195311.parquet",
+    "06da1f15-47a6-47a6-a3ce-f90b0f099f9b-0" : "a/06da1f15-47a6-47a6-a3ce-f90b0f099f9b-0_0-21-24_20210406195311.parquet"
+  },
+  "totalRecordsDeleted" : 0,
+  "totalCreateTime" : 990,
+  "totalUpsertTime" : 0,
+  "totalScanTime" : 0
+}

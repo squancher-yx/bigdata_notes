@@ -17,13 +17,13 @@ public class GraphTest {
         String EDGE_COLLECTION_NAME = "edges";
         String VERTEXT_COLLECTION_NAME = "circles";
         ArangoDB arangoDB = new ArangoDB.Builder()
-                .host("192.168.121.128", 8529)
+                .host("192.168.121.128", 8530)
                 .user("root")
-                .password("123321")
+                .password("")
                 .build();
-//        if (arangoDB.db(TEST_DB).exists())
-//            arangoDB.db(TEST_DB).drop();
-//        arangoDB.createDatabase(TEST_DB);
+        if (arangoDB.db(TEST_DB).exists())
+            arangoDB.db(TEST_DB).drop();
+        arangoDB.createDatabase(TEST_DB);
         db = arangoDB.db(TEST_DB);
 
         final Collection<EdgeDefinition> edgeDefinitions = new ArrayList<>();

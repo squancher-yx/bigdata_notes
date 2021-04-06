@@ -1,0 +1,60 @@
+{
+  "partitionToWriteStats" : {
+    "a" : [ {
+      "fileId" : "",
+      "path" : null,
+      "prevCommit" : "null",
+      "numWrites" : 0,
+      "numDeletes" : 0,
+      "numUpdateWrites" : 0,
+      "numInserts" : 1,
+      "totalWriteBytes" : 0,
+      "totalWriteErrors" : 0,
+      "tempPath" : null,
+      "partitionPath" : null,
+      "totalLogRecords" : 0,
+      "totalLogFilesCompacted" : 0,
+      "totalLogSizeCompacted" : 0,
+      "totalUpdatedRecordsCompacted" : 0,
+      "totalLogBlocks" : 0,
+      "totalCorruptLogBlock" : 0,
+      "totalRollbackBlocks" : 0,
+      "fileSizeInBytes" : 0
+    } ],
+    "b" : [ {
+      "fileId" : "",
+      "path" : null,
+      "prevCommit" : "null",
+      "numWrites" : 0,
+      "numDeletes" : 0,
+      "numUpdateWrites" : 0,
+      "numInserts" : 1,
+      "totalWriteBytes" : 0,
+      "totalWriteErrors" : 0,
+      "tempPath" : null,
+      "partitionPath" : null,
+      "totalLogRecords" : 0,
+      "totalLogFilesCompacted" : 0,
+      "totalLogSizeCompacted" : 0,
+      "totalUpdatedRecordsCompacted" : 0,
+      "totalLogBlocks" : 0,
+      "totalCorruptLogBlock" : 0,
+      "totalRollbackBlocks" : 0,
+      "fileSizeInBytes" : 0
+    } ]
+  },
+  "compacted" : false,
+  "extraMetadata" : { },
+  "operationType" : "UPSERT",
+  "totalLogFilesCompacted" : 0,
+  "totalLogFilesSize" : 0,
+  "totalLogRecordsCompacted" : 0,
+  "totalCompactedRecordsUpdated" : 0,
+  "fileIdAndRelativePaths" : {
+    "" : null
+  },
+  "totalRecordsDeleted" : 0,
+  "totalCreateTime" : 0,
+  "totalUpsertTime" : 0,
+  "totalScanTime" : 0
+}
