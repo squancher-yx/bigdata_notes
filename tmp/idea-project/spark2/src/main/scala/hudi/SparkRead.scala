@@ -11,8 +11,7 @@ object SparkRead {
       .master("local[*]")
       .getOrCreate()
     ss.read.format("org.apache.hudi")
-      .load("file:///D:/bak/bigdata_notes/tmp/idea-project/spark2/src/main/hudi_data/*/*").show()
-
+      .load("file:///D:/bak/bigdata_notes/tmp/idea-project/spark2/src/main/hudi_data/*").rdd.foreach(f=>{println(f)})
   }
 
 }

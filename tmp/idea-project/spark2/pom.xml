@@ -46,6 +46,13 @@
 <!--            <version>0.7.0</version>-->
 <!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/org.apache.hudi/hudi-spark-bundle -->
+<!--        引入java-client spark无法写入-->
+        <dependency>
+            <groupId>org.apache.hudi</groupId>
+            <artifactId>hudi-java-client</artifactId>
+            <version>0.7.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.hudi</groupId>
             <artifactId>hudi-spark-bundle_2.11</artifactId>

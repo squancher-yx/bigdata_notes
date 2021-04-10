@@ -1,14 +1,14 @@
 {
   "partitionToWriteStats" : {
     "a" : [ {
-      "fileId" : "06da1f15-47a6-47a6-a3ce-f90b0f099f9b-0",
-      "path" : "a/06da1f15-47a6-47a6-a3ce-f90b0f099f9b-0_0-21-24_20210406195311.parquet",
-      "prevCommit" : "null",
-      "numWrites" : 1,
+      "fileId" : "13afac25-5753-4acf-a3bc-8fa47f8222b3-0",
+      "path" : "a/13afac25-5753-4acf-a3bc-8fa47f8222b3-0_0-371-576_20210408165928.parquet",
+      "prevCommit" : "20210408165926",
+      "numWrites" : 24,
       "numDeletes" : 0,
       "numUpdateWrites" : 0,
       "numInserts" : 1,
-      "totalWriteBytes" : 434510,
+      "totalWriteBytes" : 434682,
       "totalWriteErrors" : 0,
       "tempPath" : null,
       "partitionPath" : "a",
@@ -19,17 +19,17 @@
       "totalLogBlocks" : 0,
       "totalCorruptLogBlock" : 0,
       "totalRollbackBlocks" : 0,
-      "fileSizeInBytes" : 434510
+      "fileSizeInBytes" : 434682
     } ],
     "b" : [ {
-      "fileId" : "b4078c78-0d6f-49a7-8ef2-d9646958fc53-0",
-      "path" : "b/b4078c78-0d6f-49a7-8ef2-d9646958fc53-0_1-21-25_20210406195311.parquet",
-      "prevCommit" : "null",
-      "numWrites" : 1,
+      "fileId" : "1cdbbeb9-3d06-427f-af50-41af14591919-0",
+      "path" : "b/1cdbbeb9-3d06-427f-af50-41af14591919-0_1-371-577_20210408165928.parquet",
+      "prevCommit" : "20210408165926",
+      "numWrites" : 24,
       "numDeletes" : 0,
       "numUpdateWrites" : 0,
       "numInserts" : 1,
-      "totalWriteBytes" : 434512,
+      "totalWriteBytes" : 434686,
       "totalWriteErrors" : 0,
       "tempPath" : null,
       "partitionPath" : "b",
@@ -40,7 +40,7 @@
       "totalLogBlocks" : 0,
       "totalCorruptLogBlock" : 0,
       "totalRollbackBlocks" : 0,
-      "fileSizeInBytes" : 434512
+      "fileSizeInBytes" : 434686
     } ]
   },
   "compacted" : false,
@@ -48,16 +48,16 @@
     "schema" : "{\"type\":\"record\",\"name\":\"test_record\",\"namespace\":\"hoodie.test\",\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":[\"string\",\"null\"]},{\"name\":\"ts\",\"type\":\"int\"},{\"name\":\"path\",\"type\":[\"string\",\"null\"]}]}"
   },
   "operationType" : "UPSERT",
+  "totalScanTime" : 0,
+  "totalLogRecordsCompacted" : 0,
   "totalLogFilesCompacted" : 0,
   "totalLogFilesSize" : 0,
-  "totalLogRecordsCompacted" : 0,
-  "totalCompactedRecordsUpdated" : 0,
-  "fileIdAndRelativePaths" : {
-    "b4078c78-0d6f-49a7-8ef2-d9646958fc53-0" : "b/b4078c78-0d6f-49a7-8ef2-d9646958fc53-0_1-21-25_20210406195311.parquet",
-    "06da1f15-47a6-47a6-a3ce-f90b0f099f9b-0" : "a/06da1f15-47a6-47a6-a3ce-f90b0f099f9b-0_0-21-24_20210406195311.parquet"
-  },
+  "totalUpsertTime" : 103,
   "totalRecordsDeleted" : 0,
-  "totalCreateTime" : 990,
-  "totalUpsertTime" : 0,
-  "totalScanTime" : 0
+  "fileIdAndRelativePaths" : {
+    "1cdbbeb9-3d06-427f-af50-41af14591919-0" : "b/1cdbbeb9-3d06-427f-af50-41af14591919-0_1-371-577_20210408165928.parquet",
+    "13afac25-5753-4acf-a3bc-8fa47f8222b3-0" : "a/13afac25-5753-4acf-a3bc-8fa47f8222b3-0_0-371-576_20210408165928.parquet"
+  },
+  "totalCompactedRecordsUpdated" : 0,
+  "totalCreateTime" : 0
 }

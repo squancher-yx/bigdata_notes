@@ -1,13 +1,13 @@
 {
   "partitionToWriteStats" : {
-    "a" : [ {
+    "2020/01/02" : [ {
       "fileId" : "",
       "path" : null,
       "prevCommit" : "null",
       "numWrites" : 0,
       "numDeletes" : 0,
       "numUpdateWrites" : 0,
-      "numInserts" : 1,
+      "numInserts" : 5,
       "totalWriteBytes" : 0,
       "totalWriteErrors" : 0,
       "tempPath" : null,
@@ -21,7 +21,28 @@
       "totalRollbackBlocks" : 0,
       "fileSizeInBytes" : 0
     } ],
-    "b" : [ {
+    "2020/01/01" : [ {
+      "fileId" : "",
+      "path" : null,
+      "prevCommit" : "null",
+      "numWrites" : 0,
+      "numDeletes" : 0,
+      "numUpdateWrites" : 0,
+      "numInserts" : 4,
+      "totalWriteBytes" : 0,
+      "totalWriteErrors" : 0,
+      "tempPath" : null,
+      "partitionPath" : null,
+      "totalLogRecords" : 0,
+      "totalLogFilesCompacted" : 0,
+      "totalLogSizeCompacted" : 0,
+      "totalUpdatedRecordsCompacted" : 0,
+      "totalLogBlocks" : 0,
+      "totalCorruptLogBlock" : 0,
+      "totalRollbackBlocks" : 0,
+      "fileSizeInBytes" : 0
+    } ],
+    "2020/01/03" : [ {
       "fileId" : "",
       "path" : null,
       "prevCommit" : "null",
@@ -45,16 +66,16 @@
   },
   "compacted" : false,
   "extraMetadata" : { },
-  "operationType" : "UPSERT",
-  "totalLogFilesCompacted" : 0,
+  "operationType" : "INSERT",
+  "totalCreateTime" : 0,
+  "totalUpsertTime" : 0,
   "totalLogFilesSize" : 0,
-  "totalLogRecordsCompacted" : 0,
+  "totalLogFilesCompacted" : 0,
   "totalCompactedRecordsUpdated" : 0,
+  "totalLogRecordsCompacted" : 0,
+  "totalRecordsDeleted" : 0,
   "fileIdAndRelativePaths" : {
     "" : null
   },
-  "totalRecordsDeleted" : 0,
-  "totalCreateTime" : 0,
-  "totalUpsertTime" : 0,
   "totalScanTime" : 0
 }

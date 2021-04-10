@@ -11,7 +11,67 @@ import java.util.*;
 public class ParseSQL {
     public static void main(String[] args) throws ParseException {
         ParseDriver pd = new ParseDriver();
-        ASTNode ast = pd.parse("SELECT A.C as CC,T FROM ( SELECT * FROM B ) AS A");
+        ASTNode ast = pd.parse("select\n" +
+                "    count(distinct uid) as device_brand_device_device_model_login_platform_new_uid_dcnt_1day,\n" +
+                "    nvl(day_first_device_brand, 'all') as day_first_device_brand,\n" +
+                "    nvl(day_first_device_model, 'all') as day_first_device_model,\n" +
+                "    nvl(day_first_login_platform, 'all') as day_first_login_platform,\n" +
+                "    nvl(day_first_device, 'all') as day_first_device,\n" +
+                "    gate\n" +
+                "from\n" +
+                "    (\n" +
+                "        select\n" +
+                "            nvl(dt1.day_first_device, 'unknown') as day_first_device,\n" +
+                "            nvl(dt1.day_first_device_brand, 'unknown') as day_first_device_brand,\n" +
+                "            nvl(dt1.day_first_login_platform, 'unknown') as day_first_login_platform,\n" +
+                "            nvl(dt1.day_first_device_model, 'unknown') as day_first_device_model,\n" +
+                "            ft.uid as uid,\n" +
+                "            ft.gate as gate\n" +
+                "        from\n" +
+                "            (\n" +
+                "                select\n" +
+                "                    distinct uid,\n" +
+                "                    gate\n" +
+                "                from\n" +
+                "                    db_datawarehouse_game.dwd_game_new_user_incr_day\n" +
+                "                where\n" +
+                "                    pdate = 123\n" +
+                "            ) as ft\n" +
+                "            left join (\n" +
+                "                select\n" +
+                "                    day_first_device,\n" +
+                "                    day_first_device_model,\n" +
+                "                    day_first_login_platform,\n" +
+                "                    day_first_device_brand,\n" +
+                "                    uid,\n" +
+                "                    gate\n" +
+                "                from\n" +
+                "                    db_datawarehouse_game.dim_firstlogin_lastlogout_user_info_incr_day\n" +
+                "                where\n" +
+                "                    pdate = 123\n" +
+                "            ) as dt1 on ft.uid = dt1.uid\n" +
+                "            and ft.gate = dt1.gate\n" +
+                "    ) rt\n" +
+                "group by\n" +
+                "    day_first_device_brand,\n" +
+                "    day_first_device_model,\n" +
+                "    day_first_login_platform,\n" +
+                "    day_first_device,\n" +
+                "    gate grouping sets(\n" +
+                "        (\n" +
+                "            gate,\n" +
+                "            day_first_device_brand,\n" +
+                "            day_first_device,\n" +
+                "            day_first_device_model\n" +
+                "        ),\n" +
+                "        (\n" +
+                "            day_first_login_platform,\n" +
+                "            gate,\n" +
+                "            day_first_device_brand,\n" +
+                "            day_first_device,\n" +
+                "            day_first_device_model\n" +
+                "        )\n" +
+                "    )");
 //        System.out.println(ast.getChild(0).getChild(0));
 //        System.out.println(ast.getChild(0).getChild(1));
 //        parseChild(ast);

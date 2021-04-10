@@ -12,7 +12,7 @@ public class SortByBits {
 
 }
 
-class Solution {
+class Solution33 {
     public int[] sortByBits(int[] arr) {
         List<Integer> list = new ArrayList<Integer>();
         for (int x : arr) {

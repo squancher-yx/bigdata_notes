@@ -4,6 +4,7 @@ import org.apache.hudi.DataSourceWriteOptions
 import org.apache.hudi.config.HoodieWriteConfig
 import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.apache.hudi.QuickstartUtils._
+
 import scala.collection.JavaConversions._
 import org.apache.spark.sql.SaveMode._
 import org.apache.hudi.DataSourceReadOptions._
@@ -21,15 +22,23 @@ object SparkToHudi {
       .getOrCreate()
     import ss.implicits._
 
-    val source = ss.createDataset(List((1,"qq",1,"a"),(2,"ww",5,"b"))).toDF("id","name","ts","path")
-    source.write.format("hudi")
-      .option(PRECOMBINE_FIELD_OPT_KEY, "ts")
-      .options(getQuickstartWriteConfigs)
-      .option(RECORDKEY_FIELD_OPT_KEY, "id")
-      .option(TABLE_NAME, "test")
-      .option(PARTITIONPATH_FIELD_OPT_KEY, "path")
-      .mode(Overwrite)
-      .save("D:\\bak\\bigdata_notes\\tmp\\idea-project\\spark2\\src\\main\\hudi_data")
+    for(i <- 0 until 100){
+      val source = ss.createDataset(List((i,"qq",1,"a"),(i+1,"ww",5,"b"))).toDF("id","name","tts","path")
+      source.write.format("hudi")
+        .option(PRECOMBINE_FIELD_OPT_KEY, "ts")
+        .options(getQuickstartWriteConfigs)
+        .option(RECORDKEY_FIELD_OPT_KEY, "id")
+        .option(TABLE_NAME, "test")
+        .option(PARTITIONPATH_FIELD_OPT_KEY, "path")
+        .option("hoodie.index.type", "INMEMORY")
+//        .option("hoodie.keep.max.commits", "20")
+//        .option("hoodie.keep.min.commits", "11")
+//        .option("hoodie.cleaner.commits.retained", "2")
+        .mode(Append)
+        .save("D:\\bak\\bigdata_notes\\tmp\\idea-project\\spark2\\src\\main\\hudi_data")
+      println("done:" + i)
+    }
+
 
 //    val tableName = "hudi_trips_cow"
 //    val basePath = "D:\\bak\\bigdata_notes\\tmp\\idea-project\\spark2\\src\\main\\hudi_data"
