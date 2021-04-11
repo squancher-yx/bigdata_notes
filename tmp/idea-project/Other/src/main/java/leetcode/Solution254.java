@@ -23,24 +23,24 @@ class Solution111 {
     }
 
     public void helper(List<List<Integer>> result, List<Integer> item, int n, int start){
-        if (n <= 1) {
-            if (item.size() > 1) {
-                result.add(new ArrayList<Integer>(item));
-            }
-            return;
-        }
 
-        for (int i = start; i * i <= n; ++i) {
-            if (n % i == 0) {
+
+        for (int i = start; i  <= sqrt(n); ++i) {
+            if (n % i != 0){
+                continue;
+            }
+//            if (n % i == 0) {
                 item.add(i);
                 helper(result, item, n/i, i);
                 item.remove(item.size()-1);
-            }
+//            }
         }
 
-        int i = n;
-        item.add(i);
-        helper(result, item, 1, i);
+        item.add(n);
+        //去除本身
+        if (item.size() > 1) {
+            result.add(new ArrayList<Integer>(item));
+        }
         item.remove(item.size()-1);
     }
 }
@@ -48,18 +48,24 @@ class Solution111 {
 
 class Solution222 {
     public List<List<Integer>> getFactors(int n) {
-        List<List<Integer>> res;
-        helper(n, 2, {}, res);
+        List<List<Integer>> res =  new ArrayList<List<Integer>>();
+        helper(n, 2, new ArrayList<Integer>(), res);
         return res;
     }
     void helper(int n, int start, List<Integer> out, List<List<Integer>> res) {
-        for (int i = start; i <= sqrt(n); ++i) {
-            if (n % i != 0) continue;
-            List<Integer> new_out = out;
-            new_out.push_back(i);
-            helper(n / i, i, new_out, res);
-            new_out.push_back(n / i);
-            res.push_back(new_out);
+
+        for (int i = start; i *i<= n; ++i) {
+            if (n % i != 0){
+                continue;
+            }
+            out.add(i);
+
+            out.add(n/i);
+            res.add(new ArrayList<Integer>(out));
+            out.remove(out.size()-1);
+
+            helper(n / i, i, out, res);
+            out.remove(out.size()-1);
         }
     }
-};
+}
