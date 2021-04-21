@@ -15,20 +15,21 @@ import org.apache.flink.util.OutputTag;
 public class WaterMarkTest {
     public static void main(String[] args) {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        DataStreamSource<String> ds = env.socketTextStream("127.0.0.1",8888);
+        DataStreamSource<String> ds = env.socketTextStream("127.0.0.1", 8888);
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
         //onPeriodicEmit 发送间隔
         env.getConfig().setAutoWatermarkInterval(100000);
         //侧输出
-        OutputTag<String> output = new OutputTag<String>("test"){};
+        OutputTag<String> output = new OutputTag<String>("test") {
+        };
         DataStream<String> tmp = ds.assignTimestampsAndWatermarks(((WatermarkStrategy<String>) context -> new WatermarkGenerator<String>() {
             private long watermark = 0;
             private long delay = 0;
 
             @Override
             public void onEvent(String s, long l, WatermarkOutput watermarkOutput) {
-                watermark = Math.max(watermark,Long.parseLong(s));
+                watermark = Math.max(watermark, Long.parseLong(s));
             }
 
             //间隔发送
@@ -41,7 +42,7 @@ public class WaterMarkTest {
         SingleOutputStreamOperator<String> tmp2 = tmp.windowAll(TumblingEventTimeWindows.of(Time.seconds(10)))
                 .sideOutputLateData(output)
                 .apply((AllWindowFunction<String, String, TimeWindow>) (timeWindow, iterable, collector) -> {
-                    for (String value:iterable) {
+                    for (String value : iterable) {
                         collector.collect(value);
                     }
                 });
