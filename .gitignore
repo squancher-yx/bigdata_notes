@@ -8,6 +8,7 @@
 .*.md.html
 .DS_Store
 .classpath
+.class
 .factorypath
 .gradle
 .idea

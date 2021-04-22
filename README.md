@@ -20,6 +20,8 @@
       <th><img width="50px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/sqoop.png"></th>
       <th><img width="50px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/azkaban.png"></th>
       <th><img width="50px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/scala.jpg"></th>
+	  <th><img width="50px" src=""></th>
+	  <th><img width="50px" src=""></th>
     </tr>
     <tr>
       <td align="center"><a href="#一hadoop">Hadoop</a></td>
@@ -34,15 +36,29 @@
       <td align="center"><a href="#十sqoop">Sqoop</a></td>
       <td align="center"><a href="#十一azkaban">Azkaban</a></td>
       <td align="center"><a href="#十二scala">Scala</a></td>
+	  <td align="center"><a href="#十三kudu">Kudu</a></td>
+	  <td align="center"><a href="#十四hudi">Hudi</a></td>
     </tr>
-  </table>
+</table>
+<br/>
 <br/>
 
+**其它**
 
+<table>
+	<tr>
+		<th><img width="50px" src=""></th>
+		<th><img width="50px" src=""></th>
+	</tr>
+	<tr>
+		<td align="center"><a href="#十五MySQL">MySQL</a></td>
+		<td align="center"><a href="#十六Linux">Linux</a></td>
+	</tr>
+</table>
 
 <br/>
 
-## :black_nib: 前  言
+## 前  言
 
 1. [大数据学习路线](notes/大数据学习路线.md)
 2. [大数据技术栈思维导图](notes/大数据技术栈思维导图.md)        
@@ -152,6 +168,7 @@
 3. [Zookeeper 常用 Shell 命令](notes/zookeeper/Zookeeper常用Shell命令.md)
 4. [Zookeeper Java 客户端 —— Apache Curator](notes/zookeeper/Zookeeper_Java客户端Curator.md)
 5. [Zookeeper  ACL 权限控制](notes/zookeeper/Zookeeper_ACL权限控制.md)
+6. [Zookeeper  选取机制](notes/zookeeper/Zookeeper选举机制.md)
 
 ## 九、Flume
 
@@ -187,14 +204,37 @@
 12. [类型参数](notes/scala/Scala类型参数.md)
 13. [隐式转换和隐式参数](notes/scala/Scala隐式转换和隐式参数.md)
 
-## 十三、公共内容
+## 十三、kudu
+
+1. [官方文档](https://kudu.apache.org/docs/developing.html)
+
+
+## 十四、hudi
+
+1. [占位](notes/hudi/tmp.md)
+
+## 十五、MySQL
+
+1. [MySQL 导出](notes/mysql/Mysql_dump.md)
+2. [MySQL 索引](notes/mysql/Mysql_索引.md)
+3. [基本操作语句](notes/mysql/Mysql_DML_DDL_DCL.md)
+4. [常用函数](notes/mysql/Mysql常用函数.md)
+
+## 十五、Linux
+
+1. [sed](notes/linux/Linux_sed.md)
+2. [多进程并发度控制](notes/linux/多进程并发度控制.md)
+
+## ??、公共内容
 
 1. [大数据应用常用打包方式](notes/大数据应用常用打包方式.md)
 
 <br>
 
-## :bookmark_tabs: 后  记
+## 后  记
 
 [资料分享与开发工具推荐](notes/资料分享与工具推荐.md)
 
+fork自heibaiying，基础上做增加和修改   
+未整理的资料位于tmp目录，主要为idea工程及官方文档
 <br>
