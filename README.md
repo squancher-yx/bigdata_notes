@@ -220,7 +220,7 @@
 3. [基本操作语句](notes/mysql/Mysql_DML_DDL_DCL.md)
 4. [常用函数](notes/mysql/Mysql常用函数.md)
 
-## 十五、Linux
+## 十六、Linux
 
 1. [sed](notes/linux/Linux_sed.md)
 2. [多进程并发度控制](notes/linux/多进程并发度控制.md)
