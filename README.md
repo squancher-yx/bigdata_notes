@@ -152,6 +152,7 @@
 9. [HBase 容灾与备份](notes/hbase/Hbase容灾与备份.md)
 10. [HBase的 SQL 中间层 —— Phoenix](notes/hbase/Hbase的SQL中间层_Phoenix.md)
 11. [Spring/Spring Boot 整合 Mybatis + Phoenix](notes/hbase/Spring+Mybtais+Phoenix整合.md)
+12. [bulk load](notes/hbase/bulk_load.md)
 
 ## 七、Kafka
 

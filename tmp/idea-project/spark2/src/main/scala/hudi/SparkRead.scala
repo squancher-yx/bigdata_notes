@@ -1,7 +1,7 @@
 package hudi
 
 import org.apache.spark.sql.SparkSession
-
+import org.apache.hadoop.hbase.spark.HBaseRDDFunctions._
 
 object SparkRead {
   def main(args: Array[String]): Unit = {
