@@ -561,7 +561,6 @@ public class HBaseUtils {
             } else {
                 return null;
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

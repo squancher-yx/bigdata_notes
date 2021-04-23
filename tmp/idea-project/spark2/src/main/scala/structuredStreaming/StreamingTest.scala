@@ -12,6 +12,8 @@ object StreamingTest {
       .readStream
       .text("D:\\bak\\bigdata_notes\\tmp\\idea-project\\spark2\\src\\main\\resources\\")
       .as[String].flatMap(_.split(" ")).map(T1(_,1)).toDF()
+
+
     val tmp = source.writeStream.outputMode("append")
       .format("console")
       .trigger(ProcessingTime("10 seconds"))

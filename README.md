@@ -207,7 +207,7 @@
 ## 十三、kudu
 
 1. [官方文档](https://kudu.apache.org/docs/developing.html)
-
+2. [JAVA API(notes/kudu/kudu_java_API.md)
 
 ## 十四、hudi
 
@@ -224,6 +224,7 @@
 
 1. [sed](notes/linux/Linux_sed.md)
 2. [多进程并发度控制](notes/linux/多进程并发度控制.md)
+3. [wget克隆网页](notes/linux/wget.md)
 
 ## ??、公共内容
 
