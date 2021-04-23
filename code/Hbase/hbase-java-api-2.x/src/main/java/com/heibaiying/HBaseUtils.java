@@ -140,7 +140,7 @@ public class HBaseUtils {
     }
 
     /**
-     * 根据rowKey获取指定行的所有版本所有列数据
+     * 根据rowKey获取指定列的所有版本数据
      *
      * @param tableName    表名
      * @param rowKey       唯一标识
@@ -151,7 +151,8 @@ public class HBaseUtils {
         try {
             Table table = connection.getTable(TableName.valueOf(tableName));
             Get get = new Get(Bytes.toBytes(rowKey));
-            get.setMaxVersions();
+			get.addColumn(Bytes.toBytes(columnFamily), Bytes.toBytes(qualifier));
+			get.setMaxVersions();
             Result result = table.get(get);
             List<Cell> cells = result.getColumnCells(Bytes.toBytes(columnFamily), Bytes.toBytes(qualifier));
             return cells;
@@ -194,6 +195,8 @@ public class HBaseUtils {
      *
      * @param tableName 表名
      */
+	 
+	//可使用setCaching和setBatch提升性能
     public static ResultScanner getScanner(String tableName) {
         try {
             Table table = connection.getTable(TableName.valueOf(tableName));

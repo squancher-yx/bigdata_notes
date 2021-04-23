@@ -11,11 +11,11 @@
 
 ## 一、简述
 
-截至到目前 (2019.04)，HBase 有两个主要的版本，分别是 1.x 和 2.x ，两个版本的 Java API 有所不同，1.x 中某些方法在 2.x 中被标识为 `@deprecated` 过时。所以下面关于 API 的样例，我会分别给出 1.x 和 2.x 两个版本。完整的代码见本仓库：
+**完整的代码见本仓库（较本页面有所调整）**：
 
->+ [Java API 1.x Examples](https://github.com/heibaiying/BigData-Notes/tree/master/code/Hbase/hbase-java-api-1.x)
+>+ [Java API 1.x Examples](https://github.com/squancher-yx/bigdata_notes/tree/master/code/Hbase/hbase-java-api-1.x)
 >
->+ [Java API 2.x Examples](https://github.com/heibaiying/BigData-Notes/tree/master/code/Hbase/hbase-java-api-2.x)
+>+ [Java API 2.x Examples](https://github.com/squancher-yx/bigdata_notes/tree/master/code/Hbase/hbase-java-api-2.x)
 
 同时你使用的客户端的版本必须与服务端版本保持一致，如果用 2.x 版本的客户端代码去连接 1.x 版本的服务端，会抛出 `NoSuchColumnFamilyException` 等异常。
 
