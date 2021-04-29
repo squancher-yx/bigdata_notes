@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class FunTest {
     public static void main(String[] args) throws InterruptedException {
-        System.out.println(Thread.currentThread().isDaemon());
+        System.out.println(Thread.currentThread());
 
     }
 }
