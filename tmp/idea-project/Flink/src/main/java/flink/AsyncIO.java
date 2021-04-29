@@ -19,6 +19,7 @@ public class AsyncIO {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setParallelism(1);
         DataStream<String> ds = env.socketTextStream("127.0.0.1", 8888).setParallelism(1);
+        // capacity 为最大异步时等待队列
         AsyncDataStream.unorderedWait(ds, new MyAsyncFunction(), 100000, TimeUnit.MILLISECONDS, 2)
                 .print();
         env.execute("test");
@@ -41,6 +42,7 @@ class MyAsyncFunction extends RichAsyncFunction<String, String> {
     public void asyncInvoke(String s, ResultFuture<String> resultFuture) throws Exception {
         System.out.println(Thread.currentThread().getName());
 
+//1. CompletableFuture.supplyAsync 相当于新启一个线程执行，然后回调。client 不支持并发的时候无效(TestClient 去掉 synchronized 可行)。
         CompletableFuture.supplyAsync(new Supplier<String>() {
             @Override
             public String get() {
@@ -53,6 +55,7 @@ class MyAsyncFunction extends RichAsyncFunction<String, String> {
 
 //        resultFuture.complete(Collections.singleton(client.get(s)));
 
+//2.直接多线程模拟并发，可行
 //        new Thread(
 //                () -> {
 //                    try {
@@ -65,6 +68,7 @@ class MyAsyncFunction extends RichAsyncFunction<String, String> {
 //                    }
 //                }
 //        ).start();
+
         System.out.println("end:"+Thread.currentThread().getName());
 
     }

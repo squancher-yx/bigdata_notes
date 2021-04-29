@@ -1,10 +1,10 @@
 package thread;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+/**
+ *  等待当前线程完成，详见源码 while(isAlive())
+ */
 
-public class DaemonTest {
+public class JoinTest {
     public static void main(String[] args) throws InterruptedException {
         TestRunnable ttt = new TestRunnable();
         Thread thread = new Thread(ttt);
@@ -18,7 +18,7 @@ public class DaemonTest {
 class TestRunnable implements Runnable {
     public void run(){
         try {
-            Thread.sleep(1000); // 守护线程阻塞1秒后运行
+            Thread.sleep(1000);//等待完成
             System.out.println("22222");
         } catch(InterruptedException e1) {
             e1.printStackTrace();

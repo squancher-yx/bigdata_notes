@@ -12,14 +12,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class FunTest {
     public static void main(String[] args) throws InterruptedException {
-        Lock lock = new ReentrantLock();
-        Condition condition1 = lock.newCondition();
-        Lock lock2 = new ReentrantLock();
-        Condition condition2 = lock2.newCondition();
-        lock.lock();
-        System.out.println("lock 1");
-        lock2.lock();
-        condition2.await();
-        lock.unlock();
+        System.out.println(Thread.currentThread().isDaemon());
+
     }
 }
+
