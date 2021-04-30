@@ -71,11 +71,38 @@ import java.util.concurrent.Executors;
  *      （2）FutureTask 实现接口 RunnableFuture（其中 RunnableFuture<V> extends Runnable, Future<V>），实现了 run、get等方法，然后 run 方法中调用（1）里面封装的的 callable 的 call。
  *  2）submit(Runnable task, T result)，通过submit(Runnable task, T result)传入一个载体，通过这个载体获取返回值。和 submit(Runnable task)类似
  *  3）submit(Callable<T> task)，同上，但不封装 task 了。
+ *
+ *  停止线程池
+ *  shutdown
+ *  (1)线程池的状态变成SHUTDOWN状态，此时不能再往线程池中添加新的任务，否则会抛出RejectedExecutionException异常。
+ *  (2)线程池不会立刻退出，直到添加到线程池中的任务都已经处理完成，才会退出。
+ *  注意这个函数不会等待提交的任务执行完成，要想等待全部任务完成，可以调用：
+ *  shutdownNow
+ *  (1)线程池的状态立刻变成STOP状态，此时不能再往线程池中添加新的任务。
+ *  (2)终止等待执行的线程，并返回它们的列表；
+ *  (3)试图停止所有正在执行的线程，试图终止的方法是调用Thread.interrupt()，如果线程中没有sleep 、wait、Condition、定时锁等应用, interrupt()方法是无法中断当前的线程的。所以，ShutdownNow()并不代表线程池就一定立即就能退出，它可能必须要等待所有正在执行的任务都执行完成了才能退出。
+ *
+ * isShutDown：当调用shutdown()或shutdownNow()方法后返回为true。
+ * isTerminated：当调用shutdown()方法后，并且所有提交的任务完成后返回为true;
+ * isTerminated：当调用shutdownNow()方法后，成功停止后返回为true;
+ *
+ * cancel(boolean mayInterruptIfRunning)
+ * mayInterruptIfRunning = false 如果已经开始运行，则会等待结束，如果未开始运行，则不会运行。
+ * mayInterruptIfRunning = true 如果已经开始运行，会尝试使用 interrupt 中断，如果未开始运行，则不会运行。
+ * 实际调用了 interrupt()
+ *
+ * get() 获取结果时，如果运行过程中 cancel 了，抛异常，同时会一直阻塞。( @throws CancellationException if the computation was cancelled )
+ *
+ * interrupt()
+ * 仅设置中断状态。不能中断运行中线程，只能中断线程的阻塞，如 sleep，处理阻塞的异常后依然能继续运行。(所以线程池中的worker线程不会因为异常退出)
+ * 如果在调用 wait join sleep 等，会抛出异常中断，且中断状态将被清除。
+ * 详见 Thread 类。
  */
 public class ThreadPoolTest {
     public static void main(String[] args) {
-        ExecutorService tmp = Executors.newScheduledThreadPool(1);
+        ExecutorService tmp = Executors.newScheduledThreadPool(3);
         Executors.newFixedThreadPool(1);
+        Thread.currentThread().stop();
         Executors.newFixedThreadPool(1).submit(new Runnable() {
             @Override
             public void run() {

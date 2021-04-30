@@ -17,6 +17,11 @@ import java.util.function.*;
  * whenCompleteAsync (类似 thenAcceptAsync，但上一步异常也会执行)
  * handle (类似 whenComplete，有返回值，如果有异常可获取到异常)
  * handleAsync (类似 whenCompleteAsync，无返回值，如果有异常可获取到异常)
+ *
+ * cancel(boolean mayInterruptIfRunning)
+ * mayInterruptIfRunning = false 如果已经开始运行，则会等待结束，如果未开始运行，则不会运行。
+ * mayInterruptIfRunning = true 如果已经开始运行，会尝试使用 interrupt 中断，如果未开始运行，则不会运行。
+ *
  */
 
 public class CompletableFutureTest {
@@ -50,6 +55,7 @@ public class CompletableFutureTest {
                 return "get";
             }
         }, pool);
+
 
         // res 异常后不执行
 //        res.thenAcceptAsync(new Consumer<String>() {
