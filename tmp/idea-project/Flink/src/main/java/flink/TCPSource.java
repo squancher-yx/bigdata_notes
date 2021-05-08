@@ -21,7 +21,7 @@ public class TCPSource {
                 }
 
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println("connection closed, start new.");
             }
         }
     }

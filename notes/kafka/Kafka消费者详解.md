@@ -195,6 +195,7 @@ commitAsync(Map<TopicPartition, OffsetAndMetadata> offsets, OffsetCommitCallback
 需要注意的是，因为你可以订阅多个主题，所以 `offsets` 中必须要包含所有主题的每个分区的偏移量，示例代码如下：
 
 ```java
+
 try {
     while (true) {
         ConsumerRecords<String, String> records = consumer.poll(Duration.of(100, ChronoUnit.MILLIS));
@@ -202,6 +203,7 @@ try {
             System.out.println(record);
             /*记录每个主题的每个分区的偏移量*/
             TopicPartition topicPartition = new TopicPartition(record.topic(), record.partition());
+            /* The committed offset should always be the offset of the next message that your application will read. Thus, when calling commitSync(offsets) you should add one to the offset of the last message processed.*/
             OffsetAndMetadata offsetAndMetadata = new OffsetAndMetadata(record.offset()+1, "no metaData");
             /*TopicPartition 重写过 hashCode 和 equals 方法，所以能够保证同一主题和分区的实例不会被重复添加*/
             offsets.put(topicPartition, offsetAndMetadata);
@@ -212,6 +214,26 @@ try {
 } finally {
     consumer.close();
 }
+```
+
+```java
+//KafkaConsumer 源码中的示例更合理
+try {
+     while(running) {
+         ConsumerRecords<String, String> records = consumer.poll(Long.MAX_VALUE);
+         for (TopicPartition partition : records.partitions()) {
+             List<ConsumerRecord<String, String>> partitionRecords = records.records(partition);
+             for (ConsumerRecord<String, String> record : partitionRecords) {
+                 System.out.println(record.offset() + ": " + record.value());
+             }
+             long lastOffset = partitionRecords.get(partitionRecords.size() - 1).offset();
+             consumer.commitSync(Collections.singletonMap(partition, new OffsetAndMetadata(lastOffset + 1)));
+         }
+     }
+} finally {
+  consumer.close();
+}
+The committed offset should always be the offset of the next message that your application will read. Thus, when calling commitSync(offsets) you should add one to the offset of the last message processed.
 ```
 
 
@@ -329,7 +351,10 @@ for (PartitionInfo partition : partitionInfos) {
 
 // 为消费者指定分区
 consumer.assign(partitions);
-
+//为所有分区指定偏移量
+//for(TopicPartition seekTopic:partitions){
+//    consumer.seek(seekTopic,0L);
+//}
 
 while (true) {
     ConsumerRecords<Integer, String> records = consumer.poll(Duration.of(100, ChronoUnit.MILLIS));
@@ -341,6 +366,40 @@ while (true) {
 }
 ```
 
+
+## 八、从指定时间戳开始消费
+
+获取partition信息 -> 通过时间戳获取偏移量 -> 指定偏移量消费
+
+```java
+Map<TopicPartition, Long> map = new HashMap<>();
+List<PartitionInfo> flink_order = consumer.partitionsFor("flink_order");
+//从半小时前开始消费
+long fetchDataTime = new Date().getTime() - 1000 * 60 * 30;
+for (PartitionInfo par : flink_order) {
+    map.put(new TopicPartition("flink_order", par.partition()), fetchDataTime);
+}
+//offsetsForTimes:通过时间戳查找给定分区的偏移量。 每个分区返回的偏移量是最早的偏移量，其时间戳大于或等于相应分区中的给定时间戳记。
+Map<TopicPartition, OffsetAndTimestamp> parMap = consumer.offsetsForTimes(map);
+for (Map.Entry<TopicPartition, OffsetAndTimestamp> entry : parMap.entrySet()) {
+    TopicPartition key = entry.getKey();
+    OffsetAndTimestamp value = entry.getValue();
+    long offset = value.offset();
+    System.out.println(key.partition());
+    System.out.println(offset);
+    //根据消费里的timestamp确定offset
+    if (value != null) {
+        consumer.assign(Arrays.asList(key));
+        consumer.seek(key, offset);
+    }
+}
+while (true) {
+    ConsumerRecords<Integer, String> poll = consumer.poll(Duration.ofSeconds(100));
+    for (ConsumerRecord<Integer, String> record : poll) {
+        System.out.println(record.key() + record.value());
+    }
+}
+```
 
 
 ## 附录 : Kafka消费者可选属性
@@ -390,6 +449,3 @@ broker 返回给消费者数据的等待时间，默认是 500ms。
 
 1. Neha Narkhede, Gwen Shapira ,Todd Palino(著) , 薛命灯 (译) . Kafka 权威指南 . 人民邮电出版社 . 2017-12-26
 
-
-
-<div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/weixin-desc.png"/> </div>

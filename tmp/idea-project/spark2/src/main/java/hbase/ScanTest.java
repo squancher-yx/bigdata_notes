@@ -50,7 +50,7 @@ public class ScanTest {
             Table table = connection.getTable(TableName.valueOf(tableName));
             Get get = new Get(Bytes.toBytes(rowKey));
             get.addColumn(Bytes.toBytes(columnFamily), Bytes.toBytes(qualifier));
-            get.setMaxVersions();
+            get.setMaxVersions(1);
             Result result = table.get(get);
             List<Cell> cells = result.getColumnCells(Bytes.toBytes(columnFamily), Bytes.toBytes(qualifier));
             return cells;

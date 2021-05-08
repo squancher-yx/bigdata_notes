@@ -13,6 +13,22 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.hadoop</groupId>
+                <artifactId>hadoop-common</artifactId>
+                <version>2.7.4</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.6.7.1</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
     <dependencies>
 
         <!-- https://mvnrepository.com/artifact/com.twitter/parquet-hive-bundle -->
@@ -27,11 +43,11 @@
             <version>2.1.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-spark -->
-        <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase-spark</artifactId>
-            <version>2.1.0-cdh6.3.4</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.hbase</groupId>-->
+<!--            <artifactId>hbase-spark</artifactId>-->
+<!--            <version>2.1.0-cdh6.3.4</version>-->
+<!--        </dependency>-->
 
         <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.hudi/hudi-spark-client &ndash;&gt;-->
 <!--        <dependency>-->
