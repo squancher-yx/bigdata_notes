@@ -1,6 +1,16 @@
+import org.apache.spark.sql.SparkSession
+
 object FunTest {
   def main(args: Array[String]): Unit = {
-    "sdf sd2  sdfgdfg   qwe1".split(" +").foreach(println)
+    val spark = SparkSession.builder()
+      .master("local[*]")
+      .appName("test")
+      .getOrCreate()
+    val sc = spark.sparkContext
+    val conf =sc.hadoopConfiguration.iterator()
+    while(conf.hasNext){
+      println(conf.next())
+    }
   }
 
 }

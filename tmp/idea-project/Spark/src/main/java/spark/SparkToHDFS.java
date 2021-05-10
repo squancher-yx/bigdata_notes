@@ -21,23 +21,27 @@ public class SparkToHDFS {
         list.add("qq ee");
         list.add("qq rr");
         JavaRDD<String> rdd = sc.parallelize(list);
+        // 显示启用压缩，本地测试使用
+        // sc.hadoopConfiguration().set("io.compress","io.compression.codecs","org.apache.hadoop.io.compress.GzipCodec,org.apache.hadoop.io.compress.DefaultCodec,org.apache.hadoop.io.compress.BZip2Codec,com.hadoop.compression.lzo.LzoCodec,com.hadoop.compression.lzo.LzopCodec");
+        // 禁用生成_SUCCESS文件
+//        sc.hadoopConfiguration().set("mapreduce.fileoutputcommitter.marksuccessfuljobs", "false");
         rdd.distinct().mapToPair(new PairFunction<String, Object, Object>() {
             @Override
             public Tuple2<Object, Object> call(String s) throws Exception {
-                String[] line =s.split(" ",-1);
+                String[] line = s.split(" ", -1);
                 String key = line[0];
                 String value = line[1];
-                return new Tuple2<>(key,value);
+                return new Tuple2<>(key, value);
             }
             //需要lzo压缩类 saveAsHadoopFile("path",String.class,String.class,MyOutPutFormat.class,com.hadoop.compression.lzo.LzopCodec);
-        }).saveAsHadoopFile("path",String.class,String.class,MyOutPutFormat.class);
+        }).saveAsHadoopFile("path", String.class, String.class, MyOutPutFormat.class);
     }
 }
 
-class MyOutPutFormat extends MultipleTextOutputFormat<String,String>{
+class MyOutPutFormat extends MultipleTextOutputFormat<String, String> {
     @Override
     protected String generateFileNameForKeyValue(String key, String value, String name) {
 
-        return key+"/"+value+"/"+name;
+        return key + "/" + value + "/" + name;
     }
 }

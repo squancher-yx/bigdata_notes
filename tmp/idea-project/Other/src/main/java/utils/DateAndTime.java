@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
 
@@ -71,6 +72,49 @@ public class DateAndTime {
         DayOfWeek dayOfWeek = time.getDayOfWeek();
         System.out.println(dayOfWeek); //WEDNESDAY
         //LocalDate和LocalTime与LocalDateTime类似
+
+        //Calendar 类
+        //获取时间
+        // 使用默认时区和语言环境获得一个日历
+        Calendar cal = Calendar.getInstance();
+        // 赋值时年月日时分秒常用的6个值，注意月份下标从0开始，所以取月份要+1
+        System.out.println("年:" + cal.get(Calendar.YEAR));
+        System.out.println("月:" + (cal.get(Calendar.MONTH) + 1));
+        System.out.println("日:" + cal.get(Calendar.DAY_OF_MONTH));
+        System.out.println("时:" + cal.get(Calendar.HOUR_OF_DAY));
+        System.out.println("分:" + cal.get(Calendar.MINUTE));
+        System.out.println("秒:" + cal.get(Calendar.SECOND));
+        //设置时间
+        Calendar cal2 = Calendar.getInstance();
+        // 如果想设置为某个日期，可以一次设置年月日时分秒，由于月份下标从0开始赋值月份要-1
+        // cal.set(year, month, date, hourOfDay, minute, second);
+        cal2.set(2018, 1, 15, 23, 59, 59);
+        // 或者6个字段分别进行设置，由于月份下标从0开始赋值月份要-1
+        cal2.set(Calendar.YEAR, 2018);
+        cal2.set(Calendar.MONTH, Calendar.FEBRUARY);
+        cal2.set(Calendar.DAY_OF_MONTH, 15);
+        cal2.set(Calendar.HOUR_OF_DAY, 23);
+        cal2.set(Calendar.MINUTE, 59);
+        cal2.set(Calendar.SECOND, 59);
+        System.out.println(cal2.getTime());
+        //者用 Date 来初始化 Calendar 对象
+        cal2.setTime(new Date());
+
+        //时间计算
+        Calendar cal3 = Calendar.getInstance();
+        cal3.set(2018, 1, 15, 23, 59, 59);
+        System.out.println(cal.getTime());
+        cal3.add(Calendar.SECOND, 1);
+        cal.add(Calendar.YEAR, -1); // 年份减1
+        cal.add(Calendar.YEAR, +1); // 年份加1
+        cal.add(Calendar.MONTH, -1);// 月份减1
+        cal.add(Calendar.DATE, -1);// 日期减1
+        cal.set(Calendar.HOUR, 15);//设置时为  15点
+        cal.set(Calendar.MINUTE, 45);//设置分为 45
+        cal.set(Calendar.SECOND, 30);//设置 秒为30
+        System.out.println(cal3.getTime());
+
+
 
         //时间类与Date类的相互转化
         //Date与Instant的相互转化

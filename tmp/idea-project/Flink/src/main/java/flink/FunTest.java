@@ -28,7 +28,7 @@ public class FunTest {
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
-        consumer.offsetsForTimes().subscribe(Collections.singletonList(topic));
+        consumer.subscribe(Collections.singletonList(topic));
         try {
             while (true) {
                 ConsumerRecords<String, String> records = consumer.poll(Duration.of(100, ChronoUnit.MILLIS));

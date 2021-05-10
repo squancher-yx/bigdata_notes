@@ -161,6 +161,7 @@
 3. [Kafka 生产者详解](notes/kafka/Kafka生产者详解.md)
 4. [Kafka 消费者详解](notes/kafka/Kafka消费者详解.md)
 5. [深入理解 Kafka 副本机制](notes/kafka/Kafka深入理解分区副本机制.md)
+6. [Kafka Shell命令](notes/kafka/Kafka Shell命令.md)
 
 ## 八、Zookeeper
 
