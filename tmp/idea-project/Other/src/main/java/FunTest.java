@@ -18,11 +18,36 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class FunTest {
     public static void main(String[] args) throws Exception {
+        fun3(new class2() {
+            @Override
+            public void fun1() {
 
+            }
+        });
+    }
+    public static void fun3(class2 cc){
 
     }
 
+}
 
+abstract class class1{
+    void fun1() {
 
+    }
+
+    abstract void fun2();
+}
+
+interface class2{
+    void fun1();
+}
+
+class class3 implements class2 {
+
+    @Override
+    public void fun1() {
+
+    }
 }
 

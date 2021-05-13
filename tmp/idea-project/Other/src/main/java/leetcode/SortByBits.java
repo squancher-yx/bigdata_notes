@@ -22,6 +22,7 @@ class Solution33 {
         for (int i = 1; i <= 10000; ++i) {
             bit[i] = bit[i >> 1] + (i & 1);
         }
+        
         Collections.sort(list, new Comparator<Integer>() {
             public int compare(Integer x, Integer y) {
                 if (bit[x] != bit[y]) {

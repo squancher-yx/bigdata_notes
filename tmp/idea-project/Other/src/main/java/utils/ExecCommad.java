@@ -7,12 +7,12 @@ import java.util.concurrent.TimeUnit;
 
 public class ExecCommad {
     public static void main(String[] args) throws IOException {
-//        run("ping 127.0.0.1 -t");
-        String[] cmd = new String[3];
-        cmd[0] = "ping";
-        cmd[1] = "127.0.0.1";
-        cmd[2] = "-t";
-        run(cmd);
+        run("java -verss");
+//        String[] cmd = new String[3];
+//        cmd[0] = "ping";
+//        cmd[1] = "127.0.0.1";
+//        cmd[2] = "-t";
+//        run(cmd);
     }
 
     public static String run(String command) throws IOException {
@@ -22,13 +22,14 @@ public class ExecCommad {
         try {
             process = Runtime.getRuntime().exec(command);
 //            try {
-//                //等待命令执行完成，可能未完成。
+//                //等待命令执行，可能未完成。
 //                process.waitFor(10, TimeUnit.SECONDS);
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
 //            }
             InputStream is = process.getInputStream();
-            input = new Scanner(is);
+            InputStream err = process.getErrorStream();
+            input = new Scanner(err);
             while (input.hasNextLine()) {
                 String tmp = input.nextLine();
                 result += tmp + "\n";
@@ -55,7 +56,7 @@ public class ExecCommad {
         try {
             process = Runtime.getRuntime().exec(command);
 //            try {
-//                //等待命令执行完成
+//                //等待命令执行
 //                process.waitFor(10, TimeUnit.SECONDS);
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
