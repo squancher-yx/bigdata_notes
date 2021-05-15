@@ -34,6 +34,7 @@ object StreamingTest {
         , $"key"
       ).count()
 
+    source.
 
     val tmp = source.repartition(1).writeStream.outputMode("update")
       .foreach(new ForeachWriter[Row] {
@@ -54,6 +55,7 @@ object StreamingTest {
       //      .format("console")
       .trigger(ProcessingTime("10 seconds"))
       .start()
+
 
     tmp.awaitTermination()
   }

@@ -8,6 +8,7 @@ public class ProcessSignal {
         TestSignal handler = new TestSignal();
         //仅支持某些信号
         //Signal already used by VM or OS: SIGQUIT
+        //注册信号
         Signal.handle(new Signal("HUP"), handler);//kill -1
         Signal.handle(new Signal("INT"), handler);//kill -2
         Signal.handle(new Signal("ABRT"), handler);
