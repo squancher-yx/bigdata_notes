@@ -49,6 +49,10 @@
 +  **consumer.subscribe(Collection\<String> topics)**  ：指明需要订阅的主题的集合；
 + **consumer.subscribe(Pattern pattern)**  ：使用正则来匹配需要订阅的集合。
 
+两种模式：
++ 自动subscribe
++ 手动assign
+
 最后只需要通过轮询 API(`poll`) 向服务器定时请求数据。一旦消费者订阅了主题，轮询就会处理所有的细节，包括群组协调、分区再均衡、发送心跳和获取数据，这使得开发者只需要关注从分区返回的数据，然后进行业务处理。 示例如下：
 
 ```scala

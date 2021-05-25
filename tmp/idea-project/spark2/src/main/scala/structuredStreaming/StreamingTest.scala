@@ -3,11 +3,15 @@ package structuredStreaming
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 
+import org.apache.spark.TaskContext
+import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.functions.window
-import org.apache.spark.sql.{ForeachWriter, Row, SparkSession, functions}
+import org.apache.spark.sql.{DataFrame, Dataset, ForeachWriter, Row, SparkSession, functions}
 import org.apache.spark.sql.streaming.Trigger.ProcessingTime
 //如果想要使用更多的内置函数，请引入：
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.functions
+
 
 object StreamingTest {
   def main(args: Array[String]): Unit = {
@@ -15,8 +19,10 @@ object StreamingTest {
       .getOrCreate()
     import spark.implicits._
 
+
     var sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     //println(sdf.parse("2018-12-01 12:00:02").getTime)
+
 
     val source = spark.readStream
       .format("socket")
@@ -28,15 +34,38 @@ object StreamingTest {
         val line = row.split(",")
         (new Timestamp(sdf.parse(line(0)).getTime), line(1))
       }).toDF("ts", "key")
-      .withWatermark("ts", "100 seconds")
+      .withWatermark("ts", "10 seconds")
       .groupBy(
-        window($"ts", "30 seconds", "30 seconds")
+        window($"ts", "30 seconds")
         , $"key"
       ).count()
 
-    source.
+    foreachBatchOut(source)
 
-    val tmp = source.repartition(1).writeStream.outputMode("update")
+  }
+
+  def foreachBatchOut(source: DataFrame): Unit = {
+    val tmp = source
+      .repartition(3)
+      .writeStream
+      .outputMode("append")
+      .foreachBatch {
+        (batchDF: DataFrame, batchId: Long) =>
+          println("batchID:" + batchId)
+          batchDF.repartition(3).foreach { f =>
+            println(Thread.currentThread().getName+"    "+f+"    "+ TaskContext.getPartitionId())
+//            println(f)
+          }
+          println("batchID:" + batchId)
+      }
+            .trigger(ProcessingTime("20 seconds"))
+      .start()
+    tmp.awaitTermination()
+  }
+
+
+  def foreachOut(source: DataFrame): Unit = {
+    val tmp = source.repartition(1).writeStream.outputMode("append")
       .foreach(new ForeachWriter[Row] {
         override def open(partitionId: Long, epochId: Long): Boolean = {
           println("open")
@@ -53,10 +82,8 @@ object StreamingTest {
         }
       })
       //      .format("console")
-      .trigger(ProcessingTime("10 seconds"))
+//      .trigger(ProcessingTime("10 seconds"))
       .start()
-
-
     tmp.awaitTermination()
   }
 

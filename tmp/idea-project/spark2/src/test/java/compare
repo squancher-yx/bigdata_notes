@@ -1,0 +1,25 @@
+// spark-shell
+spark.
+  read.format("hudi").
+  load(basePath + "/*/*/*/*").
+  select("uuid","partitionpath").
+  show(10, false)
+
+val inserts = convertToStringList(dataGen.generateInserts(10))
+val df = spark.read.json(spark.sparkContext.parallelize(inserts, 2))
+df.write.format("hudi").
+  options(getQuickstartWriteConfigs).
+  option(OPERATION_OPT_KEY,"insert_overwrite_table").
+  option(PRECOMBINE_FIELD_OPT_KEY, "ts").
+  option(RECORDKEY_FIELD_OPT_KEY, "uuid").
+  option(PARTITIONPATH_FIELD_OPT_KEY, "partitionpath").
+  option(TABLE_NAME, tableName).
+  mode(Append).
+  save(basePath)
+
+// Should have different keys now, from query before.
+spark.
+  read.format("hudi").
+  load(basePath + "/*/*/*/*").
+  select("uuid","partitionpath").
+  show(10, false)

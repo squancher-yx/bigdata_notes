@@ -192,6 +192,9 @@ hadoop fs -test -e filename
 
 `hadoop fs -cp /user/hadoop/file1 /user/hadoop/file2`
 `hadoop fs -cp /user/hadoop/file1 /user/hadoop/file2 /user/hadoop/dir`
+
+复制一个目录到另一个目录，如果目标目录已存在，则复制到子目录，不存在则新建目录（相当于重命名目录）。
+
 返回值：
 
 成功返回0，失败返回-1。
