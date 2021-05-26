@@ -2,6 +2,10 @@ import java.util
 
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.FileSystem
+import org.apache.hudi.client.SparkRDDWriteClient
+import org.apache.hudi.client.common.HoodieSparkEngineContext
+import org.apache.hudi.common.table.timeline.{HoodieActiveTimeline, HoodieTimeline}
+import org.apache.hudi.config.HoodieWriteConfig
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.api.java.UDF1
@@ -18,67 +22,22 @@ import scala.collection.JavaConverters
 
 object FunTest {
   def main(args: Array[String]): Unit = {
-    val f = FileSystem.get(new Configuration())
     val spark = SparkSession.builder()
       .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
       .appName("hudi test")
       .master("local[*]")
       .getOrCreate()
-    import spark.implicits._
-    val list: java.util.ArrayList[(String, String)] = new util.ArrayList[(String, String)]()
-    for (i <- 1000000 until 5000000) {
-      list.add((i + "qweqwe0wetrwertert0erterter0ertert", i + "qwe"))
-    }
-    val seq = JavaConverters.asScalaIteratorConverter(list.iterator()).asScala.toSeq
-    val time = System.currentTimeMillis()
-    var df = spark.sparkContext.parallelize(seq).toDF("a", "b")
 
+    val hoodieCfg = HoodieWriteConfig.newBuilder()
+      .withPath("D:\\bak\\bigdata_notes\\tmp\\idea-project\\spark2\\src\\main\\hudi_data")
+      .withAutoCommit(false)
+      .build()
+    val client = new SparkRDDWriteClient(new HoodieSparkEngineContext(spark.sparkContext), hoodieCfg, true)
+    val cleanInstant = HoodieActiveTimeline.createNewInstantTime(1621997154000L)
+    client.startCommitWithTime(cleanInstant, HoodieTimeline.REPLACE_COMMIT_ACTION)
+    val writeResult = client.deletePartitions(util.Arrays.asList("a"),cleanInstant)
+    client.commit(cleanInstant,writeResult.getWriteStatuses)
 
-    val tmp = udf(udfTest _)
-    val tmp2 = udf(udfTest2 _)
-//    udf((a:String,b:String)=>{})
-    //    val b = tmp
-    df = df.withColumn("d", tmp(col("a"), lit(2)))
-    df = df.withColumn("d", column("q"))
-    df = df.withColumn("d", udf(new UDF1[String,String] {
-      override def call(t1: String): String = t1
-    },StringType).apply(col("a")))
-    df = df.withColumn("b", tmp2(col("a"), lit(1)))
-    df.withColumn("c", tmp2(col("a"), lit(1))).show()
-//        df.mapPartitions(f=>new MapColumns(f))(Encoders.kryo(classOf[Row])).show()
-
-
-    val time2 = System.currentTimeMillis()
-    println(time2 - time)
-    //    df.withColumn("a", udf(udfTest(""),StringType)).show()
   }
 
-  def udfTest(input: String, index: String): String = {
-    //    println(1)
-    val len = input.split("0").length
-    input + "_end"
-  }
-
-  def udfTest2(input: String, index: String): String = {
-    //    println(2)
-    val len = input.split("0").length
-    input + "_end2"
-  }
-}
-
-class MapColumns(iter: Iterator[Row]) extends Iterator[Row] {
-
-
-  override def hasNext: Boolean = {
-    iter.hasNext
-  }
-
-  override def next(): Row = {
-    val row = iter.next
-    val value = row.getString(1).split("0", -1)
-    //    val offset = row.getString(2)
-    //    val partition = row.getString(3)
-    //    udf()
-    RowFactory.create(value: _*)
-  }
 }
