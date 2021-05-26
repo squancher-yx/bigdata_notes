@@ -40,8 +40,7 @@ object SparkReadHudi {
       .start()
     tmp.awaitTermination()
   }
-import org.apache.hudi.DefaultSource
-  import org.apache.spark.sql.execution.datasources.jdbc.JdbcRelationProvider
+
   def normalRead() {
     val ss = SparkSession.builder()
       .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
@@ -51,7 +50,7 @@ import org.apache.hudi.DefaultSource
     val tmp = ss.read
       .format("hudi")
       //默认快照查询(最新)
-      .option(DataSourceReadOptions.QUERY_TYPE_OPT_KEY, DataSourceReadOptions.QUERY_TYPE_INCREMENTAL_OPT_VAL)
+//      .option(DataSourceReadOptions.QUERY_TYPE_OPT_KEY, DataSourceReadOptions.QUERY_TYPE_INCREMENTAL_OPT_VAL)
       .option(DataSourceReadOptions.BEGIN_INSTANTTIME_OPT_KEY, 20210521113319L)
       .load("file:///D:/bak/bigdata_notes/tmp/idea-project/spark2/src/main/hudi_data/*")
       .show(100)

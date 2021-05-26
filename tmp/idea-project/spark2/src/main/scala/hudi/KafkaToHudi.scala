@@ -4,9 +4,13 @@ import org.apache.hudi.DataSourceWriteOptions.{PARTITIONPATH_FIELD_OPT_KEY, PREC
 import org.apache.hudi.QuickstartUtils.getQuickstartWriteConfigs
 import org.apache.hudi.config.HoodieWriteConfig.TABLE_NAME
 import org.apache.spark.sql.SaveMode.Append
+import org.apache.spark.sql.catalyst.encoders.RowEncoder
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.streaming.Trigger.ProcessingTime
+import org.apache.spark.sql.types.{DataTypes, StructType}
 import org.apache.spark.sql.{DataFrame, Row, RowFactory, SparkSession}
+
+import scala.collection.mutable.ArrayBuffer
 
 object KafkaToHudi {
   def main(args: Array[String]): Unit = {
@@ -28,10 +32,14 @@ object KafkaToHudi {
       .load()
 
     val sourceColumn = Array("value", "offset", "partition")
-    val valueColumn = Array("gate", "pdate", "ftime", "server", "logname", "title", "stats_col")
+    val valueColumns = Array("gate", "pdate", "ftime", "server", "logname", "title", "stats_col")
+    val test = new ArrayBuffer[ColumnInfo]()
+
+
 
     df.selectExpr("CAST(value AS STRING)", "CAST(offset AS STRING)", "CAST(partition AS STRING)")
       .as[(String, String, String)]
+      .mapPartitions(f => new MapColumns(f, test))(RowEncoder.apply(createSchema(test)))
       .toDF(sourceColumn: _*)
       .writeStream
       .outputMode("append")
@@ -59,11 +67,28 @@ object KafkaToHudi {
 
   }
 
+  def createSchema(columnInfo: ArrayBuffer[ColumnInfo]): StructType = {
+    var customStructType: StructType = new StructType
+    for (i <- columnInfo) {
+      customStructType = customStructType.add(i.columnName, matchType(i.columnType), true)
+    }
+    customStructType
+  }
+
+  def matchType(columntype: String) = columntype match {
+    case "Long" => DataTypes.LongType
+    case "BooleanType" => DataTypes.BooleanType
+    case "DoubleType" => DataTypes.DoubleType
+    case "StringType" => DataTypes.StringType
+    case "IntegerType" => DataTypes.IntegerType
+    case "TimestampType" => DataTypes.TimestampType
+    case "FloatType" => DataTypes.FloatType
+  }
 }
 
+case class ColumnInfo(columnName: String, columnType: String, columnIndex: Int)
 
-class MapColumns(iter: Iterator[Row], columns: Array[String], index: Array[Int]) extends Iterator[Row] {
-
+class MapColumns(iter: Iterator[(String, String, String)], columnInfo: ArrayBuffer[ColumnInfo]) extends Iterator[Row] {
 
   override def hasNext: Boolean = {
     iter.hasNext
@@ -71,10 +96,9 @@ class MapColumns(iter: Iterator[Row], columns: Array[String], index: Array[Int])
 
   override def next(): Row = {
     val row = iter.next
-    val value = row.getString(1).split("\t", -1)
-    val offset = row.getString(2)
-    val partition = row.getString(3)
-//    udf()
-    RowFactory.create()
+    val value = row._1.split("\t", -1)
+    val offset = row._2
+    val partition = row._3
+    Row()
   }
 }
