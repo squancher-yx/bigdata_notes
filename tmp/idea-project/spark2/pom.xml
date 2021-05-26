@@ -114,7 +114,7 @@
         <!--        <dependency>-->
         <!--            <groupId>org.apache.hudi</groupId>-->
         <!--            <artifactId>hudi-java-client</artifactId>-->
-        <!--            <version>0.8.0</version>-->
+        <!--            <version>0.7.0</version>-->
         <!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-avro -->
         <!--        <dependency>-->
