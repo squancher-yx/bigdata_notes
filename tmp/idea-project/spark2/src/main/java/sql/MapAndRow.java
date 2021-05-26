@@ -18,7 +18,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Map {
+/**
+ * map 时将 Row 转换为新的 Row 或自定义 Bean 类型
+ */
+
+public class MapAndRow {
     // 必须为 public，使用内部类代替
     public static class CustomBean implements Serializable {
         String obj1;
@@ -76,10 +80,10 @@ public class Map {
                     return new CustomBean(row.getString(0), row.getString(1));
                 }, Encoders.bean(CustomBean.class)).show();
 
-        // 方式二
+        // 方式二 新的 Row 字段类型需要与 schema 对应，个数不能少于 schema。
         spark.createDataFrame(javaRDD, structType)
                 .map((MapFunction<Row, Row>) row -> {
-                    return RowFactory.create(row.getString(0), row.getString(1));
+                    return RowFactory.create(row.getString(1) + "1", null);
                 }, RowEncoder.apply(structType)).show();
     }
 }
