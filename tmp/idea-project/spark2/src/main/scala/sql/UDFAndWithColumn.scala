@@ -3,7 +3,7 @@ package sql
 import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
 import org.apache.spark.sql.functions._
 
-object UDFs {
+object UDFAndWithColumn {
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder()
       .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")

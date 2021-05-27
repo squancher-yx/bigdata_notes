@@ -28,13 +28,12 @@ object SparkReadHudi {
       .writeStream.foreachBatch{
       (batchDF: DataFrame, batchId: Long) =>
         println("batchID:" + batchId)
-        batchDF.show(100)
+//        batchDF.show(100)
 //        batchDF.repartition(3).foreach { f =>
 ////          println(Thread.currentThread().getName+"    "+f+"    "+ TaskContext.getPartitionId())
 //          //            println(f)
 //        }
         println(batchDF.count())
-        println("batchID:" + batchId)
     }
       .trigger(ProcessingTime("10 seconds"))
       .start()
@@ -51,8 +50,9 @@ object SparkReadHudi {
       .format("hudi")
       //默认快照查询(最新)
 //      .option(DataSourceReadOptions.QUERY_TYPE_OPT_KEY, DataSourceReadOptions.QUERY_TYPE_INCREMENTAL_OPT_VAL)
-      .option(DataSourceReadOptions.BEGIN_INSTANTTIME_OPT_KEY, 20210521113319L)
-      .load("file:///D:/bak/bigdata_notes/tmp/idea-project/spark2/src/main/hudi_data/*")
-      .show(100)
+//      .option(DataSourceReadOptions.BEGIN_INSTANTTIME_OPT_KEY, 20210521113319L)
+      .load("file:///D:/bak/bigdata_notes/tmp/idea-project/spark2/src/main/hudi_data/*/*/*")
+//      .show(100)
+    println(tmp.count())
   }
 }
