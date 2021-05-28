@@ -110,7 +110,7 @@
 2. [Spark Streaming 基本操作](notes/spark/Spark_Streaming基本操作.md)
 3. [Spark Streaming 整合 Flume](notes/spark/Spark_Streaming整合Flume.md)
 4. [Spark Streaming 整合 Kafka](notes/spark/Spark_Streaming整合Kafka.md)
-structured-streaming
+
 
 ## 四、Storm
 

@@ -14,7 +14,8 @@ spark structured streaming 是 spark2 后提出，目前社区现状是 Dstream 
 	+ Append Mode：自上次触发以来追加在结果表中的新行。
 	+ Update Mode：自上次触发以来在结果表中已更新的行（包含 Append）。
 	
-**watermark：**如果长时间运行，中间内存会积压越来越多，系统需要知道何时可以从内存中状态删除旧的聚合，仅在特定聚合条件下可以清除聚合状态
+**watermark：**
+如果长时间运行，中间内存会积压越来越多，系统需要知道何时可以从内存中状态删除旧的聚合，仅在特定聚合条件下可以清除聚合状态
 	+ 输出模式必须为“追加”或“更新”。
 	+ 聚合必须有一列为事件时间（watermark 中指定的列）或者包含在 window 中。
 	+ withWatermark 和聚合必须使用相同时间戳列。例如， df.withWatermark("time", "1 min").groupBy("time2").count()在附加输出模式下无效。
