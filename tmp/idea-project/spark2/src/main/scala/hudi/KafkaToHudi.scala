@@ -1,6 +1,6 @@
 package hudi
 
-import java.lang.Enum.valueOf
+
 import java.text.SimpleDateFormat
 import java.util.UUID
 
@@ -20,13 +20,13 @@ import scala.collection.mutable.ArrayBuffer
  * spark 2.4.7
  * hudi 0.8.0
  */
-
+//hudi.KafkaToHudi
 object KafkaToHudi {
   def main(args: Array[String]): Unit = {
     val spark = SparkSession.builder()
       .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
-      .appName("hudi columns")
-      .master("local[*]")
+      .appName("hudi write test")
+      //      .master("local[*]")
       .getOrCreate()
 
     import spark.implicits._
@@ -34,8 +34,8 @@ object KafkaToHudi {
     val df = spark
       .readStream
       .format("kafka")
-      .option("kafka.bootstrap.servers", "127.0.0.1:9092")
-      .option("subscribe", "quickstart-events")
+      .option("kafka.bootstrap.servers", "node239:9092")
+      .option("subscribe", "hudi-test")
       //groupIdPrefix、kafka.group.id spark3 可用
       //      .option("groupIdPrefix", "quickstart-events-group")
       .load()
@@ -88,10 +88,11 @@ object KafkaToHudi {
       .withColumn("path", concat_ws("/", column("pdate"), column("gate")))
       // 使用当前时间为时间长
       .withColumn("ts", unix_timestamp())
+      // 每条都不重复
       .withColumn("uuid", uuidUdf.apply())
       .writeStream
       .outputMode("append")
-      .option("checkpointLocation", "D:\\bak\\bigdata_notes\\tmp\\idea-project\\spark2\\src\\main\\checkpoint")
+      .option("checkpointLocation", "hdfs://10.17.64.238:9000/tmp/spark_to_hudi_checkpoint")
       .foreachBatch((batchDF: DataFrame, batchId: Long) => {
         batchDF.persist()
         batchDF
@@ -103,16 +104,18 @@ object KafkaToHudi {
           // key 为分区唯一RECORDKEY_FIELD_OPT_KEY
           .option(RECORDKEY_FIELD_OPT_KEY, "uuid")
           .option(PARTITIONPATH_FIELD_OPT_KEY, "path")
-          .option("hoodie.index.type", "INMEMORY")
+          // local只支持 INMEMORY
+          //          .option("hoodie.index.type", "INMEMORY")
+          .option("hoodie.index.type", "BLOOM")
           .option("hoodie.keep.max.commits", "20")
           .option("hoodie.keep.min.commits", "11")
           .option("hoodie.cleaner.commits.retained", "2")
           .mode(Append)
-          .save("D:\\bak\\bigdata_notes\\tmp\\idea-project\\spark2\\src\\main\\hudi_data")
-        println(batchDF.count())
+          .save("hdfs://10.17.64.238:9000/tmp/hudi_test_table")
+        println("batchID:" + batchId + ",batchCount:" + batchDF.count())
         batchDF.unpersist()
       })
-      .trigger(ProcessingTime("10 seconds"))
+      .trigger(ProcessingTime("60 seconds"))
       .start().awaitTermination()
 
   }

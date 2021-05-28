@@ -9,12 +9,13 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
 
+//kafka.KafkaProducerTest
 public class KafkaProducerTest {
     public static void main(String[] args) {
-        String topicName = "quickstart-events";
+        String topicName = "hudi-test";
 
         Properties props = new Properties();
-        props.put("bootstrap.servers", "127.0.0.1:9092");
+        props.put("bootstrap.servers", "node239:9092");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         /*创建生产者*/
@@ -24,7 +25,7 @@ public class KafkaProducerTest {
         String[] logs = new String[]{"d_active_m2sw_5.2", "d_active_mx_5.2", "d_active_m2mx_5.2", "usr_info_m2sw_5.2"};
         String[] platforms = new String[]{"1", "2", "3"};
         Random random = new Random(10);
-        for (int i = 0; i < 1000000000; i++) {
+        for (long i = 0L; i < 10000000000L; i++) {
             String ftime = df.format(new Date());
             int server = random.nextInt(100000);
             String logname = logs[random.nextInt(4)];
@@ -46,7 +47,7 @@ public class KafkaProducerTest {
             /* 发送消息*/
             producer.send(record);
             try {
-                Thread.sleep(20);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

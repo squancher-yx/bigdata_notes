@@ -107,6 +107,7 @@
 3. [Spark SQL 外部数据源](notes/spark/SparkSQL外部数据源.md)
 4. [Spark SQL 常用聚合函数](notes/spark/SparkSQL常用聚合函数.md)
 5. [Spark SQL JOIN 操作](notes/spark/SparkSQL联结操作.md)
+6. [Spark Structured Streaming](notes/spark/spark结构化流.md)
 
 **Spark Streaming ：**
 
@@ -114,6 +115,7 @@
 2. [Spark Streaming 基本操作](notes/spark/Spark_Streaming基本操作.md)
 3. [Spark Streaming 整合 Flume](notes/spark/Spark_Streaming整合Flume.md)
 4. [Spark Streaming 整合 Kafka](notes/spark/Spark_Streaming整合Kafka.md)
+structured-streaming
 
 ## 四、Storm
 
@@ -137,6 +139,7 @@
 6. [Flink 窗口模型](notes/flink/Flink_Windows.md)
 7. [Flink 状态管理与检查点机制](notes/flink/Flink状态管理与检查点机制.md)
 8. [Flink Standalone 集群部署](notes/installation/Flink_Standalone_Cluster.md)
+9. [Flink 内存管理](notes/installation/Flink内存管理.md)
 
 
 ## 六、HBase

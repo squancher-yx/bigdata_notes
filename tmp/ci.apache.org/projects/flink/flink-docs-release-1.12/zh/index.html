@@ -1,0 +1,533 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Apache Flink 1.12 Documentation: Apache Flink 文档</title>
+    <link rel="shortcut icon" href="../page/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../page/favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="https://ci.apache.org/projects/flink/flink-docs-stable/zh/">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../page/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../page/css/flink.css">
+    <link rel="stylesheet" href="../page/css/syntax.css">
+    <link rel="stylesheet" href="../page/css/codetabs.css">
+    <link rel="stylesheet" href="../page/font-awesome/css/font-awesome.min.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+
+    <!-- Main content. -->
+    <div class="container">
+      
+      <div class="row">
+        <div class="col-lg-3" id="sidenavcol">
+          <div class="sidenav-logo">
+  <p><a href="index.html"><img class="bottom" alt="Apache Flink" src="../page/img/navbar-brand-logo.jpg"></a> v1.12</p>
+</div>
+<ul id="sidenav">
+<li><a href="index.html" class="active"><i class="fa fa-home title" aria-hidden="true"></i> Home</a></li><hr class="section-break"></hr>
+<li><a href="index.html#collapse-2" data-toggle="collapse"><i class="fa fa-rocket title appetizer" aria-hidden="true"></i> Try Flink<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-2"><ul>
+<li><a href="try-flink/local_installation.html">本地模式安装</a></li>
+<li><a href="try-flink/datastream_api.html">基于 DataStream API 实现欺诈检测</a></li>
+<li><a href="try-flink/table_api.html">基于 Table API 实现实时报表</a></li>
+<li><a href="try-flink/flink-operations-playground.html">Flink 操作场景</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-8" data-toggle="collapse"><i class="fa fa-hand-paper-o title appetizer" aria-hidden="true"></i> 实践练习<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-8"><ul>
+<li><a href="learn-flink/index.html">概览</a></li>
+<li><a href="learn-flink/datastream_api.html">DataStream API 简介</a></li>
+<li><a href="learn-flink/etl.html">数据管道 & ETL</a></li>
+<li><a href="learn-flink/streaming_analytics.html">流式分析</a></li>
+<li><a href="learn-flink/event_driven.html">事件驱动应用</a></li>
+<li><a href="learn-flink/fault_tolerance.html">容错处理</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-15" data-toggle="collapse"><i class="fa fa-map-o title appetizer" aria-hidden="true"></i> 概念透析<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-15"><ul>
+<li><a href="concepts/index.html">概览</a></li>
+<li><a href="concepts/stateful-stream-processing.html">有状态流处理</a></li>
+<li><a href="concepts/timely-stream-processing.html">及时流处理</a></li>
+<li><a href="concepts/flink-architecture.html">Flink 架构</a></li>
+<li><a href="concepts/glossary.html">词汇表</a></li>
+</ul></div></li><hr class="section-break"></hr>
+<li><a href="index.html#collapse-21" data-toggle="collapse"><i class="fa fa-code title maindish" aria-hidden="true"></i> 应用开发<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-21"><ul>
+<li><a href="index.html#collapse-22" data-toggle="collapse">DataStream API<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-22"><ul>
+<li><a href="dev/datastream_api.html">概览</a></li>
+<li><a href="dev/datastream_execution_mode.html">Execution Mode (Batch/Streaming)</a></li>
+<li><a href="index.html#collapse-24" data-toggle="collapse">事件时间<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-24"><ul>
+<li><a href="dev/event_time.html">概览</a></li>
+<li><a href="dev/event_timestamps_watermarks.html">生成 Watermark</a></li>
+<li><a href="dev/event_timestamp_extractors.html">内置 Watermark 生成器</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-28" data-toggle="collapse">状态与容错<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-28"><ul>
+<li><a href="dev/stream/state/index.html">概览</a></li>
+<li><a href="dev/stream/state/state.html">Working with State</a></li>
+<li><a href="dev/stream/state/broadcast_state.html">Broadcast State 模式</a></li>
+<li><a href="dev/stream/state/checkpointing.html">Checkpointing</a></li>
+<li><a href="dev/stream/state/queryable_state.html">Queryable State</a></li>
+<li><a href="dev/stream/state/state_backends.html">State Backends</a></li>
+<li><a href="dev/stream/state/schema_evolution.html">状态数据结构升级</a></li>
+<li><a href="dev/stream/state/custom_serialization.html">自定义状态序列化</a></li>
+</ul></div></li>
+<li><a href="dev/user_defined_functions.html">用户自定义 Functions</a></li>
+<li><a href="index.html#collapse-38" data-toggle="collapse">算子<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-38"><ul>
+<li><a href="dev/stream/operators/index.html">概览</a></li>
+<li><a href="dev/stream/operators/windows.html">窗口</a></li>
+<li><a href="dev/stream/operators/joining.html">Joining</a></li>
+<li><a href="dev/stream/operators/process_function.html">Process Function</a></li>
+<li><a href="dev/stream/operators/asyncio.html">异步 I/O</a></li>
+</ul></div></li>
+<li><a href="dev/stream/sources.html">Data Sources</a></li>
+<li><a href="dev/stream/side_output.html">旁路输出</a></li>
+<li><a href="dev/application_parameters.html">Handling Application Parameters</a></li>
+<li><a href="dev/stream/testing.html">测试</a></li>
+<li><a href="dev/stream/experimental.html">实验功能</a></li>
+<li><a href="dev/scala_api_extensions.html">Scala API Extensions</a></li>
+<li><a href="dev/java_lambdas.html">Java Lambda 表达式</a></li>
+<li><a href="dev/project-configuration.html">Project Configuration</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-53" data-toggle="collapse">DataSet API<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-53"><ul>
+<li><a href="dev/batch/index.html">概览</a></li>
+<li><a href="dev/batch/dataset_transformations.html">Transformations</a></li>
+<li><a href="dev/batch/iterations.html">迭代</a></li>
+<li><a href="dev/batch/zip_elements_guide.html">Zipping Elements</a></li>
+<li><a href="dev/batch/hadoop_compatibility.html">Hadoop 兼容</a></li>
+<li><a href="dev/local_execution.html">本地执行</a></li>
+<li><a href="dev/cluster_execution.html">集群执行</a></li>
+<li><a href="dev/batch/examples.html">Batch 示例</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-62" data-toggle="collapse">Table API & SQL<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-62"><ul>
+<li><a href="dev/table/index.html">概览</a></li>
+<li><a href="dev/table/common.html">概念与通用 API</a></li>
+<li><a href="index.html#collapse-64" data-toggle="collapse">流式概念<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-64"><ul>
+<li><a href="dev/table/streaming/index.html">概览</a></li>
+<li><a href="dev/table/streaming/dynamic_tables.html">动态表 (Dynamic Table)</a></li>
+<li><a href="dev/table/streaming/time_attributes.html">时间属性</a></li>
+<li><a href="dev/table/streaming/versioned_tables.html">时态表（Temporal Tables）</a></li>
+<li><a href="dev/table/streaming/joins.html">流上的 Join</a></li>
+<li><a href="dev/table/streaming/match_recognize.html">模式检测</a></li>
+<li><a href="dev/table/streaming/query_configuration.html">Query Configuration</a></li>
+<li><a href="dev/table/streaming/legacy.html">Legacy Features</a></li>
+</ul></div></li>
+<li><a href="dev/table/types.html">数据类型</a></li>
+<li><a href="dev/table/tableApi.html">Table API</a></li>
+<li><a href="index.html#collapse-75" data-toggle="collapse">SQL<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-75"><ul>
+<li><a href="dev/table/sql/index.html">概览</a></li>
+<li><a href="dev/table/sql/queries.html">查询语句</a></li>
+<li><a href="dev/table/sql/create.html">CREATE 语句</a></li>
+<li><a href="dev/table/sql/drop.html">DROP 语句</a></li>
+<li><a href="dev/table/sql/alter.html">ALTER 语句</a></li>
+<li><a href="dev/table/sql/insert.html">INSERT 语句</a></li>
+<li><a href="dev/table/sql/hints.html">SQL Hints</a></li>
+<li><a href="dev/table/sql/describe.html">DESCRIBE 语句</a></li>
+<li><a href="dev/table/sql/explain.html">EXPLAIN 语句</a></li>
+<li><a href="dev/table/sql/use.html">USE 语句</a></li>
+<li><a href="dev/table/sql/show.html">SHOW 语句</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-87" data-toggle="collapse">函数<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-87"><ul>
+<li><a href="dev/table/functions/index.html">概览</a></li>
+<li><a href="dev/table/functions/systemFunctions.html">系统（内置）函数</a></li>
+<li><a href="dev/table/functions/udfs.html">自定义函数</a></li>
+</ul></div></li>
+<li><a href="dev/table/modules.html">模块</a></li>
+<li><a href="dev/table/catalogs.html">Catalogs</a></li>
+<li><a href="dev/table/sqlClient.html">SQL 客户端</a></li>
+<li><a href="dev/table/config.html">配置</a></li>
+<li><a href="index.html#collapse-95" data-toggle="collapse">Performance Tuning<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-95"><ul>
+<li><a href="dev/table/tuning/streaming_aggregation_optimization.html">流式聚合</a></li>
+</ul></div></li>
+<li><a href="dev/table/sourceSinks.html">User-defined Sources & Sinks</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-100" data-toggle="collapse">Python API<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-100"><ul>
+<li><a href="dev/python/index.html">概览</a></li>
+<li><a href="dev/python/installation.html">环境安装</a></li>
+<li><a href="dev/python/table_api_tutorial.html">Table API 教程</a></li>
+<li><a href="dev/python/datastream_tutorial.html">DataStream API 教程</a></li>
+<li><a href="index.html#collapse-104" data-toggle="collapse">Table API用户指南<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-104"><ul>
+<li><a href="dev/python/table-api-users-guide/intro_to_table_api.html">Python Table API 简介</a></li>
+<li><a href="dev/python/table-api-users-guide/table_environment.html">TableEnvironment</a></li>
+<li><a href="dev/python/table-api-users-guide/operations.html">Operations</a></li>
+<li><a href="dev/python/table-api-users-guide/python_types.html">数据类型</a></li>
+<li><a href="dev/python/table-api-users-guide/built_in_functions.html">系统（内置）函数</a></li>
+<li><a href="index.html#collapse-110" data-toggle="collapse">自定义函数<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-110"><ul>
+<li><a href="dev/python/table-api-users-guide/udfs/python_udfs.html">普通自定义函数（UDF）</a></li>
+<li><a href="dev/python/table-api-users-guide/udfs/vectorized_python_udfs.html">向量化自定义函数</a></li>
+</ul></div></li>
+<li><a href="dev/python/table-api-users-guide/conversion_of_pandas.html">PyFlink Table 和 Pandas DataFrame 互转</a></li>
+<li><a href="dev/python/table-api-users-guide/dependency_management.html">依赖管理</a></li>
+<li><a href="dev/python/table-api-users-guide/sql.html">SQL</a></li>
+<li><a href="dev/python/table-api-users-guide/catalogs.html">Catalogs</a></li>
+<li><a href="dev/python/table-api-users-guide/metrics.html">指标</a></li>
+<li><a href="dev/python/table-api-users-guide/python_table_api_connectors.html">连接器</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-121" data-toggle="collapse">DataStream API用户指南<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-121"><ul>
+<li><a href="dev/python/datastream-api-users-guide/data_types.html">数据类型</a></li>
+<li><a href="dev/python/datastream-api-users-guide/operators.html">算子</a></li>
+<li><a href="dev/python/datastream-api-users-guide/dependency_management.html">依赖管理</a></li>
+</ul></div></li>
+<li><a href="dev/python/python_config.html">配置</a></li>
+<li><a href="dev/python/environment_variables.html">环境变量</a></li>
+<li><a href="dev/python/faq.html">常见问题</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-130" data-toggle="collapse">数据类型以及序列化<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-130"><ul>
+<li><a href="dev/types_serialization.html">概览</a></li>
+<li><a href="dev/custom_serializers.html">自定义序列化器</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-133" data-toggle="collapse">管理执行<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-133"><ul>
+<li><a href="dev/execution_configuration.html">执行配置</a></li>
+<li><a href="dev/packaging.html">程序打包</a></li>
+<li><a href="dev/parallel.html">并行执行</a></li>
+<li><a href="dev/execution_plans.html">执行计划</a></li>
+<li><a href="dev/task_failure_recovery.html">Task 故障恢复</a></li>
+</ul></div></li>
+<li><a href="dev/migration.html">API 迁移指南</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-142" data-toggle="collapse"><i class="fa fa-book title maindish" aria-hidden="true"></i> Libraries<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-142"><ul>
+<li><a href="dev/libs/cep.html">事件处理 (CEP)</a></li>
+<li><a href="dev/libs/state_processor_api.html">State Processor API</a></li>
+<li><a href="index.html#collapse-145" data-toggle="collapse">图计算: Gelly<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-145"><ul>
+<li><a href="dev/libs/gelly/index.html">概览</a></li>
+<li><a href="dev/libs/gelly/graph_api.html">Graph API</a></li>
+<li><a href="dev/libs/gelly/iterative_graph_processing.html">Iterative Graph Processing</a></li>
+<li><a href="dev/libs/gelly/library_methods.html">Library Methods</a></li>
+<li><a href="dev/libs/gelly/graph_algorithms.html">Graph Algorithms</a></li>
+<li><a href="dev/libs/gelly/graph_generators.html">Graph Generators</a></li>
+<li><a href="dev/libs/gelly/bipartite_graph.html">Bipartite Graph</a></li>
+</ul></div></li>
+</ul></div></li>
+<li><a href="index.html#collapse-154" data-toggle="collapse"><i class="fa fa-random title maindish" aria-hidden="true"></i> Connectors<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-154"><ul>
+<li><a href="index.html#collapse-155" data-toggle="collapse">DataStream Connectors<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-155"><ul>
+<li><a href="dev/connectors/index.html">概览</a></li>
+<li><a href="dev/connectors/guarantees.html">容错保证</a></li>
+<li><a href="dev/connectors/kafka.html">Kafka</a></li>
+<li><a href="dev/connectors/cassandra.html">Cassandra</a></li>
+<li><a href="dev/connectors/kinesis.html">Kinesis</a></li>
+<li><a href="dev/connectors/elasticsearch.html">Elasticsearch</a></li>
+<li><a href="dev/connectors/file_sink.html">File Sink</a></li>
+<li><a href="dev/connectors/streamfile_sink.html">Streaming File Sink</a></li>
+<li><a href="dev/connectors/rabbitmq.html">RabbitMQ</a></li>
+<li><a href="dev/connectors/nifi.html">NiFi</a></li>
+<li><a href="dev/connectors/pubsub.html">Google Cloud PubSub</a></li>
+<li><a href="dev/connectors/twitter.html">Twitter</a></li>
+<li><a href="dev/connectors/jdbc.html">JDBC</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-169" data-toggle="collapse">Table & SQL Connectors<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-169"><ul>
+<li><a href="dev/table/connectors/index.html">概览</a></li>
+<li><a href="index.html#collapse-170" data-toggle="collapse">Formats<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-170"><ul>
+<li><a href="dev/table/connectors/formats/index.html">概览</a></li>
+<li><a href="dev/table/connectors/formats/csv.html">CSV</a></li>
+<li><a href="dev/table/connectors/formats/json.html">JSON</a></li>
+<li><a href="dev/table/connectors/formats/avro-confluent.html">Confluent Avro</a></li>
+<li><a href="dev/table/connectors/formats/avro.html">Avro</a></li>
+<li><a href="dev/table/connectors/formats/debezium.html">Debezium</a></li>
+<li><a href="dev/table/connectors/formats/canal.html">Canal</a></li>
+<li><a href="dev/table/connectors/formats/maxwell.html">Maxwell</a></li>
+<li><a href="dev/table/connectors/formats/parquet.html">Parquet</a></li>
+<li><a href="dev/table/connectors/formats/orc.html">Orc</a></li>
+<li><a href="dev/table/connectors/formats/raw.html">Raw</a></li>
+</ul></div></li>
+<li><a href="dev/table/connectors/kafka.html">Kafka</a></li>
+<li><a href="dev/table/connectors/upsert-kafka.html">Upsert Kafka</a></li>
+<li><a href="dev/table/connectors/kinesis.html">Kinesis</a></li>
+<li><a href="dev/table/connectors/jdbc.html">JDBC</a></li>
+<li><a href="dev/table/connectors/elasticsearch.html">Elasticsearch</a></li>
+<li><a href="dev/table/connectors/filesystem.html">FileSystem</a></li>
+<li><a href="dev/table/connectors/hbase.html">HBase</a></li>
+<li><a href="dev/table/connectors/datagen.html">DataGen</a></li>
+<li><a href="dev/table/connectors/print.html">Print</a></li>
+<li><a href="dev/table/connectors/blackhole.html">BlackHole</a></li>
+<li><a href="index.html#collapse-192" data-toggle="collapse">Hive<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-192"><ul>
+<li><a href="dev/table/connectors/hive/index.html">概览</a></li>
+<li><a href="dev/table/connectors/hive/hive_catalog.html">Hive Catalog</a></li>
+<li><a href="dev/table/connectors/hive/hive_dialect.html">Hive 方言</a></li>
+<li><a href="dev/table/connectors/hive/hive_read_write.html">Hive Read & Write</a></li>
+<li><a href="dev/table/connectors/hive/hive_functions.html">Hive 函数</a></li>
+</ul></div></li>
+<li><a href="dev/table/connectors/downloads.html">下载</a></li>
+</ul></div></li>
+<li><a href="dev/batch/connectors.html">DataSet Connectors</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-202" data-toggle="collapse"><i class="fa fa-sliders title maindish" aria-hidden="true"></i> Deployment<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-202"><ul>
+<li><a href="deployment/index.html">概览</a></li>
+<li><a href="index.html#collapse-203" data-toggle="collapse">Resource Providers<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-203"><ul>
+<li><a href="index.html#collapse-204" data-toggle="collapse">Standalone<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-204"><ul>
+<li><a href="deployment/resource-providers/standalone/index.html">概览</a></li>
+<li><a href="deployment/resource-providers/standalone/docker.html">Docker</a></li>
+<li><a href="deployment/resource-providers/standalone/kubernetes.html">Kubernetes</a></li>
+</ul></div></li>
+<li><a href="deployment/resource-providers/native_kubernetes.html">Native Kubernetes</a></li>
+<li><a href="deployment/resource-providers/yarn.html">YARN</a></li>
+<li><a href="deployment/resource-providers/mesos.html">Mesos</a></li>
+</ul></div></li>
+<li><a href="deployment/config.html">配置参数</a></li>
+<li><a href="index.html#collapse-213" data-toggle="collapse">内存配置<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-213"><ul>
+<li><a href="deployment/memory/mem_setup.html">配置 Flink 进程的内存</a></li>
+<li><a href="deployment/memory/mem_setup_tm.html">配置 TaskManager 内存</a></li>
+<li><a href="deployment/memory/mem_setup_jobmanager.html">配置 JobManager 内存</a></li>
+<li><a href="deployment/memory/mem_tuning.html">调优指南</a></li>
+<li><a href="deployment/memory/mem_trouble.html">常见问题</a></li>
+<li><a href="deployment/memory/mem_migration.html">升级指南</a></li>
+</ul></div></li>
+<li><a href="deployment/cli.html">命令行界面</a></li>
+<li><a href="index.html#collapse-222" data-toggle="collapse">文件系统<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-222"><ul>
+<li><a href="deployment/filesystems/index.html">概览</a></li>
+<li><a href="deployment/filesystems/common.html">通用配置</a></li>
+<li><a href="deployment/filesystems/s3.html">Amazon S3</a></li>
+<li><a href="deployment/filesystems/oss.html">阿里云 OSS</a></li>
+<li><a href="deployment/filesystems/azure.html">Azure Blob 存储</a></li>
+<li><a href="deployment/filesystems/plugins.html">Plugins</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-229" data-toggle="collapse">High Availability (HA)<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-229"><ul>
+<li><a href="deployment/ha/index.html">概览</a></li>
+<li><a href="deployment/ha/zookeeper_ha.html">ZooKeeper HA Services</a></li>
+<li><a href="deployment/ha/kubernetes_ha.html">Kubernetes HA Services</a></li>
+</ul></div></li>
+<li><a href="deployment/metric_reporters.html">Metric Reporters</a></li>
+<li><a href="index.html#collapse-234" data-toggle="collapse">Security<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-234"><ul>
+<li><a href="deployment/security/security-ssl.html">SSL 设置</a></li>
+<li><a href="deployment/security/security-kerberos.html">Kerberos</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-238" data-toggle="collapse">REPLs<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-238"><ul>
+<li><a href="deployment/repls/python_shell.html">Python REPL</a></li>
+<li><a href="deployment/repls/scala_shell.html">Scala REPL</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-242" data-toggle="collapse">Advanced<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-242"><ul>
+<li><a href="deployment/advanced/external_resources.html">扩展资源</a></li>
+<li><a href="deployment/advanced/historyserver.html">History Server</a></li>
+<li><a href="deployment/advanced/logging.html">日志</a></li>
+</ul></div></li>
+</ul></div></li>
+<li><a href="index.html#collapse-248" data-toggle="collapse"><i class="fa fa-cogs title maindish" aria-hidden="true"></i> Operations<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-248"><ul>
+<li><a href="index.html#collapse-249" data-toggle="collapse">状态与容错<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-249"><ul>
+<li><a href="ops/state/checkpoints.html">Checkpoints</a></li>
+<li><a href="ops/state/savepoints.html">Savepoints</a></li>
+<li><a href="ops/state/state_backends.html">State Backends</a></li>
+<li><a href="ops/state/large_state_tuning.html">大状态与 Checkpoint 调优</a></li>
+</ul></div></li>
+<li><a href="ops/metrics.html">指标</a></li>
+<li><a href="ops/rest_api.html">REST API</a></li>
+<li><a href="index.html#collapse-257" data-toggle="collapse">Debugging<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-257"><ul>
+<li><a href="ops/debugging/debugging_event_time.html">调试窗口与事件时间</a></li>
+<li><a href="ops/debugging/debugging_classloading.html">调试类加载</a></li>
+<li><a href="ops/debugging/application_profiling.html">应用程序分析</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-262" data-toggle="collapse">Monitoring<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-262"><ul>
+<li><a href="ops/monitoring/checkpoint_monitoring.html">监控 Checkpoint</a></li>
+<li><a href="ops/monitoring/back_pressure.html">监控反压</a></li>
+</ul></div></li>
+<li><a href="ops/upgrading.html">升级应用程序和 Flink 版本</a></li>
+<li><a href="ops/production_ready.html">生产就绪情况核对清单</a></li>
+</ul></div></li><hr class="section-break"></hr>
+<li><a href="index.html#collapse-269" data-toggle="collapse"><i class="fa fa-cogs title dessert" aria-hidden="true"></i> Flink 开发<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-269"><ul>
+<li><a href="flinkDev/ide_setup.html">导入 Flink 到 IDE 中</a></li>
+<li><a href="flinkDev/building.html">从源码构建 Flink</a></li>
+</ul></div></li>
+<li><a href="index.html#collapse-273" data-toggle="collapse"><i class="fa fa-book title dessert" aria-hidden="true"></i> 内幕<i class="fa fa-caret-down pull-right" aria-hidden="true" style="padding-top: 4px"></i></a><div class="collapse" id="collapse-273"><ul>
+<li><a href="internals/job_scheduling.html">作业调度</a></li>
+<li><a href="internals/task_lifecycle.html">Task 生命周期</a></li>
+<li><a href="internals/filesystems.html">文件系统</a></li>
+</ul></div></li>
+  <li class="divider"></li>
+  <li><a href="https://ci.apache.org/projects/flink/flink-docs-release-1.12/api/java"><i class="fa fa-external-link title" aria-hidden="true"></i> Javadocs</a></li>
+  <li><a href="https://ci.apache.org/projects/flink/flink-docs-release-1.12/api/scala/index.html#org.apache.flink.api.scala.package"><i class="fa fa-external-link title" aria-hidden="true"></i> Scaladocs</a></li>
+  <li><a href="https://ci.apache.org/projects/flink/flink-docs-release-1.12/api/python"><i class="fa fa-external-link title" aria-hidden="true"></i> Pythondocs</a></li>
+  <li><a href="http://flink.apache.org"><i class="fa fa-external-link title" aria-hidden="true"></i> Project Page</a></li>
+</ul>
+
+<div class="sidenav-search-box">
+  <form class="navbar-form" role="search" action="https://ci.apache.org/projects/flink/flink-docs-release-1.12/search-results.html">
+    <div class="form-group">
+      <input type="text" class="form-control" size="16px" name="q" placeholder="Search">
+    </div>
+    <button type="submit" class="btn btn-default">Go</button>
+  </form>
+</div>
+
+<div class="sidenav-versions">
+  <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">选择文档版本<span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="http://ci.apache.org/projects/flink/flink-docs-release-1.11">v1.11</a></li>
+      <li><a href="http://ci.apache.org/projects/flink/flink-docs-release-1.10">v1.10</a></li>
+      <li><a href="http://ci.apache.org/projects/flink/flink-docs-release-1.9">v1.9</a></li>
+      <li><a href="http://ci.apache.org/projects/flink/flink-docs-release-1.8">v1.8</a></li>
+      <li><a href="http://ci.apache.org/projects/flink/flink-docs-release-1.7">v1.7</a></li>
+      <li><a href="http://ci.apache.org/projects/flink/flink-docs-release-1.6">v1.6</a></li>
+      <li><a href="http://ci.apache.org/projects/flink/flink-docs-release-1.5">v1.5</a></li>
+      <li><a href="http://ci.apache.org/projects/flink/flink-docs-release-1.4">v1.4</a></li>
+      <li><a href="http://ci.apache.org/projects/flink/flink-docs-release-1.3">v1.3</a></li>
+      <li><a href="http://ci.apache.org/projects/flink/flink-docs-release-1.2">v1.2</a></li>
+      <li><a href="http://ci.apache.org/projects/flink/flink-docs-release-1.1">v1.1</a></li>
+      <li><a href="http://ci.apache.org/projects/flink/flink-docs-release-1.0">v1.0</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sidenav-languages"><a href="https://ci.apache.org/projects/flink/flink-docs-release-1.12/">
+      <button type="submit" class="btn btn-default">English</button>
+    </a>
+</div>
+
+        </div>
+        <div class="col-lg-9 content" id="contentcol">
+
+          
+
+<ol class="breadcrumb">
+  
+    <li class="active"><i class="fa fa-home title" aria-hidden="true"></i> Home</li>
+</ol>
+
+<h1>Apache Flink 文档</h1>
+
+
+
+
+<p style="margin: 30px 60px 0 60px;text-align: center">
+Apache Flink 是一个在无界和有界数据流上进行状态计算的框架和分布式处理引擎。 Flink 已经可以在所有常见的集群环境中运行，并以 in-memory 的速度和任意的规模进行计算。
+</p>
+
+<div class="row">
+<div class="col-sm-6">
+
+    <h3 id="flink">试用 Flink</h3>
+
+    <p>如果您有兴趣使用 Flink, 可以试试我们的教程:</p>
+
+    <ul>
+      <li><a href="try-flink/local_installation.html">Local Installation</a></li>
+      <li><a href="try-flink/datastream_api.html">DataStream API 进行欺诈检测</a></li>
+      <li><a href="try-flink/table_api.html">Table API 构建实时报表</a></li>
+      <li><a href="dev/python/index.html">PyFlink 教程</a></li>
+      <li><a href="try-flink/flink-operations-playground.html">Flink 游乐场</a></li>
+    </ul>
+
+    <h3 id="flink-1">学习 Flink</h3>
+
+    <ul>
+      <li>
+        <p><a href="learn-flink/index.html">操作培训</a> 包含了一系列的课程和练习，提供了对 Flink 的逐一介绍。</p>
+      </li>
+      <li>
+        <p><a href="concepts/index.html">概念透析</a> 介绍了在浏览参考文档之前你需要了解的 Flink 知识。</p>
+      </li>
+    </ul>
+
+    <h3 id="flink-">获取 Flink 帮助</h3>
+
+    <p>如果你遇到困难了, 可以在 <a href="https://flink.apache.org/zh/community.html">社区</a>寻求帮助。值得一提的是，Apache Flink 的用户邮件列表一直是 Apache 项目里面最活跃的之一，也是一个快速获得帮助的好途径。</p>
+
+  </div>
+<div class="col-sm-6">
+
+    <h3 id="flink-2">探索 Flink</h3>
+
+    <p>参考文档包含了 Flink 所有内容。 你可以从以下几点开始学习:</p>
+
+    <div class="row">
+<div class="col-sm-6">
+
+        <ul>
+          <li><a href="dev/datastream_api.html">DataStream API</a></li>
+          <li><a href="dev/table/index.html">Table API &amp; SQL</a></li>
+          <li><a href="https://ci.apache.org/projects/flink/flink-statefun-docs-stable">状态方法</a></li>
+        </ul>
+
+      </div>
+<div class="col-sm-6">
+
+        <ul>
+          <li><a href="deployment/config.html">配置参数</a></li>
+          <li><a href="ops/rest_api.html">Rest API</a></li>
+          <li><a href="deployment/cli.html">CLI</a></li>
+        </ul>
+
+      </div>
+</div>
+
+    <h3 id="flink-3">部署 Flink</h3>
+
+    <p>在线上环境运行你的 Flink 作业之前，请阅读 <a href="ops/production_ready.html">生产环境注意事项检查清单</a>. 各种部署环境一览，详见 <a href="deployment/resource-providers/index.html">集群与部署</a>.</p>
+
+    <h3 id="flink-4">升级 Flink</h3>
+
+    <p>release notes 包含了 Flink 版本之间的重大更新。请在你升级 Flink 之前仔细阅读相应的 release notes。</p>
+
+    <p>请阅读 release notes <a href="release-notes/flink-1.11.html">Flink 1.11</a>, <a href="release-notes/flink-1.10.html">Flink 1.10</a>, <a href="release-notes/flink-1.9.html">Flink 1.9</a>, <a href="release-notes/flink-1.8.html">Flink 1.8</a>, or <a href="release-notes/flink-1.7.html">Flink 1.7</a>.</p>
+
+  </div>
+</div>
+
+<div style="margin: 40px 0 0 0; position: relative; top: 20px;">
+<p>
+本文档适用于 Apache Flink 1.12 版本。本页面最近更新于: 02/02/21, 01:03:28 AM UTC.
+</p>
+</div>
+
+
+
+<div class="footer">
+  <a href="https://cwiki.apache.org/confluence/display/FLINK/Flink+Translation+Specifications" target="_blank">
+    
+      想参与贡献翻译？
+    
+  </a>
+</div>
+
+
+        </div>
+      </div>
+    </div><!-- /.container -->
+
+    <!-- default code tab -->
+    <script>var defaultCodeTab = "";</script>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../page/js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../page/js/bootstrap.min.js"></script>
+    <script src="../page/js/anchor.min.js"></script>
+    <script src="../page/js/flink.js"></script>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-52545728-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <!-- Disqus -->
+    
+  </body>
+</html>

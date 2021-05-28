@@ -31,7 +31,7 @@ object SparkToHudi {
     demoConfigs.put("hoodie.insert.shuffle.parallelism", "10")
     demoConfigs.put("hoodie.upsert.shuffle.parallelism", "10")
     for (i <- 0 until 100) {
-      val source = ss.createDataset(List((i, "qq", 7, "a", "qq"), (i + 1, "ww", 7, "a", "ee"))).toDF("id", "name", "ts", "path", "new_column")
+      val source = ss.createDataset(List((i, "qq", 7, "b", "qq"), (i + 1, "ww", 7, "c", "ee"))).toDF("id", "name", "ts", "path", "new_column")
       try {
         source.write.format("hudi")
           .option(PRECOMBINE_FIELD_OPT_KEY, "ts")

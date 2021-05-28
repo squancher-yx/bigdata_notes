@@ -21,11 +21,11 @@ import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types.{IntegerType, StringType}
 
 import scala.collection.JavaConverters
-
+import org.apache.hudi.index.HoodieIndex
 object FunTest {
   def main(args: Array[String]): Unit = {
-    println("2021-05-27 17:09:32".matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}"))
-    println("13".matches("\\d\\d"))
+//    println("2021-05-27 17:09:32".matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}"))
+    println(1 < 10000000000L)
 //    val spark = SparkSession.builder()
 //      .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
 //      .appName("hudi test")

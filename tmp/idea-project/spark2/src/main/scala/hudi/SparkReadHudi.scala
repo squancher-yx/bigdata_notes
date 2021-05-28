@@ -51,8 +51,8 @@ object SparkReadHudi {
       //默认快照查询(最新)
 //      .option(DataSourceReadOptions.QUERY_TYPE_OPT_KEY, DataSourceReadOptions.QUERY_TYPE_INCREMENTAL_OPT_VAL)
 //      .option(DataSourceReadOptions.BEGIN_INSTANTTIME_OPT_KEY, 20210521113319L)
-      .load("file:///D:/bak/bigdata_notes/tmp/idea-project/spark2/src/main/hudi_data/*/*/*")
-//      .show(100)
-    println(tmp.count())
+      .load("file:///D:/bak/bigdata_notes/tmp/idea-project/spark2/src/main/hudi_data/{b,c}/*")
+      .show(100)
+//    println(tmp.count())
   }
 }
