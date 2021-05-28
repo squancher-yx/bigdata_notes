@@ -61,7 +61,7 @@ LOAD DATA LOCAL INPATH "/usr/file/emp30.txt" OVERWRITE INTO TABLE emp_partition 
 
 这时候当你的查询语句的 `where` 包含 `deptno=20`，则就去对应的分区目录下进行查找，而不用扫描全表。
 
-<div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/hive-hadoop-partitation.png"/> </div>
+<div align="center"> <img  src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/hive-hadoop-partitation.png"/> </div>
 
 ### 1.6 动态分区
 
@@ -94,7 +94,7 @@ insert into table test_p_target partition (ds) select id, name, birthday as ds f
 
 当调用 HashMap 的 put() 方法存储数据时，程序会先对 key 值调用 hashCode() 方法计算出 hashcode，然后对数组长度取模计算出 index，最后将数据存储在数组 index 位置的链表上，链表达到一定阈值后会转换为红黑树 (JDK1.8+)。下图为 HashMap 的数据结构图：
 
-<div align="center"> <img width="600px"  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/HashMap-HashTable.png"/> </div>
+<div align="center"> <img width="600px"  src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/HashMap-HashTable.png"/> </div>
 
 > 图片引用自：[HashMap vs. Hashtable](http://www.itcuties.com/java/hashmap-hashtable/)
 
@@ -138,13 +138,13 @@ INSERT INTO TABLE emp_bucket SELECT *  FROM emp;  --这里的 emp 表就是一�
 
 可以从执行日志看到 CTAS 触发 MapReduce 操作，且 Reducer 数量和建表时候指定 bucket 数量一致：
 
-<div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/hive-hadoop-mapreducer.png"/> </div>
+<div align="center"> <img  src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/hive-hadoop-mapreducer.png"/> </div>
 
 ### 1.5 查看分桶文件
 
 bucket(桶) 本质上就是表目录下的具体文件：
 
-<div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/hive-hadoop-bucket.png"/> </div>
+<div align="center"> <img  src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/hive-hadoop-bucket.png"/> </div>
 
 
 
@@ -183,4 +183,4 @@ SELECT * FROM page_view WHERE dt='2009-02-25';
 1. [LanguageManual DDL BucketedTables](https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL+BucketedTables)
 
 
-<div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/weixin-desc.png"/> </div>
+<div align="center"> <img  src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/weixin-desc.png"/> </div>

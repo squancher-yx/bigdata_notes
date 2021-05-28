@@ -64,8 +64,8 @@ export JAVA_HOME=/usr/java/jdk1.8.0_201
 
 出现对应的版本信息则代表配置成功。
 
-![flume-version](https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/flume-version.png)
+![flume-version](https://gitee.com/squancher/bigdata_notes/raw/master/pictures/flume-version.png)
 
 
 
-<div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/weixin-desc.png"/> </div>
+<div align="center"> <img  src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/weixin-desc.png"/> </div>

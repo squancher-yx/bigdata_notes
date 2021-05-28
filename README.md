@@ -8,18 +8,18 @@
 
 <table>
     <tr>
-      <th><img width="50px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/hadoop.jpg"></th>
-      <th><img width="50px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/hive.jpg"></th>
-      <th><img width="50px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/spark.jpg"></th>
-      <th><img width="50px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/storm.png"></th>
-      <th><img width="50px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/flink.png"></th>
-      <th><img width="50px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/hbase.png"></th>
-      <th><img width="50px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/kafka.png"></th>
-      <th><img width="50px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/zookeeper.jpg"></th>
-      <th><img width="50px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/flume.png"></th>
-      <th><img width="50px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/sqoop.png"></th>
-      <th><img width="50px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/azkaban.png"></th>
-      <th><img width="50px" src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/scala.jpg"></th>
+      <th><img width="50px" src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/hadoop.jpg"></th>
+      <th><img width="50px" src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/hive.jpg"></th>
+      <th><img width="50px" src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/spark.jpg"></th>
+      <th><img width="50px" src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/storm.png"></th>
+      <th><img width="50px" src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/flink.png"></th>
+      <th><img width="50px" src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/hbase.png"></th>
+      <th><img width="50px" src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/kafka.png"></th>
+      <th><img width="50px" src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/zookeeper.jpg"></th>
+      <th><img width="50px" src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/flume.png"></th>
+      <th><img width="50px" src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/sqoop.png"></th>
+      <th><img width="50px" src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/azkaban.png"></th>
+      <th><img width="50px" src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/scala.jpg"></th>
 	  <th><img width="50px" src=""></th>
 	  <th><img width="50px" src=""></th>
     </tr>

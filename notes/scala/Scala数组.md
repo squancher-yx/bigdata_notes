@@ -193,4 +193,4 @@ object ScalaApp extends App {
 2. 凯.S.霍斯特曼  . 快学 Scala(第 2 版)[M] . 电子工业出版社 . 2017-7
 
 
-<div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/weixin-desc.png"/> </div>
+<div align="center"> <img  src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/weixin-desc.png"/> </div>

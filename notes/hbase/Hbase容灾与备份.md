@@ -79,7 +79,7 @@ hbase org.apache.hadoop.hbase.mapreduce.CopyTable \
 # hbase org.apache.hadoop.hbase.mapreduce.CopyTable --help
 ```
 
-<div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/hbase-copy-table.png"/> </div>
+<div align="center"> <img  src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/hbase-copy-table.png"/> </div>
 
 
 
@@ -196,4 +196,4 @@ hbase> restore_snapshot '快照名'
 2. [Apache HBase ™ Reference Guide](http://hbase.apache.org/book.htm)
 
 
-<div align="center"> <img  src="https://gitee.com/heibaiying/BigData-Notes/raw/master/pictures/weixin-desc.png"/> </div>
+<div align="center"> <img  src="https://gitee.com/squancher/bigdata_notes/raw/master/pictures/weixin-desc.png"/> </div>
