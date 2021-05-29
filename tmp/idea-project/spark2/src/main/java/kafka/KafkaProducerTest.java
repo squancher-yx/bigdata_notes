@@ -15,7 +15,8 @@ public class KafkaProducerTest {
         String topicName = "hudi-test";
 
         Properties props = new Properties();
-        props.put("bootstrap.servers", "node239:9092");
+//        props.put("bootstrap.servers", "node239:9092");
+        props.put("bootstrap.servers", "127.0.0.1:9092");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         /*创建生产者*/
@@ -50,6 +51,9 @@ public class KafkaProducerTest {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+            if(i%10000000==0){
+                System.out.println("當前條數"+i);
             }
         }
         /*关闭生产者*/

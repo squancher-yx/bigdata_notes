@@ -4,7 +4,7 @@ package hudi
 import java.text.SimpleDateFormat
 import java.util.UUID
 
-import org.apache.hudi.DataSourceWriteOptions.{PARTITIONPATH_FIELD_OPT_KEY, PRECOMBINE_FIELD_OPT_KEY, RECORDKEY_FIELD_OPT_KEY}
+import org.apache.hudi.DataSourceWriteOptions.{PARTITIONPATH_FIELD_OPT_KEY, PRECOMBINE_FIELD_OPT_KEY, RECORDKEY_FIELD_OPT_KEY, STORAGE_TYPE_OPT_KEY, TABLE_TYPE_OPT_KEY}
 import org.apache.hudi.QuickstartUtils.getQuickstartWriteConfigs
 import org.apache.hudi.config.HoodieWriteConfig.TABLE_NAME
 import org.apache.spark.sql.SaveMode.Append
@@ -16,6 +16,8 @@ import org.apache.spark.sql.{DataFrame, Row, RowFactory, SparkSession}
 
 import scala.collection.mutable.ArrayBuffer
 
+//import org.apache.hudi.OverwriteWithLatestAvroPayload
+
 /**
  * spark 2.4.7
  * hudi 0.8.0
@@ -26,7 +28,7 @@ object KafkaToHudi {
     val spark = SparkSession.builder()
       .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
       .appName("hudi write test")
-      //      .master("local[*]")
+            .master("local[*]")
       .getOrCreate()
 
     import spark.implicits._
@@ -34,7 +36,8 @@ object KafkaToHudi {
     val df = spark
       .readStream
       .format("kafka")
-      .option("kafka.bootstrap.servers", "node239:9092")
+//      .option("kafka.bootstrap.servers", "node239:9092")
+      .option("kafka.bootstrap.servers", "127.0.0.1:9092")
       .option("subscribe", "hudi-test")
       //groupIdPrefix、kafka.group.id spark3 可用
       //      .option("groupIdPrefix", "quickstart-events-group")
@@ -92,30 +95,41 @@ object KafkaToHudi {
       .withColumn("uuid", uuidUdf.apply())
       .writeStream
       .outputMode("append")
-      .option("checkpointLocation", "hdfs://10.17.64.238:9000/tmp/spark_to_hudi_checkpoint")
+//      .option("checkpointLocation", "hdfs://10.17.64.238:9000/tmp/spark_to_hudi_checkpoint")
+      .option("checkpointLocation", "D:\\tmp\\spark_checkpoint")
       .foreachBatch((batchDF: DataFrame, batchId: Long) => {
         batchDF.persist()
         batchDF
           .write
           .format("hudi")
           .option(TABLE_NAME, "KafkaSource")
+          .option(TABLE_TYPE_OPT_KEY, "MERGE_ON_READ")
           .option(PRECOMBINE_FIELD_OPT_KEY, "ts")
           .options(getQuickstartWriteConfigs)
           // key 为分区唯一RECORDKEY_FIELD_OPT_KEY
           .option(RECORDKEY_FIELD_OPT_KEY, "uuid")
           .option(PARTITIONPATH_FIELD_OPT_KEY, "path")
-          // local只支持 INMEMORY
-          //          .option("hoodie.index.type", "INMEMORY")
+          // 0.7.0 local只支持 INMEMORY
+//           .option("hoodie.index.type", "INMEMORY")
+//           .option("hoodie.parquet.max.file.size", 1*1024*1024+"")
+//           .option("hoodie.parquet.small.file.limit", 1*1024*1024+"")
+//           .option("hoodie.datasource.write.operation", "insert")
+           .option("hoodie.clean.async", "true")
+           .option("hoodie.clean.automatic", "true")
+//           .option("hoodie.compact.inline", "true")
+//           .option("hoodie.compaction.target.io", 1*1024*1024+"")
           .option("hoodie.index.type", "BLOOM")
-          .option("hoodie.keep.max.commits", "20")
-          .option("hoodie.keep.min.commits", "11")
-          .option("hoodie.cleaner.commits.retained", "2")
+          // 控制 .hoodie 目录文件
+          .option("hoodie.keep.max.commits", "10")
+          .option("hoodie.keep.min.commits", "8")
+          .option("hoodie.cleaner.commits.retained", "7")
           .mode(Append)
-          .save("hdfs://10.17.64.238:9000/tmp/hudi_test_table")
+          .save("D:\\tmp\\hudi_mor_table")
+//          .save("hdfs://10.17.64.238:9000/tmp/hudi_test_table")
         println("batchID:" + batchId + ",batchCount:" + batchDF.count())
         batchDF.unpersist()
       })
-      .trigger(ProcessingTime("60 seconds"))
+      .trigger(ProcessingTime("10 seconds"))
       .start().awaitTermination()
 
   }

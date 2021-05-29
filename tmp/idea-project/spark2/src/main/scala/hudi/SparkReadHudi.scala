@@ -1,5 +1,6 @@
 package hudi
 
+import org.apache.hudi.DataSourceWriteOptions.TABLE_TYPE_OPT_KEY
 import org.apache.hudi.{DataSourceReadOptions, DataSourceWriteOptions}
 import org.apache.hudi.common.table.HoodieTableMetaClient
 import org.apache.spark.sql.{DataFrame, ForeachWriter, Row, SparkSession}
@@ -24,7 +25,7 @@ object SparkReadHudi {
       .getOrCreate()
     val tmp = ss.readStream
       .format("org.apache.hudi")
-      .load("file:///D:/bak/bigdata_notes/tmp/idea-project/spark2/src/main/hudi_data/")
+      .load("D:\\tmp\\hudi_mor_table")
       .writeStream.foreachBatch{
       (batchDF: DataFrame, batchId: Long) =>
         println("batchID:" + batchId)
@@ -49,9 +50,10 @@ object SparkReadHudi {
     val tmp = ss.read
       .format("hudi")
       //默认快照查询(最新)
-//      .option(DataSourceReadOptions.QUERY_TYPE_OPT_KEY, DataSourceReadOptions.QUERY_TYPE_INCREMENTAL_OPT_VAL)
-//      .option(DataSourceReadOptions.BEGIN_INSTANTTIME_OPT_KEY, 20210521113319L)
-      .load("file:///D:/bak/bigdata_notes/tmp/idea-project/spark2/src/main/hudi_data/{b,c}/*")
+      .option(DataSourceReadOptions.QUERY_TYPE_OPT_KEY, DataSourceReadOptions.QUERY_TYPE_INCREMENTAL_OPT_VAL)
+      .option(DataSourceReadOptions.BEGIN_INSTANTTIME_OPT_KEY, 20210521113319L)
+      .option(TABLE_TYPE_OPT_KEY, "MERGE_ON_READ")
+      .load("D:\\tmp\\hudi_mor_table\\*\\*\\*")
       .show(100)
 //    println(tmp.count())
   }
