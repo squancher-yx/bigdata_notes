@@ -2,6 +2,9 @@ package utils;
 
 import java.util.*;
 
+/**
+ * Collections 和 Arrays 简单区别
+ */
 public class Sort {
     public List<String> topKFrequent(String[] words, int k) {
         Map<String, Integer> cnt = new HashMap<String, Integer>();
@@ -32,5 +35,6 @@ public class Sort {
             }
         });
         return rec.subList(0, k);
+        // 实现 Comparable 接口的类可直接排序
     }
 }

@@ -1,5 +1,6 @@
 import java.text.SimpleDateFormat
 import java.util
+import java.util.stream.Collectors
 import java.util.{Date, Random}
 
 import org.apache.hadoop.conf.Configuration
@@ -24,24 +25,11 @@ import scala.collection.JavaConverters
 import org.apache.hudi.index.HoodieIndex
 object FunTest {
   def main(args: Array[String]): Unit = {
-//    println("2021-05-27 17:09:32".matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}"))
-    println(1 < 10000000000L)
-//    val spark = SparkSession.builder()
-//      .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
-//      .appName("hudi test")
-//      .master("local[*]")
-//      .getOrCreate()
-//
-//    val hoodieCfg = HoodieWriteConfig.newBuilder()
-//      .withPath("D:\\bak\\bigdata_notes\\tmp\\idea-project\\spark2\\src\\main\\hudi_data")
-//      .withAutoCommit(false)
-//      .build()
-//    val client = new SparkRDDWriteClient(new HoodieSparkEngineContext(spark.sparkContext), hoodieCfg, true)
-//    val cleanInstant = HoodieActiveTimeline.createNewInstantTime(1621997154000L)
-//    client.startCommitWithTime(cleanInstant, HoodieTimeline.REPLACE_COMMIT_ACTION)
-//    val writeResult = client.deletePartitions(util.Arrays.asList("a"),cleanInstant)
-//    client.commit(cleanInstant,writeResult.getWriteStatuses)
+//    Collectors
+    import java.util
+    val list = util.Arrays.asList("aaaa", "bbbb", "cccc")
 
+    //静态方法语法	ClassName::methodName
   }
 
 }

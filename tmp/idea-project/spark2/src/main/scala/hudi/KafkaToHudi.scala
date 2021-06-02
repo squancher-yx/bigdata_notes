@@ -111,18 +111,19 @@ object KafkaToHudi {
           .option(PARTITIONPATH_FIELD_OPT_KEY, "path")
           // 0.7.0 local只支持 INMEMORY
 //           .option("hoodie.index.type", "INMEMORY")
-//           .option("hoodie.parquet.max.file.size", 1*1024*1024+"")
+           .option("hoodie.parquet.max.file.size", 30*1024*1024+"")
 //           .option("hoodie.parquet.small.file.limit", 1*1024*1024+"")
-//           .option("hoodie.datasource.write.operation", "insert")
+           .option("hoodie.datasource.write.operation", "insert")
            .option("hoodie.clean.async", "true")
            .option("hoodie.clean.automatic", "true")
 //           .option("hoodie.compact.inline", "true")
 //           .option("hoodie.compaction.target.io", 1*1024*1024+"")
           .option("hoodie.index.type", "BLOOM")
           // 控制 .hoodie 目录文件
-          .option("hoodie.keep.max.commits", "10")
-          .option("hoodie.keep.min.commits", "8")
-          .option("hoodie.cleaner.commits.retained", "7")
+          .option("hoodie.keep.max.commits", "35")
+          .option("hoodie.keep.min.commits", "20")
+          // 控制分区目录下的滚动文件
+          .option("hoodie.cleaner.commits.retained", "3")
           .mode(Append)
           .save("D:\\tmp\\hudi_mor_table")
 //          .save("hdfs://10.17.64.238:9000/tmp/hudi_test_table")
@@ -219,4 +220,3 @@ class MapColumns(iter: Iterator[(String, String, String)], columnInfo: ArrayBuff
     Row(res: _*)
   }
 }
-

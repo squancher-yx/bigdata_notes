@@ -48,7 +48,7 @@ public class KafkaProducerTest {
             /* 发送消息*/
             producer.send(record);
             try {
-                Thread.sleep(10);
+                Thread.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
