@@ -7,9 +7,11 @@ import java.util.UUID
 import org.apache.hudi.DataSourceWriteOptions.{PARTITIONPATH_FIELD_OPT_KEY, PRECOMBINE_FIELD_OPT_KEY, RECORDKEY_FIELD_OPT_KEY, STORAGE_TYPE_OPT_KEY, TABLE_TYPE_OPT_KEY}
 import org.apache.hudi.QuickstartUtils.getQuickstartWriteConfigs
 import org.apache.hudi.config.HoodieWriteConfig.TABLE_NAME
+import org.apache.hudi.table.HoodieTable
 import org.apache.spark.sql.SaveMode.Append
 import org.apache.spark.sql.catalyst.encoders.RowEncoder
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.streaming.{StreamingQuery, StreamingQueryListener}
 import org.apache.spark.sql.streaming.Trigger.ProcessingTime
 import org.apache.spark.sql.types.{DataType, DataTypes, StructType}
 import org.apache.spark.sql.{DataFrame, Row, RowFactory, SparkSession}
@@ -25,10 +27,11 @@ import scala.collection.mutable.ArrayBuffer
 //hudi.KafkaToHudi
 object KafkaToHudi {
   def main(args: Array[String]): Unit = {
+    System.setProperty("HADOOP_USER_NAME", "hadoop")
     val spark = SparkSession.builder()
       .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
       .appName("hudi write test")
-            .master("local[*]")
+      .master("local[*]")
       .getOrCreate()
 
     import spark.implicits._
@@ -36,10 +39,11 @@ object KafkaToHudi {
     val df = spark
       .readStream
       .format("kafka")
-//      .option("kafka.bootstrap.servers", "node239:9092")
+      //      .option("kafka.bootstrap.servers", "node239:9092")
       .option("kafka.bootstrap.servers", "127.0.0.1:9092")
       .option("subscribe", "hudi-test")
-      //groupIdPrefix、kafka.group.id spark3 可用
+      //      .option("startingOffsets", """{"hudi-test":{"0":51000000,"1":51000000}}""")
+      // groupIdPrefix、kafka.group.id spark3 可用
       //      .option("groupIdPrefix", "quickstart-events-group")
       .load()
 
@@ -77,7 +81,50 @@ object KafkaToHudi {
       UUID.randomUUID().toString
     })
 
-    df.selectExpr("CAST(value AS STRING)", "CAST(offset AS STRING)", "CAST(partition AS STRING)")
+    spark.streams.addListener(new StreamingQueryListener() {
+      override def onQueryStarted(event: StreamingQueryListener.QueryStartedEvent): Unit = {
+        println("Query started: " + event.id)
+      }
+
+      override def onQueryProgress(event: StreamingQueryListener.QueryProgressEvent): Unit = {
+        val info = event.progress
+        val batchID = info.batchId
+        val durationMs = info.durationMs
+        val eventTime = info.eventTime
+        val timestamp = info.timestamp
+        val sources = info.sources
+        val inputRowsPerSecond = info.inputRowsPerSecond
+        val processedRowsPerSecond = info.processedRowsPerSecond
+        val numInputRows = info.numInputRows
+        val addBatch = durationMs.get("addBatch")
+        val getBatch = durationMs.get("getBatch")
+        val getEndOffset = durationMs.get("getEndOffset")
+        val queryPlanning = durationMs.get("queryPlanning")
+        val setOffsetRange = durationMs.get("setOffsetRange")
+        val triggerExecution = durationMs.get("triggerExecution")
+        val walCommit = durationMs.get("walCommit")
+        println("batchID:"+batchID)
+        println("eventTime:"+eventTime)
+        println("timestamp:"+timestamp)
+        println("inputRowsPerSecond:"+inputRowsPerSecond)
+        println("processedRowsPerSecond:"+processedRowsPerSecond)
+        println("numInputRows:"+numInputRows)
+        println("addBatch:"+addBatch)
+        println("getBatch:"+getBatch)
+        println("getEndOffset:"+getEndOffset)
+        println("queryPlanning:"+queryPlanning)
+        println("setOffsetRange:"+setOffsetRange)
+        println("triggerExecution:"+triggerExecution)
+        println("walCommit:"+walCommit)
+
+//        println("Query made progress: " + event.progress)
+      }
+
+      override def onQueryTerminated(event: StreamingQueryListener.QueryTerminatedEvent): Unit = {
+        println("Query terminated: " + event.id)
+      }
+    })
+    val query: StreamingQuery = df.selectExpr("CAST(value AS STRING)", "CAST(offset AS STRING)", "CAST(partition AS STRING)")
       .as[(String, String, String)]
       .filter(f => {
         val value = f._1
@@ -95,7 +142,7 @@ object KafkaToHudi {
       .withColumn("uuid", uuidUdf.apply())
       .writeStream
       .outputMode("append")
-//      .option("checkpointLocation", "hdfs://10.17.64.238:9000/tmp/spark_to_hudi_checkpoint")
+      //      .option("checkpointLocation", "hdfs://10.17.64.238:9000/tmp/spark_to_hudi_checkpoint")
       .option("checkpointLocation", "D:\\tmp\\spark_checkpoint")
       .foreachBatch((batchDF: DataFrame, batchId: Long) => {
         batchDF.persist()
@@ -103,36 +150,63 @@ object KafkaToHudi {
           .write
           .format("hudi")
           .option(TABLE_NAME, "KafkaSource")
+          //          .option(TABLE_TYPE_OPT_KEY, "COPY_ON_WRITE")
           .option(TABLE_TYPE_OPT_KEY, "MERGE_ON_READ")
           .option(PRECOMBINE_FIELD_OPT_KEY, "ts")
           .options(getQuickstartWriteConfigs)
           // key 为分区唯一RECORDKEY_FIELD_OPT_KEY
           .option(RECORDKEY_FIELD_OPT_KEY, "uuid")
           .option(PARTITIONPATH_FIELD_OPT_KEY, "path")
+
+
+          .option("hoodie.metrics.on", "true")
+          .option("hoodie.metrics.reporter.class", "hudi.Metrics")
+
+          /**
+           * 120M -> 80700000B
+           * 60M -> 17450000B？  52600000B
+           */
+          .option("hoodie.parquet.max.file.size", 120 * 1024 * 1024)
+          .option("hoodie.parquet.block.size", 120 * 1024 * 1024)
+          //           .option("hoodie.parquet.small.file.limit", 1*1024*1024+"")
+          .option("hoodie.datasource.write.operation", "insert")
+          .option("hoodie.clean.async", "true")
+          .option("hoodie.clean.automatic", "true")
+          //           .option("hoodie.compaction.target.io", 1*1024*1024)
+
           // 0.7.0 local只支持 INMEMORY
-//           .option("hoodie.index.type", "INMEMORY")
-           .option("hoodie.parquet.max.file.size", 30*1024*1024+"")
-//           .option("hoodie.parquet.small.file.limit", 1*1024*1024+"")
-           .option("hoodie.datasource.write.operation", "insert")
-           .option("hoodie.clean.async", "true")
-           .option("hoodie.clean.automatic", "true")
-//           .option("hoodie.compact.inline", "true")
-//           .option("hoodie.compaction.target.io", 1*1024*1024+"")
+          //           .option("hoodie.index.type", "INMEMORY")
           .option("hoodie.index.type", "BLOOM")
+
           // 控制 .hoodie 目录文件
           .option("hoodie.keep.max.commits", "35")
           .option("hoodie.keep.min.commits", "20")
-          // 控制分区目录下的滚动文件
-          .option("hoodie.cleaner.commits.retained", "3")
+
+          /**
+           * 控制分区下的文件（未达到指定大小时滚动中的文件）
+           * 使用 BLOOM 索引时
+           * 本地测试为控制分区目录下的滚动文件，无需开启 hoodie.compact.inline。
+           * 集群模式下需要打开 hoodie.compact.inline，hoodie.compact.inline.max.delta.commits 无效?
+           *
+           */
+
+          .option("hoodie.cleaner.commits.retained", "3") // n+2 ?
+          //          .option("hoodie.compact.inline", "true")
+          .option("hoodie.logfile.to.parquet.compression.ratio", "0.6")
+          .option("hoodie.compact.inline.max.delta.commits", "2")
+          .option("hoodie.parquet.small.file.limit", "1048576000")
+          // 通过每条数据大小计算小文件需要插入多少数据，如果不指定会以最近提交的动态计算（如果不配置且单个批次数据量过大，可能会有很多小文件）
+          .option("hoodie.copyonwrite.record.size.estimate", "338")
+          //          .option("hoodie.logfile.max.size", "1073741824")
           .mode(Append)
           .save("D:\\tmp\\hudi_mor_table")
-//          .save("hdfs://10.17.64.238:9000/tmp/hudi_test_table")
+        //          .save("hdfs://10.17.64.238:9000/tmp/hudi_mor_table")
         println("batchID:" + batchId + ",batchCount:" + batchDF.count())
         batchDF.unpersist()
       })
-      .trigger(ProcessingTime("10 seconds"))
-      .start().awaitTermination()
-
+      .trigger(ProcessingTime("60 seconds"))
+      .start()
+    query.awaitTermination()
   }
 
   def createSchema(columnInfo: ArrayBuffer[ColumnInfo]): StructType = {

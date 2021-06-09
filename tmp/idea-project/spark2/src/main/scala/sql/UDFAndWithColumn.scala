@@ -59,7 +59,7 @@ object UDFAndWithColumn {
 
     // 方法转换为函数
     val tmp = udf(udfTest _)
-    //tmp 参数个数需要与 udfTest 对应
+    // 使用时 tmp 参数个数需要与 udfTest 对应
     df.withColumn("d", tmp(col("a"), lit(2))).show()
     //显示调用 apply
     df.withColumn("d", tmp.apply(col("a"), lit(2))).show()

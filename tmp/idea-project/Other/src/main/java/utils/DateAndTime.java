@@ -12,7 +12,8 @@ public class DateAndTime {
     public static void TimeTest() throws ParseException {
         //Instant用于表示一个时间戳，它与System.currentTimeMillis()有些类似，不过Instant可以精确到纳秒（Nano-Second），System.currentTimeMillis()方法只精确到毫秒
         Instant instant = Instant.now();//当前时间戳
-
+//        Instant instant6 = Instant.ofEpochMilli(1623218880000L);
+//        Instant instant66 = Instant.ofEpochSecond(1623218880L);
         //获取所有合法的“区域/城市”字符串 :
         Set<String> zoneIds = ZoneId.getAvailableZoneIds();
         //获取系统默认时区 :

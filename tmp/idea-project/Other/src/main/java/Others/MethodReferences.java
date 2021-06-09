@@ -1,10 +1,8 @@
 package Others;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashSet;
+import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 /**
@@ -38,26 +36,39 @@ public class MethodReferences {
         // 3.特定类型的任意对象的实例方法引用，官方文档及其它资料未找到全面解释
         String[] stringArray = {"Barbara", "James", "Mary", "John",
                 "Patricia", "Robert", "Michael", "Linda"};
-        Arrays.sort(stringArray, String::compareToIgnoreCase);
+        Comparator<String> comparator = String::compareToIgnoreCase;
+        Arrays.sort(stringArray, comparator);
+        // Arrays.sort(stringArray, String::compareToIgnoreCase);
 
-        Arbitraryobject tmp2 = test3::add;
+        ArbitraryObject tmp2 = test3::add;
+        tmp2.accept(new test3(),1);
+
+        // 使用泛型更方便
+        BiConsumer<Set<Integer>, Integer> tmp3 = Set::add;
+        tmp3.accept(new HashSet<>(),1);
+
+        BiConsumer<test3, Integer> tmp5 = test3::add;
 
         // 4.构造函数引用
         Supplier<HashSet<Person>> supplier = HashSet::new;
         Collection<Person> tmp = supplier.get();
     }
+
 }
 
 class test3 {
-    public int add(int b) {
-        return 1;
+    private transient HashMap<Object,Object> map = new HashMap<>();
+    public void add(int b) {
+        map.put(b,new Object());
     }
 }
 
-interface Arbitraryobject {
+@FunctionalInterface
+interface ArbitraryObject {
     // 第一个参数必须是实现类，后面参数与实现方法相对应
     void accept(test3 t3, int b);
 }
+
 
 interface TmpClass {
     int testMethod(Person a, Person b);

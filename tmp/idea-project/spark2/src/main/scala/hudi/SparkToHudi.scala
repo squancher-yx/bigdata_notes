@@ -40,14 +40,16 @@ object SparkToHudi {
           .option(RECORDKEY_FIELD_OPT_KEY, "id")
           .option(TABLE_NAME, "test")
           .option(PARTITIONPATH_FIELD_OPT_KEY, "path")
-          .option("hoodie.index.type", "INMEMORY")
+          .option(TABLE_TYPE_OPT_KEY, "MERGE_ON_READ")
+          .option("hoodie.index.type", "BLOOM")
+          .option(OPERATION_OPT_KEY, "insert")
           // .hoodie目录中的小文件数量，不一定准确（看规律可能是每种后缀文件分别最小数量）
           .option("hoodie.keep.max.commits", "6")
           .option("hoodie.keep.min.commits", "3")
           // 保留的提交次数，分区下的 parquet 文件数量
           .option("hoodie.cleaner.commits.retained", "2")
           .mode(Append)
-          .save("D:\\bak\\bigdata_notes\\tmp\\idea-project\\spark2\\src\\main\\hudi_data")
+          .save("D:\\tmp\\hudi_mor_table")
         println("done:" + i)
       } catch {
         case e: HoodieCommitException =>

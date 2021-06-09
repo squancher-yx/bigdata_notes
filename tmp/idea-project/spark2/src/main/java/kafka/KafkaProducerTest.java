@@ -48,12 +48,12 @@ public class KafkaProducerTest {
             /* 发送消息*/
             producer.send(record);
             try {
-                Thread.sleep(5);
+                Thread.sleep(3);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if(i%10000000==0){
-                System.out.println("當前條數"+i);
+            if (i % 1000000 == 0) {
+                System.out.println("當前條數" + i);
             }
         }
         /*关闭生产者*/
