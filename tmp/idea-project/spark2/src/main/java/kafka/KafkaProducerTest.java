@@ -23,13 +23,13 @@ public class KafkaProducerTest {
         Producer<String, String> producer = new KafkaProducer<>(props);
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String[] logs = new String[]{"d_active_m2sw_5.2", "d_active_mx_5.2", "d_active_m2mx_5.2", "usr_info_m2sw_5.2"};
+        String[] logs = new String[]{"d_active_m2sw_5.2", "d_active_mx_5.2", "d_active_m2mx_5.2", "usr_info_m2sw_5.2","d_active_m2k8_5.2","d_active_m2q8_5.2","d_active_m2dw_5.2"};
         String[] platforms = new String[]{"1", "2", "3"};
         Random random = new Random(10);
         for (long i = 0L; i < 10000000000L; i++) {
             String ftime = df.format(new Date());
             int server = random.nextInt(100000);
-            String logname = logs[random.nextInt(4)];
+            String logname = logs[random.nextInt(7)];
             int title = random.nextInt(3) + 1;
             int info_version = random.nextInt(99);
             int uid = random.nextInt(10000000);
@@ -48,7 +48,7 @@ public class KafkaProducerTest {
             /* 发送消息*/
             producer.send(record);
             try {
-                Thread.sleep(3);
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

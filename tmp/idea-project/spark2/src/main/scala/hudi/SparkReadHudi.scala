@@ -10,8 +10,9 @@ import org.apache.spark.sql.streaming.Trigger.ProcessingTime
 
 object SparkReadHudi {
   def main(args: Array[String]): Unit = {
-    normalRead()
+//    normalRead()
     //    structuredStreamingRead()
+    parquetRead()
   }
 
   /**
@@ -61,5 +62,22 @@ object SparkReadHudi {
     ss.sql("select count(*) from ttttt where gate='m2sw'").show()
     ss.sql("select count(*) from ttttt where gate='m2mx'").show()
     //    println(tmp.count())
+  }
+
+  def parquetRead() {
+    val ss = SparkSession.builder()
+      .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+      .appName("hudi test")
+      .master("local[*]")
+      .getOrCreate()
+    val tmp = ss.read
+      .parquet("C:\\Users\\Administrator\\Desktop\\hudi_bak\\127dd4e5-3677-45b2-aa45-c9587e51a371-0_0-82-153_20210617190200.parquet")
+    tmp.createOrReplaceTempView("ttttt")
+    ss.sql("select * from ttttt where uuid like '12bb0ca2-c079-4cc%'").show()
+
+    val tmp2 = ss.read
+      .parquet("C:\\Users\\Administrator\\Desktop\\hudi_bak\\127dd4e5-3677-45b2-aa45-c9587e51a371-0_0-102-192_20210617190300.parquet")
+    tmp2.createOrReplaceTempView("ttttt2")
+    ss.sql("select * from ttttt2 where uuid like '12bb0ca2-c079-4cc%'").show()
   }
 }

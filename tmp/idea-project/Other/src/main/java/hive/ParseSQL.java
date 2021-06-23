@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.hadoop.hive.ql.parse.ASTNode;
 import org.apache.hadoop.hive.ql.parse.HiveParser;
 import org.apache.hadoop.hive.ql.parse.ParseDriver;
+import org.apache.hadoop.hive.ql.tools.LineageInfo;
 import org.apache.hadoop.hive.ql.parse.ParseException;
 
 import java.util.*;
@@ -17,7 +18,7 @@ public class ParseSQL {
                 "    nvl(day_first_device_model, 'all') as day_first_device_model,\n" +
                 "    nvl(day_first_login_platform, 'all') as day_first_login_platform,\n" +
                 "    nvl(day_first_device, 'all') as day_first_device,\n" +
-                "    gate\n" +
+                "    gate as gaga\n" +
                 "from\n" +
                 "    (\n" +
                 "        select\n" +

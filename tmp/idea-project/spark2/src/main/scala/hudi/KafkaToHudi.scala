@@ -1,8 +1,12 @@
 package hudi
 
 
+import java.sql.{Connection, DriverManager, PreparedStatement, ResultSet, SQLException}
 import java.text.SimpleDateFormat
-import java.util.UUID
+import java.time.format.DateTimeFormatter
+import java.time.{LocalDateTime, ZoneId}
+import java.util
+import java.util.{Date, HashMap, Map, TimeZone, UUID}
 
 import org.apache.hudi.DataSourceWriteOptions.{PARTITIONPATH_FIELD_OPT_KEY, PRECOMBINE_FIELD_OPT_KEY, RECORDKEY_FIELD_OPT_KEY, STORAGE_TYPE_OPT_KEY, TABLE_TYPE_OPT_KEY}
 import org.apache.hudi.QuickstartUtils.getQuickstartWriteConfigs
@@ -39,7 +43,7 @@ object KafkaToHudi {
     val df = spark
       .readStream
       .format("kafka")
-      //      .option("kafka.bootstrap.servers", "node239:9092")
+//            .option("kafka.bootstrap.servers", "node239:9092")
       .option("kafka.bootstrap.servers", "127.0.0.1:9092")
       .option("subscribe", "hudi-test")
       //      .option("startingOffsets", """{"hudi-test":{"0":51000000,"1":51000000}}""")
@@ -82,42 +86,56 @@ object KafkaToHudi {
     })
 
     spark.streams.addListener(new StreamingQueryListener() {
+      val df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+      val pattern: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+      df.setTimeZone(TimeZone.getTimeZone("UTC"))
+
       override def onQueryStarted(event: StreamingQueryListener.QueryStartedEvent): Unit = {
         println("Query started: " + event.id)
       }
 
       override def onQueryProgress(event: StreamingQueryListener.QueryProgressEvent): Unit = {
         val info = event.progress
-        val batchID = info.batchId
+        val batchID = info.batchId.toString
         val durationMs = info.durationMs
-        val eventTime = info.eventTime
         val timestamp = info.timestamp
         val sources = info.sources
-        val inputRowsPerSecond = info.inputRowsPerSecond
-        val processedRowsPerSecond = info.processedRowsPerSecond
-        val numInputRows = info.numInputRows
-        val addBatch = durationMs.get("addBatch")
-        val getBatch = durationMs.get("getBatch")
-        val getEndOffset = durationMs.get("getEndOffset")
-        val queryPlanning = durationMs.get("queryPlanning")
-        val setOffsetRange = durationMs.get("setOffsetRange")
-        val triggerExecution = durationMs.get("triggerExecution")
-        val walCommit = durationMs.get("walCommit")
-        println("batchID:"+batchID)
-        println("eventTime:"+eventTime)
-        println("timestamp:"+timestamp)
-        println("inputRowsPerSecond:"+inputRowsPerSecond)
-        println("processedRowsPerSecond:"+processedRowsPerSecond)
-        println("numInputRows:"+numInputRows)
-        println("addBatch:"+addBatch)
-        println("getBatch:"+getBatch)
-        println("getEndOffset:"+getEndOffset)
-        println("queryPlanning:"+queryPlanning)
-        println("setOffsetRange:"+setOffsetRange)
-        println("triggerExecution:"+triggerExecution)
-        println("walCommit:"+walCommit)
+        var inputRowsPerSecond = info.inputRowsPerSecond.toString
+        if (inputRowsPerSecond.equals("NaN")) {
+          inputRowsPerSecond = "0"
+        }
+        val processedRowsPerSecond = info.processedRowsPerSecond.toString
+        val numInputRows = info.numInputRows.toString
+        val addBatch = durationMs.getOrDefault("addBatch", -1).toString
+        val getBatch = durationMs.getOrDefault("getBatch", -1).toString
+        val getEndOffset = durationMs.getOrDefault("getEndOffset", -1).toString
+        val queryPlanning = durationMs.getOrDefault("queryPlanning", -1).toString
+        val setOffsetRange = durationMs.getOrDefault("setOffsetRange", -1).toString
+        val triggerExecution = durationMs.getOrDefault("triggerExecution", -1).toString
+        val walCommit = durationMs.getOrDefault("walCommit", -1).toString
+        println("batchID:" + batchID)
 
-//        println("Query made progress: " + event.progress)
+        val date2 = df.parse(timestamp)
+        val localDateTime4 = LocalDateTime.ofInstant(date2.toInstant, ZoneId.systemDefault)
+        val timestampFix = localDateTime4.format(pattern)
+
+        println("inputRowsPerSecond:" + inputRowsPerSecond)
+        println("processedRowsPerSecond:" + processedRowsPerSecond)
+        println("numInputRows:" + numInputRows)
+        println("addBatch:" + addBatch)
+        println("getBatch:" + getBatch)
+        println("getEndOffset:" + getEndOffset)
+        println("queryPlanning:" + queryPlanning)
+        println("setOffsetRange:" + setOffsetRange)
+        println("triggerExecution:" + triggerExecution)
+        println("walCommit:" + walCommit)
+
+        val mysql = new InsertMetrics()
+        val values = Array(batchID, inputRowsPerSecond, processedRowsPerSecond, numInputRows, addBatch, getBatch, getEndOffset, queryPlanning, setOffsetRange, triggerExecution, walCommit)
+        println(timestamp)
+        println(timestampFix)
+        mysql.spark(values, timestampFix)
+        //        println("Query made progress: " + event.progress)
       }
 
       override def onQueryTerminated(event: StreamingQueryListener.QueryTerminatedEvent): Unit = {
@@ -142,7 +160,7 @@ object KafkaToHudi {
       .withColumn("uuid", uuidUdf.apply())
       .writeStream
       .outputMode("append")
-      //      .option("checkpointLocation", "hdfs://10.17.64.238:9000/tmp/spark_to_hudi_checkpoint")
+//            .option("checkpointLocation", "hdfs://masters/tmp/spark_to_hudi_checkpoint")
       .option("checkpointLocation", "D:\\tmp\\spark_checkpoint")
       .foreachBatch((batchDF: DataFrame, batchId: Long) => {
         batchDF.persist()
@@ -153,7 +171,8 @@ object KafkaToHudi {
           //          .option(TABLE_TYPE_OPT_KEY, "COPY_ON_WRITE")
           .option(TABLE_TYPE_OPT_KEY, "MERGE_ON_READ")
           .option(PRECOMBINE_FIELD_OPT_KEY, "ts")
-          .options(getQuickstartWriteConfigs)
+          .option("hoodie.insert.shuffle.parallelism", "200")
+          .option("hoodie.upsert.shuffle.parallelism", "200")
           // key 为分区唯一RECORDKEY_FIELD_OPT_KEY
           .option(RECORDKEY_FIELD_OPT_KEY, "uuid")
           .option(PARTITIONPATH_FIELD_OPT_KEY, "path")
@@ -175,7 +194,7 @@ object KafkaToHudi {
           //           .option("hoodie.compaction.target.io", 1*1024*1024)
 
           // 0.7.0 local只支持 INMEMORY
-          //           .option("hoodie.index.type", "INMEMORY")
+//                     .option("hoodie.index.type", "INMEMORY")
           .option("hoodie.index.type", "BLOOM")
 
           // 控制 .hoodie 目录文件
@@ -186,25 +205,30 @@ object KafkaToHudi {
            * 控制分区下的文件（未达到指定大小时滚动中的文件）
            * 使用 BLOOM 索引时
            * 本地测试为控制分区目录下的滚动文件，无需开启 hoodie.compact.inline。
-           * 集群模式下需要打开 hoodie.compact.inline，hoodie.compact.inline.max.delta.commits 无效?
+           * 集群模式下需要打开 hoodie.compact.inline
+           * hoodie.compact.inline.max.delta.commits 控制 log 文件的数量（需要看索引类型，如 BLOOM 无 log文件）
            *
            */
 
-          .option("hoodie.cleaner.commits.retained", "3") // n+2 ?
-          //          .option("hoodie.compact.inline", "true")
-          .option("hoodie.logfile.to.parquet.compression.ratio", "0.6")
-          .option("hoodie.compact.inline.max.delta.commits", "2")
-          .option("hoodie.parquet.small.file.limit", "1048576000")
+          .option("hoodie.cleaner.commits.retained", "1") // n+2 ?
+          .option("hoodie.parquet.compression.codec", "gzip")
+          .option("hoodie.compact.inline", "true")
+          .option("hoodie.datasource.compaction.async.enable", "true")
+//          .option("hoodie.logfile.to.parquet.compression.ratio", "0.3")
+//          .option("hoodie.compact.inline.max.delta.commits", "2")
+//          .option("hoodie.compaction.daybased.target", "10")
+          .option("hoodie.parquet.small.file.limit", 100 * 1024 * 1024)
+//          .option("hoodie.parquet.small.file.limit", "100857600")
           // 通过每条数据大小计算小文件需要插入多少数据，如果不指定会以最近提交的动态计算（如果不配置且单个批次数据量过大，可能会有很多小文件）
-          .option("hoodie.copyonwrite.record.size.estimate", "338")
+          .option("hoodie.copyonwrite.record.size.estimate", "90")
           //          .option("hoodie.logfile.max.size", "1073741824")
           .mode(Append)
           .save("D:\\tmp\\hudi_mor_table")
-        //          .save("hdfs://10.17.64.238:9000/tmp/hudi_mor_table")
+//                  .save("hdfs://masters/tmp/hudi_mor_table")
         println("batchID:" + batchId + ",batchCount:" + batchDF.count())
         batchDF.unpersist()
       })
-      .trigger(ProcessingTime("60 seconds"))
+      .trigger(ProcessingTime("300 seconds"))
       .start()
     query.awaitTermination()
   }
@@ -292,5 +316,47 @@ class MapColumns(iter: Iterator[(String, String, String)], columnInfo: ArrayBuff
       }
     }
     Row(res: _*)
+  }
+
+  def Test(): Unit = {
+    val url = "jdbc:mysql://192.168.121.128:3306/test"
+    //    private String url = "jdbc:mysql://192.168.121.128:3306/test?rewriteBatchedStatements=true&useSSL=false";
+    val user = "root"
+    val password = "123321"
+    var conn: Connection = null
+    var pstm: PreparedStatement = null
+
+    try {
+      Class.forName("com.mysql.jdbc.Driver")
+      conn = DriverManager.getConnection(url, user, password)
+      val sql = "INSERT INTO test5 values(?,?,?)"
+      pstm = conn.prepareStatement(sql)
+      val startTime = System.currentTimeMillis
+      for (i <- 1 to 100000) {
+        pstm.setInt(1, i)
+        pstm.setInt(2, i)
+        pstm.setInt(3, i)
+        pstm.executeUpdate
+      }
+      val endTime = System.currentTimeMillis
+      System.out.println("用时：" + (endTime - startTime))
+    } catch {
+      case e: Exception =>
+        e.printStackTrace()
+        throw new RuntimeException(e)
+    } finally {
+      if (pstm != null) try pstm.close()
+      catch {
+        case e: SQLException =>
+          e.printStackTrace()
+          throw new RuntimeException(e)
+      }
+      if (conn != null) try conn.close()
+      catch {
+        case e: SQLException =>
+          e.printStackTrace()
+          throw new RuntimeException(e)
+      }
+    }
   }
 }

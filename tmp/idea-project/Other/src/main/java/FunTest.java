@@ -4,6 +4,8 @@ import org.apache.kudu.Type;
 import org.apache.kudu.client.AlterTableOptions;
 import org.apache.kudu.client.PartialRow;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
@@ -18,36 +20,13 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class FunTest {
     public static void main(String[] args) throws Exception {
-        fun3(new class2() {
-            @Override
-            public void fun1() {
-
-            }
-        });
-    }
-    public static void fun3(class2 cc){
-
+        BufferedWriter writer =  new BufferedWriter(new FileWriter("D:\\test\\test.txt"));
+        FileWriter fileWriter = new FileWriter("");
+        writer.write("123");
+        writer.close();
     }
 
 }
 
-abstract class class1{
-    void fun1() {
 
-    }
-
-    abstract void fun2();
-}
-
-interface class2{
-    void fun1();
-}
-
-class class3 implements class2 {
-
-    @Override
-    public void fun1() {
-
-    }
-}
 
