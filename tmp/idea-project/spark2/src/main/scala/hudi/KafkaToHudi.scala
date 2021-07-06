@@ -46,7 +46,7 @@ object KafkaToHudi {
 //            .option("kafka.bootstrap.servers", "node239:9092")
       .option("kafka.bootstrap.servers", "127.0.0.1:9092")
       .option("subscribe", "hudi-test")
-      //      .option("startingOffsets", """{"hudi-test":{"0":51000000,"1":51000000}}""")
+//            .option("startingOffsets", """{"hudi-test":{"0":0,"1":0}}""")
       // groupIdPrefix、kafka.group.id spark3 可用
       //      .option("groupIdPrefix", "quickstart-events-group")
       .load()
@@ -129,10 +129,11 @@ object KafkaToHudi {
         println("setOffsetRange:" + setOffsetRange)
         println("triggerExecution:" + triggerExecution)
         println("walCommit:" + walCommit)
+        println("startOffset"+sources(0).startOffset)
+        println("endOffset"+sources(0).endOffset)
 
         val mysql = new InsertMetrics()
         val values = Array(batchID, inputRowsPerSecond, processedRowsPerSecond, numInputRows, addBatch, getBatch, getEndOffset, queryPlanning, setOffsetRange, triggerExecution, walCommit)
-        println(timestamp)
         println(timestampFix)
         mysql.spark(values, timestampFix)
         //        println("Query made progress: " + event.progress)
@@ -163,7 +164,7 @@ object KafkaToHudi {
 //            .option("checkpointLocation", "hdfs://masters/tmp/spark_to_hudi_checkpoint")
       .option("checkpointLocation", "D:\\tmp\\spark_checkpoint")
       .foreachBatch((batchDF: DataFrame, batchId: Long) => {
-        batchDF.persist()
+//        batchDF.persist()
         batchDF
           .write
           .format("hudi")
@@ -220,13 +221,13 @@ object KafkaToHudi {
           .option("hoodie.parquet.small.file.limit", 100 * 1024 * 1024)
 //          .option("hoodie.parquet.small.file.limit", "100857600")
           // 通过每条数据大小计算小文件需要插入多少数据，如果不指定会以最近提交的动态计算（如果不配置且单个批次数据量过大，可能会有很多小文件）
-          .option("hoodie.copyonwrite.record.size.estimate", "90")
+          .option("hoodie.copyonwrite.record.size.estimate", "80")
           //          .option("hoodie.logfile.max.size", "1073741824")
           .mode(Append)
           .save("D:\\tmp\\hudi_mor_table")
 //                  .save("hdfs://masters/tmp/hudi_mor_table")
-        println("batchID:" + batchId + ",batchCount:" + batchDF.count())
-        batchDF.unpersist()
+//        println("batchID:" + batchId + ",batchCount:" + batchDF.count())
+//        batchDF.unpersist()
       })
       .trigger(ProcessingTime("300 seconds"))
       .start()

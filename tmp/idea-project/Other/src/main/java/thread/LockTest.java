@@ -25,6 +25,12 @@ public class LockTest {
         Thread.sleep(1000);
         Thread thread = new Thread(new RunTest(myThread, true,1,1));
         thread.start();
+        Thread thread11 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                
+            }
+        });
 
 
     }

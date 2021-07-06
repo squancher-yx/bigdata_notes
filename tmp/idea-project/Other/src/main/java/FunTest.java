@@ -18,14 +18,19 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class FunTest {
-    public static void main(String[] args) throws Exception {
-        BufferedWriter writer =  new BufferedWriter(new FileWriter("D:\\test\\test.txt"));
-        FileWriter fileWriter = new FileWriter("");
-        writer.write("123");
-        writer.close();
+class Student{
+    static  String name;
+    static {
+        name="321";
     }
 
+}
+
+public class FunTest {
+
+    public static void main(String[] args) {
+
+    }
 }
 
 

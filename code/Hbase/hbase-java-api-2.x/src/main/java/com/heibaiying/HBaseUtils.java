@@ -151,8 +151,8 @@ public class HBaseUtils {
         try {
             Table table = connection.getTable(TableName.valueOf(tableName));
             Get get = new Get(Bytes.toBytes(rowKey));
-			get.addColumn(Bytes.toBytes(columnFamily), Bytes.toBytes(qualifier));
-			get.setMaxVersions();
+            get.addColumn(Bytes.toBytes(columnFamily), Bytes.toBytes(qualifier));
+            get.setMaxVersions();
             Result result = table.get(get);
             List<Cell> cells = result.getColumnCells(Bytes.toBytes(columnFamily), Bytes.toBytes(qualifier));
             return cells;
@@ -195,8 +195,10 @@ public class HBaseUtils {
      *
      * @param tableName 表名
      */
-	 
-	//可使用setCaching和setBatch提升性能
+     
+    //可使用setCaching和setBatch提升性能
+    //Result 包含的cell数 = Min(每行列数，Batch大小)
+    //Result 的个数 =（ row数 * 每行的列数 ）/ Min(每行列数，Batch大小)
     public static ResultScanner getScanner(String tableName) {
         try {
             Table table = connection.getTable(TableName.valueOf(tableName));

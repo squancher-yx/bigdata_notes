@@ -1,5 +1,7 @@
 package thread;
 
+import org.junit.Test;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -100,6 +102,7 @@ import java.util.concurrent.Executors;
  */
 public class ThreadPoolTest {
     public static void main(String[] args) {
+        System.out.println(333);
         ExecutorService tmp = Executors.newScheduledThreadPool(3);
         Executors.newFixedThreadPool(1);
         Thread.currentThread().stop();
@@ -121,7 +124,8 @@ public class ThreadPoolTest {
      * scheduleWithFixedDelay:
      * 每当上次任务执行完毕后，间隔一段时间执行。不管当前任务执行时间大于、等于还是小于间隔时间，执行效果都是一样的。
      */
-    public static void scheduledThreadTest(){
-
+    @Test
+    public  void scheduledThreadTest(){
+        System.out.println(123);
     }
 }

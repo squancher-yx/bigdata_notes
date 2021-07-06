@@ -1,6 +1,6 @@
 ## Raft概述
 分以下三部分对Raft进行讨论：
-
+[Raft 原理动画](http://thesecretlivesofdata.com/raft/)
 + Leader election——a new leader must be chosen when an existing leader fails. （领导人选举）
 + Log replication——the leader must accept log entries from clients and replicate them across the cluster, forcing the other logs to agree with its own.（日志复制）
 + Safety——the key safety property for Raft. （安全性）
