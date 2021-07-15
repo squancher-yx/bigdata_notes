@@ -24,6 +24,9 @@ class Student{
         name="321";
     }
 
+    public static void main(String[] args) {
+    }
+
 }
 
 public class FunTest {

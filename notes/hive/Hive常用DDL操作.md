@@ -179,6 +179,14 @@ CREATE [TEMPORARY] [EXTERNAL] TABLE [IF NOT EXISTS] [db_name.]table_name     --�
     ROW FORMAT DELIMITED FIELDS TERMINATED BY "\t"
     LOCATION '/hive/emp_partition';
 ```
+```
+添加分区
+ALTER TABLE my_partition_test_table ADD IF NOT EXISTS  PARTITION (p_hour='2017113003', p_city='573', p_loctype='MHA') LOCATION 'path';
+删除分区
+ALTER TABLE my_partition_test_table DROP IF EXISTS PARTITION (p_loctype='MHA') LOCATION 'path';
+修复所有分区
+MSCK REPAIR TABLE table_name;
+```
 
 ### 2.5 分桶表
 

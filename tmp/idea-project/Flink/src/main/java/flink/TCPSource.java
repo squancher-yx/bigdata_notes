@@ -12,8 +12,8 @@ public class TCPSource {
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(8888);
 
-        FileInputStream f1 = new FileInputStream("");
-        BufferedInputStream b2 = new BufferedInputStream(f1);
+//        FileInputStream f1 = new FileInputStream("");
+//        BufferedInputStream b2 = new BufferedInputStream(f1);
 
         while (true) {
             try {

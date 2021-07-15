@@ -10,9 +10,9 @@ import org.apache.spark.sql.streaming.Trigger.ProcessingTime
 
 object SparkReadHudi {
   def main(args: Array[String]): Unit = {
-//    normalRead()
+    normalRead()
     //    structuredStreamingRead()
-    parquetRead()
+//    parquetRead()
   }
 
   /**
@@ -58,9 +58,9 @@ object SparkReadHudi {
       //      .option(DataSourceReadOptions.END_INSTANTTIME_OPT_KEY, 20210703160721L)
       .load("D:\\tmp\\hudi_mor_table\\*\\*")
     tmp.createOrReplaceTempView("ttttt")
-    ss.sql("select count(*) from ttttt where gate='mx2'").show()
-    ss.sql("select count(*) from ttttt where gate='m2sw'").show()
-    ss.sql("select count(*) from ttttt where gate='m2mx'").show()
+    ss.sql("select * from ttttt where gate='mx2'").show()
+//    ss.sql("select count(*) from ttttt where gate='m2sw'").show()
+//    ss.sql("select count(*) from ttttt where gate='m2mx'").show()
     //    println(tmp.count())
   }
 

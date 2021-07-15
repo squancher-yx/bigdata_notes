@@ -32,14 +32,15 @@ public class KafkaProducerTest {
             String logname = logs[random.nextInt(7)];
             int title = random.nextInt(3) + 1;
             int info_version = random.nextInt(99);
-            int uid = random.nextInt(10000000);
+            int uid = random
+                    .nextInt(10000000);
             int role_id = random.nextInt(10000000);
             int stats_obj = 1;
             String login_platform = platforms[random.nextInt(3)];
             String ip = random.nextInt(255) + 1 + "." + random.nextInt(255) + "." + random.nextInt(255) + "." + random.nextInt(255);
             String stats_location = "99,66";
-            String stats_rel = "";
-            String opt_result = "";
+            String stats_rel = "shserhserhserhserherh";
+            String opt_result = "eserhserhserhserhserhsereysaweaaaataertsert";
             String stats_col = "test";
 
             ProducerRecord<String, String> record = new ProducerRecord<>(topicName,

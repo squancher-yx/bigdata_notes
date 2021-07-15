@@ -3,10 +3,10 @@ package utils;
 import java.sql.*;
 
 public class JDBCMysql {
-    private String url = "jdbc:mysql://192.168.121.128:3306/test";
-//    private String url = "jdbc:mysql://192.168.121.128:3306/test?rewriteBatchedStatements=true&useSSL=false";
+//    private String url = "jdbc:mysql://127.0.0.1:3306/test";
+    private String url = "jdbc:mysql://127.0.0.1:3306/test?rewriteBatchedStatements=true&useSSL=false";
     private String user = "root";
-    private String password = "123321";
+    private String password = "123456";
 
     public static void main(String[] args) {
         JDBCMysql tmp = new JDBCMysql();
@@ -122,14 +122,14 @@ public class JDBCMysql {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, user, password);
-            String sql = "INSERT INTO test5 values(?,?,?)";
+            String sql = "INSERT INTO test5 values(?,?)";
             pstm = conn.prepareStatement(sql);
             Long startTime = System.currentTimeMillis();
             conn.setAutoCommit(false);
             for (int i = 1; i <= 100000; i++) {
                 pstm.setInt(1, i);
                 pstm.setInt(2, i);
-                pstm.setInt(3, i);
+//                pstm.setInt(3, i);
                 pstm.addBatch();
             }
             pstm.executeBatch();
